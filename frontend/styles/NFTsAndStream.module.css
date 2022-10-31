@@ -1,0 +1,58 @@
+.container {
+  width: 100vw;
+  max-width: 1080px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.header {
+  font-size: 1.25rem;
+  border-bottom: 3px solid var(--red);
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  padding-bottom: 0.5rem;
+}
+
+.header-name {
+  color: var(--red);
+}
+
+.element {
+  border-bottom: 2px solid var(--red);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  justify-content: space-between;
+  padding-bottom: 0.5rem;
+}
+
+.element button {
+  padding: 0.25rem;
+  justify-self: center;
+}
+
+.buttons {
+  padding-top: 1rem;
+  display: flex;
+  gap: 1rem;
+  align-self: flex-end;
+}
+
+.files {
+  display: flex;
+  gap: 2rem;
+}
+
+.file-symbol {
+  display: flex;
+  gap: 0.5rem;
+}
+
+@media screen and (max-width: 800px) {
+  .buttons {
+    flex-direction: column;
+  }
+}

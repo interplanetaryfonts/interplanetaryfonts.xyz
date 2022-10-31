@@ -1,0 +1,14 @@
+.container {
+  min-height: 50vh;
+  width: 100vw;
+  max-width: 1080px;
+  padding: 2rem;
+  display: flex;
+  gap: 1rem;
+}
+
+@media screen and (max-width: 800px) {
+  .container {
+    flex-direction: column;
+  }
+}

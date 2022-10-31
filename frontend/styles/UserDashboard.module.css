@@ -1,0 +1,57 @@
+.buttons {
+  width: 100%;
+  display: flex;
+  justify-content: stretch;
+  gap: 1rem;
+}
+
+.button {
+  width: 100%;
+}
+
+.active {
+  background-color: var(--darkblue);
+  border-color: var(--yellow);
+  color: var(--yellow);
+}
+
+.profile-elements {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1rem;
+}
+
+.profile-elements h5 {
+  align-self: flex-start;
+}
+
+.stream-data {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.unwrap {
+  padding: 0.25rem;
+}
+
+@media (hover) {
+  .active:hover {
+    border-color: var(--yellow);
+    color: var(--yellow);
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+  .button {
+    max-width: 15rem;
+  }
+  .profile-elements {
+    padding-top: 2rem;
+  }
+}

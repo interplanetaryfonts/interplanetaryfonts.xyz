@@ -1,0 +1,13 @@
+.buttons {
+  gap: 0.5rem;
+  width: 100%;
+  display: flex;
+}
+
+.buttons button {
+  flex-basis: 50%;
+}
+
+.buttons button.onecol {
+  flex-basis: 100%;
+}

@@ -1,0 +1,20 @@
+.button {
+  padding: 0.5rem;
+  background-color: var(--red);
+  border-radius: var(--global-radius);
+  border: 1px solid var(--red);
+  color: var(--light);
+  transition: all 0.5s ease;
+  min-width: 10rem;
+}
+
+@media (hover) {
+  .button:hover {
+    color: var(--darkblue);
+    border: 1px solid var(--darkblue);
+  }
+}
+
+.button:focus {
+  outline: none;
+}

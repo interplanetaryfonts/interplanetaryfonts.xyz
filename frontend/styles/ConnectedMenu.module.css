@@ -1,0 +1,28 @@
+.container {
+  opacity: 0;
+  background-color: white;
+  width: 16rem;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  gap: 0.5rem;
+  border-radius: var(--global-radius);
+  transform: translate(148.05%, 45%);
+  transition: all 0.5s ease;
+}
+
+.open {
+  opacity: 1;
+}
+
+.user-profile {
+  color: var(--darkblue);
+  transition: all 0.5s ease;
+}
+
+@media (hover) {
+  .user-profile:hover {
+    color: var(--red);
+  }
+}

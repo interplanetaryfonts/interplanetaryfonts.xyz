@@ -1,0 +1,80 @@
+.container {
+  width: 15rem;
+  max-width: 100%;
+  position: fixed;
+  right: -15rem;
+  top: 5vh;
+  border: 4px solid var(--red);
+  background-color: var(--light);
+  padding: 1rem;
+  border-radius: var(--global-radius);
+  cursor: pointer;
+  transition: all 0.5s ease;
+  animation-name: push-notification;
+  animation-duration: 20s;
+  animation-delay: 20s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes push-notification {
+  0% {
+    right: -15rem;
+  }
+  40% {
+    right: -15rem;
+  }
+  45% {
+    right: 5rem;
+  }
+  55% {
+    right: 5rem;
+  }
+  60% {
+    right: -15rem;
+  }
+  100% {
+    right: -15rem;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .container {
+    width: 100%;
+    visibility: hidden;
+    max-width: 15rem;
+    top: auto;
+    bottom: 5vh;
+    left: auto;
+    right: auto;
+    margin-left: auto;
+    margin-right: auto;
+    transition: opacity 1s ease;
+  }
+
+  @keyframes push-notification {
+    0% {
+      visibility: hidden;
+      opacity: 0;
+    }
+    40% {
+      visibility: hidden;
+      opacity: 0;
+    }
+    45% {
+      visibility: visible;
+      opacity: 1;
+    }
+    55% {
+      visibility: visible;
+      opacity: 1;
+    }
+    60% {
+      visibility: hidden;
+      opacity: 0;
+    }
+    100% {
+      visibility: hidden;
+      opacity: 0;
+    }
+  }
+}
