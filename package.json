@@ -1,6 +1,5 @@
 {
     "name": "interplanetaryfonts",
-    "homepage": ".",
     "version": "0.1.0",
     "private": true,
     "description": "Web3 Fonts Universe",
@@ -10,7 +9,8 @@
         "deploy:smart-contract": "pnpm --filter contracts run deploy",
         "verify:smart-contract": "pnpm --filter contracts run verify",
         "test:smart-contract": "pnpm --filter contracts run test",
-        "dev:frontend": "pnpm --filter frontend run dev"
+        "dev:frontend": "pnpm --filter frontend run dev",
+        "dev:backend": "pnpm --filter backend run dev"
     },
     "keywords": [
         "ethereum",
