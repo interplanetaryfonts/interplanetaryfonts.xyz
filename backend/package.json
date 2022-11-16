@@ -1,11 +1,17 @@
 {
     "name": "backend",
+    "homepage": ".",
     "version": "1.0.0",
+    "private": true,
     "description": "InterplanetaryFonts Backend",
-    "main": "index.js",
+    "main": "src/index.js",
     "scripts": {
-        "dev": "nodemon src/index",
-        "test": "test"
+        "dev": "nodemon src/index"
+    },
+    "dependencies": {
+        "apollo-server": "^3.11.1",
+        "graphql": "^16.6.0",
+        "nodemon": "^2.0.20"
     },
     "repository": {
         "type": "git",
@@ -13,19 +19,14 @@
     },
     "keywords": [
         "ethereum",
-        "server",
-        "graphql",
+        "blockchain",
+        "web3",
+        "polygon",
+        "graphQL",
+        "superfluid",
+        "fonts",
         "backend"
     ],
     "author": "InterplanetaryFonts",
-    "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/interplanetaryfonts/interplanetaryfonts.xyz/issues"
-    },
-    "homepage": "https://github.com/interplanetaryfonts/interplanetaryfonts.xyz#readme",
-    "dependencies": {
-        "apollo-server": "^3.11.1",
-        "graphql": "^16.6.0",
-        "nodemon": "^2.0.20"
-    }
+    "license": "MIT"
 }

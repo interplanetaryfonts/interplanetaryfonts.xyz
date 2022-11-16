@@ -3,11 +3,13 @@ const { gql } = require('apollo-server');
 const typeDefs = gql`
     """
     Available Queries for the InterplanetaryFonts marketplace.
-    Based on ERD
+    Based on ERD.
     """
     type Query {
         users: [User!]!
-        fontProjects: [FontProject!]!
+        "There always be an user but some won't have projects"
+        fontProjects: [FontProject!]
+        "Some projects won't have streams"
         fontStreams: [FontStream!]
     }
 
@@ -20,10 +22,14 @@ const typeDefs = gql`
         bio: String
         links: [Link!]
         lensHandle: String
+        "Dates as ints, usefull for sorting"
+        createdAt: Int!
+        updatedAt: Int
         "Check if is creator ond/or collectors"
         creator: Boolean!
         collector: Boolean!
     }
+    "If there's a link it will need this structure"
     type Link {
         name: String!
         address: String!
@@ -32,18 +38,23 @@ const typeDefs = gql`
     "Font Project"
     type FontProject {
         id: ID!
+        name: String!
+        "Descriptions are optional"
+        description: String
         perCharacterMintPrice: Int!
         creator: User!
-        name: String!
         "Superfluid related data"
         idaRoyaltyIndex: Int
-        description: String
         "Dates are received as integer and transformed with JS"
-        startDateTime: Int!
+        launchDateTime: Int!
+        createdAt: Int!
+        updatedAt: Int
         "IPFS URL"
         fontFilesCID: String!
         "Number of mints defined by creator"
         mintings: Int
+        "Superfluid token contract address"
+        distributionToken: String!
     }
 
     "Font Stream, funders, and collaborators"
@@ -55,11 +66,13 @@ const typeDefs = gql`
         fundingGoalAmount: Int!
         "Dates are received as integer and transformed with JS"
         startDateTime: Int!
+        createdAt: Int!
+        updatedAt: Int
         proposer: User!
         isApproved: Boolean!
         project: FontProject!
-        "Superfluid"
-        streamingURL: String
+        "Superfluid SuperToken address"
+        streamingSuperToken: String!
         fundings: [FontStreamFund!]
         collaborations: [FontStreamCollaboration!]
     }
@@ -68,16 +81,20 @@ const typeDefs = gql`
         funder: User!
         amount: Int!
         rate: Int!
-        stream: FontStream
+        stream: FontStream!
+        createdAt: Int!
+        updatedAt: Int
     }
     type FontStreamCollaboration {
         id: ID!
         proposer: User!
-        "ZIP file with source font"
+        "Path to ZIP file with source font"
         deliverablesCID: String!
         funderApprovedVoters: [User!]
         funderDisapprovedVoters: [User!]
-        stream: FontStream
+        stream: FontStream!
+        createdAt: Int!
+        updatedAt: Int
     }
 `;
 

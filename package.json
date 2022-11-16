@@ -1,9 +1,10 @@
 {
     "name": "interplanetaryfonts",
+    "homepage": "https://github.com/interplanetaryfonts/interplanetaryfonts.xyz#readme",
     "version": "0.1.0",
     "private": true,
-    "description": "Web3 Fonts Universe",
-    "main": "index.js",
+    "description": "InterplanetaryFonts Fullstack DApp",
+    "main": "README.md",
     "scripts": {
         "compile:smart-contract": "pnpm --filter contracts run compile",
         "deploy:smart-contract": "pnpm --filter contracts run deploy",
@@ -12,6 +13,10 @@
         "dev:frontend": "pnpm --filter frontend run dev",
         "dev:backend": "pnpm --filter backend run dev"
     },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/interplanetaryfonts/interplanetaryfonts.xyz.git"
+    },
     "keywords": [
         "ethereum",
         "blockchain",
@@ -19,7 +24,8 @@
         "polygon",
         "graphQL",
         "superfluid",
-        "fonts"
+        "fonts",
+        "fullstack"
     ],
     "author": "InterplanetaryFonts",
     "license": "MIT"
