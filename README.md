@@ -7,7 +7,6 @@ A decentralized NFT marketplace for creators and collectors of Fonts.
 ## [ETHOnline 2022](https://online.ethglobal.com/) Hackathon Finalist Project 🏆
 Project page: https://ethglobal.com/showcase/interplanetary-fonts-ekwuo
 
-Team: [@eduairet](https://github.com/eduairet) [@hyperalchemy](https://github.com/hyperalchemy) [@jsanchez034](https://github.com/jsanchez034) [@miglconts](https://github.com/orgs/letterengine/people/miglconts)
 <br><br>
 
 ## Project Description:
@@ -32,7 +31,7 @@ Users can connect with their wallet to the application, fund projects or mint NF
 ### Steps
 1. Clone the repo
 ```bash
-    $ git clone https://github.com/letterengine/interplanetary-fonts-ethonline.git
+    $ git clone https://github.com/interplanetaryfonts/interplanetaryfonts.xyz.git
 ```
 2. Install dependencies 
 ```bash

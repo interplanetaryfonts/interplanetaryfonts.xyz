@@ -12,7 +12,15 @@
         "test:smart-contract": "pnpm --filter contracts run test",
         "dev:frontend": "pnpm --filter frontend run dev"
     },
-    "keywords": [],
+    "keywords": [
+        "ethereum",
+        "blockchain",
+        "web3",
+        "polygon",
+        "graphQL",
+        "superfluid",
+        "fonts"
+    ],
     "author": "InterplanetaryFonts",
-    "license": "ISC"
+    "license": "MIT"
 }
