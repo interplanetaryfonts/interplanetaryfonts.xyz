@@ -78,10 +78,40 @@ contract FontProject {
     string lensHandle
   );
 
+  // Map of created users
+  mapping(address => User) public addressToUser;
+
   event FontProjectMinted(
     bytes32 id,
     uint256 tokenId
   );
+
+  function createUser(
+    string calldata lensHandle,
+    string calldata profileInfoCID,
+    uint256 createdAt
+  ) external {
+
+    require(addressToUser[msg.sender].walletAddress == address(0), "USER IS ALREADY REGISTERED");
+
+    User memory user = User(
+      msg.sender,
+      profileInfoCID,
+      createdAt,
+      createdAt,
+      lensHandle
+    );
+
+    addressToUser[msg.sender] = user;
+
+    emit UserCreated(
+      msg.sender, 
+      profileInfoCID, 
+      createdAt, 
+      createdAt, 
+      lensHandle
+    );
+  }
 
 
   function createFontProject(
