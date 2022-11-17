@@ -3,7 +3,12 @@ lockfileVersion: 5.4
 importers:
 
   .:
-    specifiers: {}
+    specifiers:
+      graphql: ^16.6.0
+      urql: ^3.0.3
+    dependencies:
+      graphql: 16.6.0
+      urql: 3.0.3_graphql@16.6.0
 
   backend:
     specifiers:
@@ -81,8 +86,8 @@ importers:
       autoprefixer: ^10.4.8
       eslint: 7.23.0
       eslint-config-next: 12.2.5
-      ethers: ^5.7.1
-      graphql: ^15.0.0
+      ethers: ^5.7.2
+      graphql: ^15.8.0
       next: 12.2.5
       node-fetch: '*'
       postcss: ^8.4.16
@@ -118,14 +123,6 @@ importers:
       eslint-config-next: 12.2.5_d6djodu674rxuopabqarwp27ee
       postcss: 8.4.19
       tailwindcss: 3.2.4_postcss@8.4.19
-
-  server:
-    specifiers:
-      apollo-server: ^3.11.1
-      graphql: ^16.6.0
-    dependencies:
-      apollo-server: 3.11.1_graphql@16.6.0
-      graphql: 16.6.0
 
 packages:
 
@@ -2156,6 +2153,14 @@ packages:
       graphql: 15.8.0
     dev: false
 
+  /@graphql-typed-document-node/core/3.1.1_graphql@16.6.0:
+    resolution: {integrity: sha512-NQ17ii0rK1b34VZonlmT2QMJFI70m0TRwbknO/ihlbatXyaktDhN/98vBiUU6kNBPljqGqyIrl2T4nY2RpFANg==}
+    peerDependencies:
+      graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
+    dependencies:
+      graphql: 16.6.0
+    dev: false
+
   /@hapi/hoek/9.3.0:
     resolution: {integrity: sha512-/c6rf4UJlmHlC9b5BaNvzAcFv7HZ2QHaV0D4/HNlBdvFnvQq8RI4kYdhyPCl7Xj+oWvTWQ8ujhqS53LIgAe6KQ==}
     dev: false
@@ -3399,7 +3404,7 @@ packages:
   /@superfluid-finance/js-sdk/0.6.3:
     resolution: {integrity: sha512-bSeV//KLAyseYwFVMGwrZmmS0iIZWx5FLGEEjXfi0oS42NFomD0MEt+iRyF7o/Jx6/8bfHGMH9I4s8LAWR27bQ==}
     dependencies:
-      '@superfluid-finance/metadata': github.com/superfluid-finance/metadata/edd18b65e170417d2abff336fc14b6683fcf5e94
+      '@superfluid-finance/metadata': github.com/superfluid-finance/metadata/aa1f9158956355fa1224cdf973b2dc972f3e5703
       '@truffle/contract': 4.5.23
       auto-bind: 4.0.0
       node-fetch: 2.6.7
@@ -3417,7 +3422,7 @@ packages:
       ethers: ^5.6.9
       graphql: ^16.0.0
     dependencies:
-      '@superfluid-finance/metadata': github.com/superfluid-finance/metadata/edd18b65e170417d2abff336fc14b6683fcf5e94
+      '@superfluid-finance/metadata': github.com/superfluid-finance/metadata/aa1f9158956355fa1224cdf973b2dc972f3e5703
       browserify: 17.0.0
       ethers: 5.7.1
       graphql: 16.6.0
@@ -4046,6 +4051,16 @@ packages:
   /@ungap/promise-all-settled/1.1.2:
     resolution: {integrity: sha512-sL/cEvJWAnClXw0wHk85/2L0G6Sj8UB0Ctc1TEMbKSsmpRosqhwj9gWgFRZSrBr2f9tiXISwNhCPmlfqUqyb9Q==}
     dev: true
+
+  /@urql/core/3.0.5_graphql@16.6.0:
+    resolution: {integrity: sha512-6/1HG+WEAcPs+hXSFnxWBTWkNUwa8dj2cHysWokMaFIbAioGtUaSdxp2q9FDMtWAIGdc640NFSt2B8itGLdoAA==}
+    peerDependencies:
+      graphql: ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
+    dependencies:
+      '@graphql-typed-document-node/core': 3.1.1_graphql@16.6.0
+      graphql: 16.6.0
+      wonka: 6.1.1
+    dev: false
 
   /@vanilla-extract/css/1.7.0:
     resolution: {integrity: sha512-2Abpr5aJskwKS+waMWxWnTBqq/rj4J93KtGteW0VSORMUsijrupwjOXECd7Llh+nSFfx/Y6usuexF5/ffyDF8A==}
@@ -14624,6 +14639,17 @@ packages:
       querystring: 0.2.0
     dev: false
 
+  /urql/3.0.3_graphql@16.6.0:
+    resolution: {integrity: sha512-aVUAMRLdc5AOk239DxgXt6ZxTl/fEmjr7oyU5OGo8uvpqu42FkeJErzd2qBzhAQ3DyusoZIbqbBLPlnKo/yy2A==}
+    peerDependencies:
+      graphql: ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
+      react: '>= 16.8.0'
+    dependencies:
+      '@urql/core': 3.0.5_graphql@16.6.0
+      graphql: 16.6.0
+      wonka: 6.1.1
+    dev: false
+
   /use-callback-ref/1.3.0_react@18.1.0:
     resolution: {integrity: sha512-3FT9PRuRdbB9HfXhEq35u4oZkvpJ5kuYbpqhCfmiZyReuRgpnhDlbr2ZEnnuS0RrJAPn6l23xjFg9kpDM+Ms7w==}
     engines: {node: '>=10'}
@@ -15495,6 +15521,10 @@ packages:
     engines: {node: '>= 0.10.0'}
     hasBin: true
 
+  /wonka/6.1.1:
+    resolution: {integrity: sha512-shBtyZ0KFvUadtnDGlTRA4mF4pgcRoyZKikdputKhmShoXWcZDvlg6CUw6Jx9nTL7Ub8QUJoIarPpxdlosg9cw==}
+    dev: false
+
   /word-wrap/1.2.3:
     resolution: {integrity: sha512-Hz/mrNwitNRh/HUAtM/VT/5VH+ygD6DV7mYKZAtHOrbs8U7lvPS6xf7EJKMF0uW1KJCl0H701g3ZGus+muE5vQ==}
     engines: {node: '>=0.10.0'}
@@ -15880,8 +15910,8 @@ packages:
       ethereumjs-util: 6.2.1
     dev: false
 
-  github.com/superfluid-finance/metadata/edd18b65e170417d2abff336fc14b6683fcf5e94:
-    resolution: {tarball: https://codeload.github.com/superfluid-finance/metadata/tar.gz/edd18b65e170417d2abff336fc14b6683fcf5e94}
+  github.com/superfluid-finance/metadata/aa1f9158956355fa1224cdf973b2dc972f3e5703:
+    resolution: {tarball: https://codeload.github.com/superfluid-finance/metadata/tar.gz/aa1f9158956355fa1224cdf973b2dc972f3e5703}
     name: '@superfluid-finance/metadata'
     version: 1.1.0
     dev: false

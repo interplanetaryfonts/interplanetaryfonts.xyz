@@ -28,5 +28,9 @@
         "fullstack"
     ],
     "author": "InterplanetaryFonts",
-    "license": "MIT"
+    "license": "MIT",
+    "dependencies": {
+        "graphql": "^16.6.0",
+        "urql": "^3.0.3"
+    }
 }
