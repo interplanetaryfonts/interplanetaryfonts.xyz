@@ -5,7 +5,7 @@ pragma solidity ^0.8.16;
 import "./InterPlanetaryFontNFT.sol";
 
 import { IERC20 } from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import {ISuperfluid, ISuperToken} from "@superfluid-finance/ethereum-contracts/contracts/apps/SuperAppBase.sol";
+import { ISuperfluid, ISuperfluidToken } from "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol";
 import { ISETH } from "@superfluid-finance/ethereum-contracts/contracts/interfaces/tokens/ISETH.sol";
 import {IInstantDistributionAgreementV1} from "@superfluid-finance/ethereum-contracts/contracts/interfaces/agreements/IInstantDistributionAgreementV1.sol";
 
@@ -14,6 +14,11 @@ import {IDAv1Library} from "@superfluid-finance/ethereum-contracts/contracts/app
 contract FontProject {
   InterPlanetaryFontNFT private fontNFT = new InterPlanetaryFontNFT();
   // TODO : create instance of FontStream contract here
+
+
+  uint8 constant TOTAL_DISTRIBUTION_UNITS = 100;
+  uint8 constant OWNER_DISTRIBUTION_UNITS = 50;
+  uint8 constant COLLABORATOR_DISTRIBUTION_UNITS = TOTAL_DISTRIBUTION_UNITS - OWNER_DISTRIBUTION_UNITS;
 
   /// @notice IDA Library
   using IDAv1Library for IDAv1Library.InitData;
@@ -45,8 +50,8 @@ contract FontProject {
     string metaDataCID; // name, description
 
     // Superfluid IDA (Immediate Distribution Agreement) related data for distributing royaltys when minting
-    uint256 royaltyIDAIndex;
-    ISuperToken idaDistributionToken;
+    uint32 royaltyIDAIndex;
+    ISuperfluidToken idaDistributionToken;
 
     string fontFilesCID; // IPFS CID pointing to source font files
     uint256 mintLimit;
@@ -81,6 +86,12 @@ contract FontProject {
   // Map of created users
   mapping(address => User) public addressToUser;
 
+  // Map of create font projects
+  mapping(bytes32 => FontProjectEntity) public idToFontProject;
+
+  // Map of project to project mints
+  mapping(bytes32 => uint256[]) public fontProjectIdToMints;
+
   event FontProjectMinted(
     bytes32 id,
     uint256 tokenId
@@ -113,23 +124,74 @@ contract FontProject {
     );
   }
 
-
   function createFontProject(
     uint256 createdAt,
     uint256 launchDateTime,
     uint256 perCharacterMintPrice,
     uint256 mintLimit,
+    address distributionSuperToken,
     string calldata metaDataCID,
     string calldata fontFilesCID
   ) external {
+    bytes32 fontId = keccak256(
+        abi.encodePacked(
+            msg.sender,
+            address(this),
+            createdAt,
+            launchDateTime,
+            perCharacterMintPrice
+        )
+    );
 
-    // check to see if User struct exists already, if not create it
+    require(idToFontProject[fontId].createdAt == 0, "FONT IS ALREADY REGISTERED");
+
+    currentIDAIndex = currentIDAIndex + 1;
+
+    ISuperfluidToken distributionToken = ISuperfluidToken(distributionSuperToken);
 
     // create font project struct
+    FontProjectEntity memory font = FontProjectEntity(
+        fontId,
+        msg.sender,
+        perCharacterMintPrice,
+        metaDataCID,
+        currentIDAIndex,
+        distributionToken,
+        fontFilesCID,
+        mintLimit,
+        launchDateTime,
+        createdAt,
+        createdAt
+    );
+    idToFontProject[fontId] = font;
 
-    // create SuperFluid IDA subscription 
+    // create SuperFluid IDA subscription
+    _idaV1.createIndex(
+      font.idaDistributionToken,
+      font.royaltyIDAIndex
+    );
+
+    // Give the project created the full share of the minting royalties 
+    // Once they get collaborators they still get 50% and collaborators will split
+    // the other 50%
+    _idaV1.updateSubscriptionUnits(
+      font.idaDistributionToken,
+      font.royaltyIDAIndex,
+      msg.sender,
+      TOTAL_DISTRIBUTION_UNITS
+    );
 
     // emit FontProjectCreated event to aid in subgraph creation
+    emit FontProjectCreated(
+      fontId,
+      metaDataCID,
+      msg.sender,
+      perCharacterMintPrice,
+      mintLimit,
+      launchDateTime,
+      createdAt,
+      createdAt
+    );
   }
 
   function minFontProject(
