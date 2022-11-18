@@ -149,9 +149,9 @@ export default function ProfileGallery(props) {
             profileNme={profile.name}
             description={profile.bio}
             avatar={profile.avatarUrl || 'https://picsum.photos/200'}
-            website={`/profile/${profile.handle}`}
+            website={`universe/profile/${profile.handle}`}
             //backGroundImage={lens.backGroundImage}
-            url={`/profile/${profile.handle}`}
+            url={`universe/profile/${profile.handle}`}
           />
           ))}
     </div>

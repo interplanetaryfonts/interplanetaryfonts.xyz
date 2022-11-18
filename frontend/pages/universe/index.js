@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { client, exploreProfiles } from '../../api'
-import Link from 'next/link'
+//import Link from 'next/link'
 import MainContainer from "../../components/UI/MainContainer";
 import ProfileGallery from '../../components/Universe/ProfileGallery';
 
