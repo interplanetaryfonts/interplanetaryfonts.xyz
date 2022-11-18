@@ -24,6 +24,13 @@ query ExploreProfiles {
           }
         }
       }
+      coverPicture {
+      ... on MediaSet {
+        original {
+          url
+        }
+      }
+    }
       stats {
         totalFollowers
       }
@@ -39,6 +46,13 @@ query Profile($handle: Handle!) {
     name
     bio
     picture {
+      ... on MediaSet {
+        original {
+          url
+        }
+      }
+    }
+    coverPicture {
       ... on MediaSet {
         original {
           url

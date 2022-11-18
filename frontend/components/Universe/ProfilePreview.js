@@ -11,7 +11,7 @@ export default function ProfilePreview(props) {
             style={{ backgroundImage: `url("${props.backGroundImage}")` }}
           ></div>
         </Link>
-        <Link href={props.website}>
+        <Link href={props.url}>
           <div
             className=" mt-20 h-36 w-36 md rounded-full absolute  z-10  border-4 border-solid border-red 
           bg-slate-600 bg-cover bg-center hover:border-4 hover:border-solid hover:border-yellow  cursor-pointer box-content bg-no-repeat"
@@ -27,7 +27,7 @@ export default function ProfilePreview(props) {
         </Link>
         <Link href={props.url}>
           <p className="text-darkbluetext-left text-sm font-light cursor-pointer hover:text-red">
-            {props.profileNme}
+            {props.profileName}
           </p>
         </Link>
         <Link href={props.website}>

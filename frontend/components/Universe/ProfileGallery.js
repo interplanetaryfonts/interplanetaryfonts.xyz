@@ -129,6 +129,15 @@ export default function ProfileGallery(props) {
             profile.avatarUrl = picture.original.url
           }
         }
+        let coverPicture = profile.coverPicture
+        if (coverPicture && coverPicture.original && coverPicture.original.url) {
+          if (coverPicture.original.url.startsWith('ipfs://')) {
+            let result = coverPicture.original.url.substring(7, coverPicture.original.url.length)
+            profile.bgUrl = 'https://lens.infura-ipfs.io/ipfs/${result}'
+          } else {
+            profile.bgUrl = coverPicture.original.url
+          }
+        }
         return profile
       }))
 
@@ -146,11 +155,11 @@ export default function ProfileGallery(props) {
             handle={profile.handle}
             followers={profile.stats.totalFollowers}
             //following={lens.following}
-            profileNme={profile.name}
+            profileName={profile.name}
             description={profile.bio}
             avatar={profile.avatarUrl || 'https://picsum.photos/200'}
             website={`universe/profile/${profile.handle}`}
-            //backGroundImage={lens.backGroundImage}
+            backGroundImage={profile.bgUrl || 'https://picsum.photos/200'}
             url={`universe/profile/${profile.handle}`}
           />
           ))}

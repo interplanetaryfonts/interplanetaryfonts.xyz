@@ -21,11 +21,20 @@ export default function Home() {
         if (picture && picture.original && picture.original.url) {
           if (picture.original.url.startsWith('ipfs://')) {
             let result = picture.original.url.substring(7, picture.original.url.length)
-            profile.avatarUrl = `http://lens.infura-ipfs.io/ipfs/${result}`
+            profile.avatarUrl = 'https://lens.infura-ipfs.io/ipfs/${result}'
           } else {
             profile.avatarUrl = picture.original.url
           }
-        }
+        }  
+        let coverPicture = profile.coverPicture
+        if (coverPicture && coverPicture.original && coverPicture.original.url) {
+          if (coverPicture.original.url.startsWith('ipfs://')) {
+            let result = coverPicture.original.url.substring(7, coverPicture.original.url.length)
+            profile.bgUrl = 'https://lens.infura-ipfs.io/ipfs/${result}'
+          } else {
+            profile.bgUrl = coverPicture.original.url
+          }
+        }   
         return profile
       }))
 
