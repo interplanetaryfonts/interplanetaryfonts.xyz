@@ -40,6 +40,10 @@ export default function ProfilePreview(props) {
         </p>
       </div>
       <Button className=" self-center  mt-2 mb-6">Follow </Button>
+      <p className="text-darkbluetext-left text-sm font-light px-10 py-4">
+          Following: {props.following} | Followers: {props.followers}
+
+        </p>
     </div>
   );
 }

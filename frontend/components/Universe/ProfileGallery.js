@@ -154,7 +154,7 @@ export default function ProfileGallery(props) {
             key={profile.id}
             handle={profile.handle}
             followers={profile.stats.totalFollowers}
-            //following={lens.following}
+            following={profile.stats.totalFollowing}
             profileName={profile.name}
             description={profile.bio}
             avatar={profile.avatarUrl || 'https://picsum.photos/200'}
