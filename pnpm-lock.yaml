@@ -15,8 +15,8 @@ importers:
       '@nomiclabs/hardhat-truffle5': ^2.0.7
       '@nomiclabs/hardhat-web3': ^2.0.0
       '@openzeppelin/contracts': ^4.7.3
-      '@superfluid-finance/ethereum-contracts': ^1.4.0
-      '@superfluid-finance/sdk-core': ^0.5.6
+      '@superfluid-finance/ethereum-contracts': ^1.4.3
+      '@superfluid-finance/sdk-core': ^0.5.8
       '@typechain/ethers-v5': ^10.1.0
       '@typechain/hardhat': ^6.1.2
       '@types/chai': ^4.2.0
@@ -34,8 +34,8 @@ importers:
       web3: ^1.8.0
     dependencies:
       '@openzeppelin/contracts': 4.7.3
-      '@superfluid-finance/ethereum-contracts': 1.4.0
-      '@superfluid-finance/sdk-core': 0.5.6_sup44lqfolz3u7wyp5ytwzo2j4
+      '@superfluid-finance/ethereum-contracts': 1.4.3
+      '@superfluid-finance/sdk-core': 0.5.8_sup44lqfolz3u7wyp5ytwzo2j4
       dotenv: 16.0.2
       graphql: 16.6.0
     devDependencies:
@@ -1556,8 +1556,8 @@ packages:
       antlr4ts: 0.5.0-alpha.4
     dev: true
 
-  /@superfluid-finance/ethereum-contracts/1.4.0:
-    resolution: {integrity: sha512-j552IAThuzdgnxsyQ9ujqsOUZl48PIv51wLARhiSv6l78RwdEnZd7U1/3UXyZuN8i0JARKExOetd9+SDaSRW8Q==}
+  /@superfluid-finance/ethereum-contracts/1.4.3:
+    resolution: {integrity: sha512-QKycgANL6/+09+JbSLF7PaHFHbYKRWSKb4vpVWsXMSR44ozxWkS8ebld72+iG7qxzybw4XIxzKyzLce5h4PE+A==}
     dependencies:
       '@decentral.ee/web3-helpers': 0.5.3
       '@openzeppelin/contracts': 4.7.3
@@ -1577,7 +1577,7 @@ packages:
   /@superfluid-finance/js-sdk/0.6.3:
     resolution: {integrity: sha512-bSeV//KLAyseYwFVMGwrZmmS0iIZWx5FLGEEjXfi0oS42NFomD0MEt+iRyF7o/Jx6/8bfHGMH9I4s8LAWR27bQ==}
     dependencies:
-      '@superfluid-finance/metadata': github.com/superfluid-finance/metadata/edd18b65e170417d2abff336fc14b6683fcf5e94
+      '@superfluid-finance/metadata': github.com/superfluid-finance/metadata/aa1f9158956355fa1224cdf973b2dc972f3e5703
       '@truffle/contract': 4.5.23
       auto-bind: 4.0.0
       node-fetch: 2.6.7
@@ -1588,14 +1588,15 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@superfluid-finance/sdk-core/0.5.6_sup44lqfolz3u7wyp5ytwzo2j4:
-    resolution: {integrity: sha512-PeaIgGu/hcM/fnSZwAGOT8BlRxH/RnLxpaC7yhsTjFZXIGIhJYIEjbUHNWVpgwKqOTX5+JTnesLwIEQdNUF0wA==}
+  /@superfluid-finance/sdk-core/0.5.8_sup44lqfolz3u7wyp5ytwzo2j4:
+    resolution: {integrity: sha512-xH0q1Hq1RBUYgdThjMQQrpcZeIxpP4bWwZJ7PQdFUJrUawS0Mtjwc82IMqQ/nkD+yp4L4yMtmoRX5c/a0QPjBg==}
     engines: {node: '>=12'}
     peerDependencies:
       ethers: ^5.6.9
       graphql: ^16.0.0
     dependencies:
-      '@superfluid-finance/metadata': github.com/superfluid-finance/metadata/edd18b65e170417d2abff336fc14b6683fcf5e94
+      '@superfluid-finance/ethereum-contracts': 1.4.3
+      '@superfluid-finance/metadata': github.com/superfluid-finance/metadata/aa1f9158956355fa1224cdf973b2dc972f3e5703
       browserify: 17.0.0
       ethers: 5.7.1
       graphql: 16.6.0
@@ -1603,8 +1604,12 @@ packages:
       lodash: 4.17.21
       tsify: 5.0.4_nqawqrm2u5w6akvyecz7kgercy
     transitivePeerDependencies:
+      - '@openzeppelin/test-helpers'
+      - bufferutil
       - encoding
+      - supports-color
       - typescript
+      - utf-8-validate
     dev: false
 
   /@swc/helpers/0.4.3:
@@ -5563,6 +5568,19 @@ packages:
     peerDependenciesMeta:
       debug:
         optional: true
+    dev: false
+
+  /follow-redirects/1.15.2_debug@4.3.4:
+    resolution: {integrity: sha512-VQLG33o04KaQ8uYi2tVNbdrWp1QWxNNea+nmIB4EVM28v0hmP17z7aG1+wAkNzVq4KeXTq3221ye5qTJP91JwA==}
+    engines: {node: '>=4.0'}
+    peerDependencies:
+      debug: '*'
+    peerDependenciesMeta:
+      debug:
+        optional: true
+    dependencies:
+      debug: 4.3.4
+    dev: true
 
   /for-each/0.3.3:
     resolution: {integrity: sha512-jqYfLp7mo9vIyQf8ykW2v7A+2N4QjeCeI5+Dz9XraiO1ign81wjiH7Fb9vSOWvQfNtmSa4H2RoQTrrXivdUZmw==}
@@ -5998,7 +6016,7 @@ packages:
       source-map: 0.6.1
       wordwrap: 1.0.0
     optionalDependencies:
-      uglify-js: 3.17.1
+      uglify-js: 3.17.4
     dev: true
 
   /har-schema/2.0.0:
@@ -9381,7 +9399,7 @@ packages:
     dependencies:
       command-exists: 1.2.9
       commander: 3.0.2
-      follow-redirects: 1.15.2
+      follow-redirects: 1.15.2_debug@4.3.4
       fs-extra: 0.30.0
       js-sha3: 0.8.0
       memorystream: 0.3.1
@@ -10258,8 +10276,8 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
-  /uglify-js/3.17.1:
-    resolution: {integrity: sha512-+juFBsLLw7AqMaqJ0GFvlsGZwdQfI2ooKQB39PSBgMnMakcFosi9O8jCwE+2/2nMNcc0z63r9mwjoDG8zr+q0Q==}
+  /uglify-js/3.17.4:
+    resolution: {integrity: sha512-T9q82TJI9e/C1TAxYvfb16xO120tMVFZrGA3f9/P4424DNu6ypK103y0GPFVa17yotwSyZW5iYXgjYHkGrJW/g==}
     engines: {node: '>=0.8.0'}
     hasBin: true
     requiresBuild: true
@@ -11520,8 +11538,8 @@ packages:
       ethereumjs-util: 6.2.1
     dev: false
 
-  github.com/superfluid-finance/metadata/edd18b65e170417d2abff336fc14b6683fcf5e94:
-    resolution: {tarball: https://codeload.github.com/superfluid-finance/metadata/tar.gz/edd18b65e170417d2abff336fc14b6683fcf5e94}
+  github.com/superfluid-finance/metadata/aa1f9158956355fa1224cdf973b2dc972f3e5703:
+    resolution: {tarball: https://codeload.github.com/superfluid-finance/metadata/tar.gz/aa1f9158956355fa1224cdf973b2dc972f3e5703}
     name: '@superfluid-finance/metadata'
     version: 1.1.0
     dev: false

@@ -11,7 +11,7 @@ import {IInstantDistributionAgreementV1} from "@superfluid-finance/ethereum-cont
 
 import {IDAv1Library} from "@superfluid-finance/ethereum-contracts/contracts/apps/IDAv1Library.sol";
 
-contract FontProject {
+contract FontProjectV2 {
   InterPlanetaryFontNFT private fontNFT = new InterPlanetaryFontNFT();
   // TODO : create instance of FontStream contract here
 
@@ -71,8 +71,7 @@ contract FontProject {
     uint256 mintLimit,
 
     uint256 launchDateTime,
-    uint256 createdAt,
-    uint256 updatedAt
+    uint256 createdAt
   );
 
   event UserCreated(
@@ -147,8 +146,6 @@ contract FontProject {
 
     currentIDAIndex = currentIDAIndex + 1;
 
-    ISuperfluidToken distributionToken = ISuperfluidToken(distributionSuperToken);
-
     // create font project struct
     FontProjectEntity memory font = FontProjectEntity(
         fontId,
@@ -156,7 +153,7 @@ contract FontProject {
         perCharacterMintPrice,
         metaDataCID,
         currentIDAIndex,
-        distributionToken,
+        ISuperfluidToken(distributionSuperToken),
         fontFilesCID,
         mintLimit,
         launchDateTime,
@@ -181,16 +178,19 @@ contract FontProject {
       TOTAL_DISTRIBUTION_UNITS
     );
 
+    emitFontProjectCreated(font);
+  }
+
+  function emitFontProjectCreated(FontProjectEntity memory font) internal {
     // emit FontProjectCreated event to aid in subgraph creation
     emit FontProjectCreated(
-      fontId,
-      metaDataCID,
-      msg.sender,
-      perCharacterMintPrice,
-      mintLimit,
-      launchDateTime,
-      createdAt,
-      createdAt
+      font.id,
+      font.metaDataCID,
+      font.creatorAddress,
+      font.perCharacterMintPrice,
+      font.mintLimit,
+      font.launchDateTime,
+      font.createdAt
     );
   }
 
