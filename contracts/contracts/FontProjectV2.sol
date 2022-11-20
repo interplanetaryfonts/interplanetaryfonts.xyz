@@ -200,16 +200,16 @@ contract FontProjectV2 {
 
   }
 
-  function addCollaborator(
+  function distributeFontProfit(bytes32 fontId) public {
+
+  }
+
+  function addFontStreamCollaborator(
     bytes32 fontProjectId, 
     address collaborator,
     string calldata deliverablesCID,
     bytes32 fontStreamId
   ) external {
-
-  }
-
-  function distributeFontProfit(bytes32 fontId) public {
 
   }
 }
