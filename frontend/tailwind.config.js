@@ -12,6 +12,7 @@ module.exports = {
         light: "#ffffdd",
         cyan: "#32f9e1",
         darkblue: "#020866",
+        lensLime: "#ABFE2C",
       },
     },
     container: {
@@ -31,4 +32,4 @@ module.exports = {
     extend: {},
   },
   plugins: [],
-}
+};

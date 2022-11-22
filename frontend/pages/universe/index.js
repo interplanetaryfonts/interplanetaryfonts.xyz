@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { client, exploreProfiles } from "../../api";
 //import Link from 'next/link'
 import MainContainer from "../../components/UI/MainContainer";
+import LensLogin from "../../components/Universe/LensLogin";
 import ProfileGallery from "../../components/Universe/ProfileGallery";
 
 export default function Home() {
@@ -58,6 +59,7 @@ export default function Home() {
   }
   return (
     <MainContainer>
+      <LensLogin></LensLogin>
       <ProfileGallery />
     </MainContainer>
   );

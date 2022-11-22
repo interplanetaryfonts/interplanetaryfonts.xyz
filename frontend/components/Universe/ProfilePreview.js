@@ -1,6 +1,7 @@
 import Link from "next/link";
 import MainContainer from "../UI/MainContainer";
-import Script from "next/script";
+
+import FollowButton from "./FollowButton";
 
 export default function ProfilePreview(props) {
   return (
@@ -44,9 +45,8 @@ export default function ProfilePreview(props) {
             {props.description}
           </p>
         </div>
-        <span id="lens-follow-small" data-handle={props.handle} />
+        <FollowButton id={props.id} handle={props.handle}></FollowButton>
       </div>
-      <Script async src="https://lens.xyz/widget.js" />
     </MainContainer>
   );
 }

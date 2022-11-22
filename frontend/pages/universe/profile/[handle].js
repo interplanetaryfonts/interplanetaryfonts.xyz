@@ -1,11 +1,11 @@
 // Components
 
 import MainContainer from "../../../components/UI/MainContainer";
-import Script from "next/script";
 /* pages/profile/[handle].js */
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { client, getPublications, getProfile } from "../../../api";
+import FollowButton from "../../../components/Universe/FollowButton";
 
 export default function Profile() {
   /* create initial state to hold user profile and array of publications */
@@ -20,7 +20,6 @@ export default function Profile() {
       fetchProfile();
     }
   }, [handle]);
-
   async function fetchProfile() {
     try {
       /* fetch the user profile using their handle */
@@ -75,7 +74,11 @@ export default function Profile() {
             <div className=" flex flex-col space-y-2 ">
               <p className="text-2xl text-left text-red">@{profile.handle}</p>
               <p className="text-l text-left text-red">{profile.name}</p>
-              <span id="lens-follow-small" data-handle="yourhandle" />
+              {/* <span id="lens-follow-small" data-handle={profile.handle} /> */}
+              <FollowButton
+                id={profile.id}
+                handle={profile.handle}
+              ></FollowButton>
             </div>
             {/* <p className="text-center text-xl font-bold mt-2 mb-2 w-1/2">
               {profile.bio}
@@ -96,12 +99,6 @@ export default function Profile() {
               </p>
             </div>
             <div className=" flex flex-col border-solid border-red border-4 px-5 py-2 ">
-              <p className="text-md text-center text-red">Posts</p>
-              <p className="text-sm text-center text-red">
-                {profile.stats.totalPosts}
-              </p>
-            </div>
-            <div className=" flex flex-col border-solid border-red border-4 px-5 py-2 ">
               <p className="text-md text-center text-red">Mirrors</p>
               <p className="text-sm text-center text-red">
                 {profile.stats.totalMirrors}
@@ -119,7 +116,6 @@ export default function Profile() {
           ))}
         </div>
       </div>
-      <Script src="https://lens.xyz/widget.js" />
     </MainContainer>
   );
 }
