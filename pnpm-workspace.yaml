@@ -1,3 +1,4 @@
 packages:
-  - contracts
-  - frontend
+    - contracts
+    - frontend
+    - backend
