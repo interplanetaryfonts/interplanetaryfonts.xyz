@@ -6,9 +6,9 @@ require("dotenv").config();
 module.exports = {
   solidity: "0.8.16",
   networks: {
-    // hardhat: {
-    //   blockGasLimit: 100000000
-    // },
+    hardhat: {
+      blockGasLimit: 100000000
+    },
     mumbai: {
       url: process.env.INFURA_RPC,
       accounts: [`0x${process.env.STAGING_PRIVATE_KEY}`],
