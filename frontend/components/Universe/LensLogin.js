@@ -49,13 +49,22 @@ export default function LensLogin() {
       /* if user authentication is successful, you will receive an accessToken and refreshToken */
       const {
         data: {
-          authenticate: { accessToken },
+          authenticate: { accessToken, refreshToken },
         },
       } = authData;
       console.log({ accessToken });
-      localStorage.setItem("accessToken", { accessToken });
-      console.log(localStorage.getItem("accessToken"));
+      console.log({ refreshToken });
+      console.log({ address });
       setToken(accessToken);
+      localStorage.setItem("TOKENTEMP", JSON.stringify({ accessToken }));
+      const tokenAccess = JSON.parse(window.localStorage.getItem("TOKENTEMP"));
+      localStorage.setItem("TOKEN", tokenAccess.accessToken);
+
+      localStorage.setItem("TOKENREFRE", JSON.stringify({ refreshToken }));
+      const tokenRefresh = JSON.parse(window.localStorage.getItem("TOKENREFRE"));
+      localStorage.setItem("TOKENREFRESH", tokenAccess.accessToken);
+
+
     } catch (err) {
       console.log("Error signing in: ", err);
     }
@@ -72,7 +81,7 @@ export default function LensLogin() {
         </div>
       )}
       {/* once the user has authenticated, show them a success message */}
-      {address && token && <h2>Successfully signed in!</h2>}
+      {address && token && <h2> Successfully signed in!</h2>}
     </div>
   );
 }

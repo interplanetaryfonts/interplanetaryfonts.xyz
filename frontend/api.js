@@ -1,10 +1,33 @@
-import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
+import {
+  ApolloClient,
+  InMemoryCache,
+  gql,
+  createHttpLink,
+} from "@apollo/client";
+import { setContext } from "@apollo/client/link/context";
 
 const API_URL = "https://api.lens.dev";
+
+const authLink = setContext((_, { headers }) => {
+  const token = window.localStorage.getItem("TOKEN");
+  const tokenRepresh = window.localStorage.getItem("TOKENREFRESH");
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : "",
+      "refresh-token": `${tokenRepresh}`,
+    },
+  };
+});
+
+const httpLink = createHttpLink({
+  uri: API_URL,
+});
 
 /* create the API client */
 export const client = new ApolloClient({
   uri: API_URL,
+  link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
 });
 
@@ -228,3 +251,16 @@ export const authenticate = gql`
     }
   }
 `;
+
+/* export const refreshToken = gql`
+  mutation Refresh($refreshToken!) {
+    refresh(
+      request: {
+        refreshToken: {refreshToken}
+      }
+    ) {
+      accessToken
+      refreshToken
+    }
+  }
+`; */

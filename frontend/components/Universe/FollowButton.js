@@ -23,8 +23,7 @@ export default function FollowButton(props) {
       onClick={followUser}
       type="button"
       className="inline-flex items-center px-4 py-1 border border-transparent text-sm text-center justify-center  font-medium rounded-md shadow-sm text-white bg-green-500 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 w-10/12 self-center mb-5"
-    >
-      Follow
-    </button>
+      children={props.isFollowedByMe ? "Following" : "Follow"}
+    ></button>
   );
 }

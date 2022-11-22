@@ -1,6 +1,5 @@
 import Link from "next/link";
 import MainContainer from "../UI/MainContainer";
-
 import FollowButton from "./FollowButton";
 
 export default function ProfilePreview(props) {
@@ -25,19 +24,19 @@ export default function ProfilePreview(props) {
         <div className="container mt-12 flex flex-col items-center  justify-items-center max-w-xs gap-1 ">
           <Link href={props.url}>
             <p className="text-darkblue text-2xl text-left font-black cursor-pointer hover:text-red">
-              {props.handle}
+              @{props.handle}
             </p>
           </Link>
           <Link href={props.url}>
-            <p className="text-darkbluetext-left text-sm font-light cursor-pointer hover:text-red">
+            <p className="text-darkblue text-left text-sm font-light cursor-pointer hover:text-red">
               {props.profileName}
             </p>
           </Link>
-          <Link href={props.website}>
+          {/*   <Link href={props.website}>
             <p className="text-red text-left text-sm font-light cursor-pointer hover:text-darkblue">
               {props.website}
             </p>
-          </Link>
+          </Link> */}
           <p className="text-darkbluetext-left text-sm font-light px-10 py-4">
             Following: {props.following} | Followers: {props.followers}
           </p>
@@ -45,7 +44,14 @@ export default function ProfilePreview(props) {
             {props.description}
           </p>
         </div>
-        <FollowButton id={props.id} handle={props.handle}></FollowButton>
+        <Link href={props.url}>
+          <button
+            type="button"
+            className="inline-flex items-center px-4 py-1 border border-transparent text-sm text-center justify-center  font-medium rounded-md shadow-sm text-white bg-green-500 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 w-10/12 self-center mb-5"
+          >
+            {props.handle}
+          </button>
+        </Link>
       </div>
     </MainContainer>
   );

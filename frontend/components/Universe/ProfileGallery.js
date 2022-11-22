@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { client, exploreProfiles } from "../../api";
-
 import ProfilePreview from "./ProfilePreview";
 
 // const dummyProfiles = [
@@ -165,6 +164,7 @@ export default function ProfileGallery(props) {
         <ProfilePreview
           key={profile.id}
           handle={profile.handle}
+          isFollowedByMe={profile.isFollowedByMe}
           id={profile.id}
           followers={profile.stats.totalFollowers}
           following={profile.stats.totalFollowing}

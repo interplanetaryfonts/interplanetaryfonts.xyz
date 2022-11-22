@@ -72,12 +72,15 @@ export default function Profile() {
               src={profile.avatarUrl}
             />
             <div className=" flex flex-col space-y-2 ">
-              <p className="text-2xl text-left text-red">@{profile.handle}</p>
+              <p className="text-2xl text-left text-red font-black ">
+                @{profile.handle}
+              </p>
               <p className="text-l text-left text-red">{profile.name}</p>
               {/* <span id="lens-follow-small" data-handle={profile.handle} /> */}
               <FollowButton
                 id={profile.id}
                 handle={profile.handle}
+                isFollowedByMe={profile.isFollowedByMe}
               ></FollowButton>
             </div>
             {/* <p className="text-center text-xl font-bold mt-2 mb-2 w-1/2">
