@@ -1,9 +1,7 @@
 // Components
-import Button from "../../../components/UI/Button";
-import ProfilePage from "../../../components/Universe/ProfilePage";
-import ProfilePreview from "../../../components/Universe/ProfilePreview";
-import MainContainer from "../../../components/UI/MainContainer";
 
+import MainContainer from "../../../components/UI/MainContainer";
+import Script from "next/script";
 /* pages/profile/[handle].js */
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
@@ -77,7 +75,7 @@ export default function Profile() {
             <div className=" flex flex-col space-y-2 ">
               <p className="text-2xl text-left text-red">@{profile.handle}</p>
               <p className="text-l text-left text-red">{profile.name}</p>
-              <Button>Follow</Button>
+              <span id="lens-follow-small" data-handle="yourhandle" />
             </div>
             {/* <p className="text-center text-xl font-bold mt-2 mb-2 w-1/2">
               {profile.bio}
@@ -121,6 +119,7 @@ export default function Profile() {
           ))}
         </div>
       </div>
+      <Script src="https://lens.xyz/widget.js" />
     </MainContainer>
   );
 }

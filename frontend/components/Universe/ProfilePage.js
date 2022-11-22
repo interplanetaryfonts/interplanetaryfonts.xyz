@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Button from "../UI/Button";
+
 
 export default function ProfilePage(props) {
   return (
@@ -13,7 +13,7 @@ export default function ProfilePage(props) {
           <div className=" flex flex-col space-y-2 ">
             <p className="text-2xl text-left text-red">@{props.handle}</p>
             <p className="text-l text-left text-red">{props.name}</p>
-            <Button>Follow</Button>
+            <span id="lens-follow-small" data-handle={props.handle} />
           </div>
           {/* <p className="text-center text-xl font-bold mt-2 mb-2 w-1/2">
           {props.bio}
