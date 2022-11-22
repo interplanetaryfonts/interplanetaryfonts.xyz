@@ -6,7 +6,8 @@
   "scripts": {
     "compile": "npx hardhat compile",
     "deploy": "npx hardhat run scripts/deploy.js --network mumbai",
-    "test": "node scripts/run.js",
+    "integration-test": "node scripts/run.js",
+    "test": "npx hardhat test --network hardhat",
     "verify": "npx hardhat run scripts/verify.js --network mumbai"
   },
   "repository": {
@@ -43,8 +44,8 @@
   },
   "dependencies": {
     "@openzeppelin/contracts": "^4.7.3",
-    "@superfluid-finance/ethereum-contracts": "^1.4.0",
-    "@superfluid-finance/sdk-core": "^0.5.6",
+    "@superfluid-finance/ethereum-contracts": "^1.4.3",
+    "@superfluid-finance/sdk-core": "^0.5.8",
     "dotenv": "^16.0.2",
     "graphql": "^16.6.0"
   }
