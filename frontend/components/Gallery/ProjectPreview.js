@@ -3,7 +3,7 @@ import Link from 'next/link';
 export default function ProjectPreview(props) {
   return (
     <div className='max-w-sm min-w-fit container flex  flex-col border-2 border-solid border-red rounded'>
-      <div className='container flex flex-row items-center p-4 h-8 bg-red'>
+      <div className='container flex flex-row items-center p-4 h-8'>
         {' '}
         <a href='https://lenster.xyz/' target='blank'>
           <svg
