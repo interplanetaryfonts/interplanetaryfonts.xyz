@@ -16,11 +16,10 @@ async function main() {
   });
 
 
-  const fontProjectFactory = await hre.ethers.getContractFactory("FontProject");
+  const fontProjectFactory = await hre.ethers.getContractFactory("FontProjectV2");
   const fontProjectContract = await fontProjectFactory.deploy(
     sf.settings.config.hostAddress,
-    sf.settings.config.idaV1Address,
-    process.env.MATICX_MUMBAI_CONTRACT
+    sf.settings.config.idaV1Address
   );
 
   await fontProjectContract.deployed();

@@ -22,8 +22,7 @@ async function main() {
     address: process.env.CONTRACT_ADDRESS,
     constructorArguments: [
       sf.settings.config.hostAddress,
-      sf.settings.config.idaV1Address,
-      process.env.MATICX_MUMBAI_CONTRACT
+      sf.settings.config.idaV1Address
     ],
   });
 }
