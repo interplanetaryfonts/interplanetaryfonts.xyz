@@ -1,6 +1,5 @@
-import { useEffect, useState } from 'react'
-import { client, exploreProfiles } from '../../api'
-
+import { useEffect, useState } from "react";
+import { client, exploreProfiles } from "../../api";
 import ProfilePreview from "./ProfilePreview";
 
 // const dummyProfiles = [
@@ -109,60 +108,74 @@ import ProfilePreview from "./ProfilePreview";
 export default function ProfileGallery(props) {
   //const [profiles] = useState(dummyProfiles);
   /* create initial state to hold array of profiles */
-  const [profiles, setProfiles] = useState([])
+  const [profiles, setProfiles] = useState([]);
   useEffect(() => {
-    fetchProfiles()
-  }, [])
+    fetchProfiles();
+  }, []);
   async function fetchProfiles() {
     try {
       /* fetch profiles from Lens API */
-      let response = await client.query({ query: exploreProfiles })
+      let response = await client.query({ query: exploreProfiles });
       /* loop over profiles, create properly formatted ipfs image links */
-      let profileData = await Promise.all(response.data.exploreProfiles.items.map(async profileInfo => {
-        let profile = { ...profileInfo }
-        let picture = profile.picture
-        if (picture && picture.original && picture.original.url) {
-          if (picture.original.url.startsWith('ipfs://')) {
-            let result = picture.original.url.substring(7, picture.original.url.length)
-            profile.avatarUrl = `http://lens.infura-ipfs.io/ipfs/${result}`
-          } else {
-            profile.avatarUrl = picture.original.url
+      let profileData = await Promise.all(
+        response.data.exploreProfiles.items.map(async (profileInfo) => {
+          let profile = { ...profileInfo };
+          let picture = profile.picture;
+          if (picture && picture.original && picture.original.url) {
+            if (picture.original.url.startsWith("ipfs://")) {
+              let result = picture.original.url.substring(
+                7,
+                picture.original.url.length
+              );
+              profile.avatarUrl = `http://lens.infura-ipfs.io/ipfs/${result}`;
+            } else {
+              profile.avatarUrl = picture.original.url;
+            }
           }
-        }
-        let coverPicture = profile.coverPicture
-        if (coverPicture && coverPicture.original && coverPicture.original.url) {
-          if (coverPicture.original.url.startsWith('ipfs://')) {
-            let result = coverPicture.original.url.substring(7, coverPicture.original.url.length)
-            profile.bgUrl = 'https://lens.infura-ipfs.io/ipfs/${result}'
-          } else {
-            profile.bgUrl = coverPicture.original.url
+          let coverPicture = profile.coverPicture;
+          if (
+            coverPicture &&
+            coverPicture.original &&
+            coverPicture.original.url
+          ) {
+            if (coverPicture.original.url.startsWith("ipfs://")) {
+              let result = coverPicture.original.url.substring(
+                7,
+                coverPicture.original.url.length
+              );
+              profile.bgUrl = "https://lens.infura-ipfs.io/ipfs/${result}";
+            } else {
+              profile.bgUrl = coverPicture.original.url;
+            }
           }
-        }
-        return profile
-      }))
+          return profile;
+        })
+      );
 
       /* update the local state with the profiles array */
-      setProfiles(profileData)
+      setProfiles(profileData);
     } catch (err) {
-      console.log({ err })
+      console.log({ err });
     }
   }
   return (
-      <div className="container sm:grid sm:grid-cols-2 sm:gap-x-6 sm:gap-y-12 sm:space-y-0 md:grid-cols-3 md:gap-x-8 lg:grid-cols-4">
-      {profiles.map(profile => (
-            <ProfilePreview
-            key={profile.id}
-            handle={profile.handle}
-            followers={profile.stats.totalFollowers}
-            following={profile.stats.totalFollowing}
-            profileName={profile.name}
-            description={profile.bio}
-            avatar={profile.avatarUrl || 'https://picsum.photos/200'}
-            website={`universe/profile/${profile.handle}`}
-            backGroundImage={profile.bgUrl || 'https://picsum.photos/200'}
-            url={`universe/profile/${profile.handle}`}
-          />
-          ))}
+    <div className="container sm:grid sm:grid-cols-2 sm:gap-x-6 sm:gap-y-12 sm:space-y-0 md:grid-cols-3 md:gap-x-8 lg:grid-cols-4">
+      {profiles.map((profile) => (
+        <ProfilePreview
+          key={profile.id}
+          handle={profile.handle}
+          isFollowedByMe={profile.isFollowedByMe}
+          id={profile.id}
+          followers={profile.stats.totalFollowers}
+          following={profile.stats.totalFollowing}
+          profileName={profile.name}
+          description={profile.bio}
+          avatar={profile.avatarUrl || "https://picsum.photos/200"}
+          website={`universe/profile/${profile.handle}`}
+          backGroundImage={profile.bgUrl || "https://picsum.photos/200"}
+          url={`universe/profile/${profile.handle}`}
+        />
+      ))}
     </div>
   );
 }

@@ -1,10 +1,33 @@
-import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
+import {
+  ApolloClient,
+  InMemoryCache,
+  gql,
+  createHttpLink,
+} from "@apollo/client";
+import { setContext } from "@apollo/client/link/context";
 
 const API_URL = "https://api.lens.dev";
+
+const authLink = setContext((_, { headers }) => {
+  const token = window.localStorage.getItem("TOKEN");
+  const tokenRepresh = window.localStorage.getItem("TOKENREFRESH");
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : "",
+      "refresh-token": `${tokenRepresh}`,
+    },
+  };
+});
+
+const httpLink = createHttpLink({
+  uri: API_URL,
+});
 
 /* create the API client */
 export const client = new ApolloClient({
   uri: API_URL,
+  link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
 });
 
@@ -105,6 +128,7 @@ export const exploreProfiles = gql`
 export const getProfile = gql`
   query Profile($handle: Handle!) {
     profile(request: { handle: $handle }) {
+      isFollowedByMe
       id
       name
       bio
@@ -210,3 +234,33 @@ export const getPublications = gql`
     content
   }
 `;
+
+export const challenge = gql`
+  query Challenge($address: EthereumAddress!) {
+    challenge(request: { address: $address }) {
+      text
+    }
+  }
+`;
+
+export const authenticate = gql`
+  mutation Authenticate($address: EthereumAddress!, $signature: Signature!) {
+    authenticate(request: { address: $address, signature: $signature }) {
+      accessToken
+      refreshToken
+    }
+  }
+`;
+
+/* export const refreshToken = gql`
+  mutation Refresh($refreshToken!) {
+    refresh(
+      request: {
+        refreshToken: {refreshToken}
+      }
+    ) {
+      accessToken
+      refreshToken
+    }
+  }
+`; */
