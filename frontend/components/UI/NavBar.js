@@ -67,7 +67,7 @@ export default function NavBar(props) {
             className='text-md w-72 border-2 px-4 py-2 border-darkblue rounded-full border-dashed text-darkblue-100 placeholder-darkblue hover:border-solid  hover:border-darkblue  focus:border-darkblue  focus:border-solid focus:outline-none'
             placeholder='Search Fonts in the Universe'
       ></input>*/}
-                    <Link href='universe'>Universe</Link>
+                    <Link href='../../universe'>Universe</Link>
                 </div>
                 {/* <ConnectButton 
             user={props.user}
