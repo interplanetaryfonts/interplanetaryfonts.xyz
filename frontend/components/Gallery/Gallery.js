@@ -90,7 +90,7 @@ const GET_FONTS = gql`
     }
 `;
 
-export default function Gallery() {
+export default function Gallery(props) {
     const [projects] = useState(dummyProjects);
 
     const { loading, error, data } = useQuery(GET_FONTS);
@@ -110,6 +110,8 @@ export default function Gallery() {
                         authorurl={project.author.url}
                         projectImage={project.projectImage}
                         url={project.url}
+                        token={props.token}
+                        address={props.address}
                     />
                 );
             })}

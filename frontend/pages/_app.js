@@ -142,11 +142,12 @@ export default function MyApp({ Component, pageProps }) {
         const localToken = window.localStorage.getItem('lens-auth-token');
         if (localToken) {
             setToken(localToken);
+            console.log(token);
         }
-    }, [token]);
+    }, []);
     async function handleLensLogin(token) {
         setToken(token);
-        window.localStorage.setItem('lens-auth-token', `${token}`);
+        window.localStorage.setItem('lens-auth-token', token);
     }
     async function handleLensLogout() {
         setToken('');

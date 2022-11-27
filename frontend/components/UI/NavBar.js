@@ -40,7 +40,6 @@ export default function NavBar(props) {
                     authenticate: { accessToken },
                 },
             } = authData;
-            console.log({ accessToken });
             props.handleLensLogin(accessToken);
         } catch (err) {
             window.localStorage.removeItem('lens-auth-token');
