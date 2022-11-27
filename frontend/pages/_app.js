@@ -129,19 +129,28 @@ export default function MyApp({ Component, pageProps }) {
     const [font] = useState(fakeFont),
         [user] = useState(fakeUser),
         [connected, setConnected] = useState(true),
+        [address, setAddress] = useState(),
         [token, setToken] = useState();
 
-    const handleConnected = bool => {
+    const handleConnected = (bool, currentAddress) => {
         setConnected(bool);
+        setAddress(currentAddress);
     };
 
     // Lens connection
     useEffect(() => {
-        setToken(window.localStorage.getItem('lens-auth-token'));
+        const localToken = window.localStorage.getItem('lens-auth-token');
+        if (localToken) {
+            setToken(localToken);
+        }
     }, [token]);
     async function handleLensLogin(token) {
         setToken(token);
-        window.localStorage.setItem('lens-auth-token', `Bearer ${token}`);
+        window.localStorage.setItem('lens-auth-token', `${token}`);
+    }
+    async function handleLensLogout() {
+        setToken('');
+        window.localStorage.removeItem('lens-auth-token');
     }
 
     return (
@@ -162,6 +171,7 @@ export default function MyApp({ Component, pageProps }) {
                         <NavBar
                             handleConnected={handleConnected}
                             handleLensLogin={handleLensLogin}
+                            handleLensLogout={handleLensLogout}
                             token={token}
                         />
                         <Component
@@ -169,6 +179,8 @@ export default function MyApp({ Component, pageProps }) {
                             font={font}
                             user={user}
                             connected={connected}
+                            token={token}
+                            address={address}
                         />
                     </MainContainer>
                 </ApolloProvider>

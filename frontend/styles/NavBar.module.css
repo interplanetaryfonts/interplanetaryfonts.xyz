@@ -71,6 +71,18 @@
     display: none;
 }
 
+.nav-link {
+    font-style: normal;
+    font-size: 1.5rem;
+    transition: all 0.5s ease;
+}
+
+.nav-link-active {
+    color: var(--darkblue);
+    font-weight: 700;
+    transition: all 0.5s ease;
+}
+
 @media (hover) {
     .connected-container button:hover {
         color: var(--red);

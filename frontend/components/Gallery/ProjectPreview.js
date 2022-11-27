@@ -1,20 +1,21 @@
 import Link from 'next/link';
 // Lens Mirror
 import { client as lensClient, mirror } from '../../api';
-console.log(mirror);
 
 export default function ProjectPreview(props) {
     async function mirrorPost() {
+        console.log(mirror);
         console.log('Mirrored');
+        console.log(lensClient);
     }
 
     return (
-        <div className='max-w-sm min-w-fit container flex  flex-col border-2 border-solid border-red rounded'>
+        <div className='max-w-sm min-w-fit container flex flex-col border-2 border-solid border-red rounded'>
             <div className='container flex flex-row items-center p-4 h-8'>
                 {' '}
                 <button onClick={mirrorPost}>
                     <svg
-                        className='h-5   fill-yellow  hover:fill-darkblue'
+                        className='h-5 fill-yellow hover:fill-darkblue'
                         xmlns='http://www.w3.org/2000/svg'
                         viewBox='0 0 576 512'
                     >
@@ -24,11 +25,11 @@ export default function ProjectPreview(props) {
             </div>
             <Link href={props.url}>
                 <div
-                    className='h-80 border-2 border-solid border-red bg-white bg-cover bg-center cursor-pointer'
+                    className='h-80 border-t-[2px] border-b-[2px] border-solid border-red bg-white bg-cover bg-center cursor-pointer'
                     style={{ backgroundImage: `url("${props.projectImage}")` }}
                 ></div>
             </Link>
-            <div className=' container flex flex-row items-center bg-white p-4  border-2 border-solid border-red'>
+            <div className=' container flex flex-row items-center bg-white p-4'>
                 <Link href={props.authorurl}>
                     <div
                         className='border-r-2 border-2 border-solid border-transparent h-14 w-16 rounded-full mr mr-4 bg-slate-600 bg-contain bg-center hover:border-2 hover:border-solid hover:border-yellow  cursor-pointer box-content'

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import logo from '../../public/logoHeader.svg';
 import classes from '../../styles/NavBar.module.css';
 import Button from '../UI/Button';
@@ -9,6 +10,7 @@ import { client as lensClient, challenge, authenticate } from '../../api';
 import { ethers } from 'ethers';
 
 export default function NavBar(props) {
+    const router = useRouter();
     const [navbarOpen, setNavbarOpen] = useState(false);
 
     const handleHamburgerMenu = () => {
@@ -41,6 +43,7 @@ export default function NavBar(props) {
             console.log({ accessToken });
             props.handleLensLogin(accessToken);
         } catch (err) {
+            window.localStorage.removeItem('lens-auth-token');
             console.log('Error signing in: ', err);
         }
     }
@@ -76,7 +79,17 @@ export default function NavBar(props) {
                 }`}
             >
                 <div className='flex flex-wrap items-center'>
-                    <Link href='../../universe'>Universe</Link>
+                    <Link href='/universe' passHref legacyBehavior>
+                        <a
+                            className={`${classes['nav-link']} ${
+                                router.pathname === '/universe'
+                                    ? classes['nav-link-active']
+                                    : ''
+                            }`}
+                        >
+                            FontsUniverse
+                        </a>
+                    </Link>
                 </div>
                 <ConnectButton.Custom>
                     {({
@@ -99,7 +112,11 @@ export default function NavBar(props) {
                             (!authenticationStatus ||
                                 authenticationStatus === 'authenticated');
                         useEffect(() => {
-                            props.handleConnected(connected ? true : false);
+                            props.handleConnected(
+                                ...(connected
+                                    ? [true, account.address]
+                                    : [false, ''])
+                            );
                         }, [connected]);
                         return (
                             <div
@@ -175,16 +192,18 @@ export default function NavBar(props) {
                                                                 '2px solid var(--red)',
                                                         }}
                                                     >
-                                                        Profile
+                                                        Dashboard
                                                     </button>
                                                 </Link>
 
                                                 {props.token ? (
-                                                    <Link href={`/universe`}>
-                                                        <button>
-                                                            Universe Profile
-                                                        </button>
-                                                    </Link>
+                                                    <button
+                                                        onClick={
+                                                            props.handleLensLogout
+                                                        }
+                                                    >
+                                                        Disconnect Lens
+                                                    </button>
                                                 ) : (
                                                     <button
                                                         onClick={() =>
@@ -193,7 +212,7 @@ export default function NavBar(props) {
                                                             )
                                                         }
                                                     >
-                                                        Lens Login
+                                                        Connect Lens
                                                     </button>
                                                 )}
                                             </div>

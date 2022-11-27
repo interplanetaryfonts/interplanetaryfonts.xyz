@@ -11,7 +11,7 @@ const authLink = setContext((_, { headers }) => {
     return {
         headers: {
             ...headers,
-            authorization: token ? `Bearer ${token}` : '',
+            authorization: token ? `${token}` : '',
         },
     };
 });
@@ -36,9 +36,24 @@ export const challenge = gql`
     }
 `;
 
+export const verify = gql`
+    query Query($address: EthereumAddress!) {
+        verify(request: { address: $address, signature: $signature })
+    }
+`;
+
 export const authenticate = gql`
     mutation Authenticate($address: EthereumAddress!, $signature: Signature!) {
         authenticate(request: { address: $address, signature: $signature }) {
+            accessToken
+            refreshToken
+        }
+    }
+`;
+
+export const refreshAuth = gql`
+    mutation Refresh($address: EthereumAddress!, $signature: Signature!) {
+        refresh(request: { address: $address, signature: $signature }) {
             accessToken
             refreshToken
         }
