@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+// Global imports
+import { useEffect, useState } from 'react';
 import '../styles/reset.css';
 import '../styles/globals.css';
 
@@ -29,14 +30,13 @@ const wagmiClient = createClient({
     provider,
 });
 
-// Apollo client
-import { ApolloProvider, gql } from '@apollo/client';
-import client from '../apollo-client';
+// InterplanetaryFonts GraphQL
+import { ApolloProvider } from '@apollo/client';
+import { client as ipfontsClient } from '../apollo-client';
 
 // Components
 import NavBar from '../components/UI/NavBar';
 import MainContainer from '../components/UI/MainContainer';
-import Notification from '../components/UI/Notification';
 
 // Dummy Data
 const fakeUser = {
@@ -129,21 +129,20 @@ export default function MyApp({ Component, pageProps }) {
     const [font] = useState(fakeFont),
         [user] = useState(fakeUser),
         [connected, setConnected] = useState(true),
-        [cNotification, setCNotification] = useState(0);
+        [token, setToken] = useState();
 
     const handleConnected = bool => {
         setConnected(bool);
     };
 
+    // Lens connection
     useEffect(() => {
-        const pushNotification = setInterval(() => {
-            setCNotification(
-                prevNotifications =>
-                    prevNotifications + Math.trunc(Math.random() * 5)
-            );
-        }, 20000);
-        return () => clearInterval(pushNotification);
-    }, [cNotification]);
+        setToken(window.localStorage.getItem('lens-auth-token'));
+    }, [token]);
+    async function handleLensLogin(token) {
+        setToken(token);
+        window.localStorage.setItem('lens-auth-token', `Bearer ${token}`);
+    }
 
     return (
         <WagmiConfig client={wagmiClient}>
@@ -158,24 +157,19 @@ export default function MyApp({ Component, pageProps }) {
                 })}
                 modalSize='compact'
             >
-                <ApolloProvider client={client} >
+                <ApolloProvider client={ipfontsClient}>
                     <MainContainer>
-                        <NavBar handleConnected={handleConnected} />
+                        <NavBar
+                            handleConnected={handleConnected}
+                            handleLensLogin={handleLensLogin}
+                            token={token}
+                        />
                         <Component
                             {...pageProps}
                             font={font}
                             user={user}
                             connected={connected}
                         />
-                        {connected ? (
-                            <Notification
-                                message={`You have ${cNotification} EPNS notification${
-                                    cNotification <= 1 ? '' : 's'
-                                }`}
-                            />
-                        ) : (
-                            ''
-                        )}
                     </MainContainer>
                 </ApolloProvider>
             </RainbowKitProvider>

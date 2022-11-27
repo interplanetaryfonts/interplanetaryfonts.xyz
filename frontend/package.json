@@ -17,6 +17,7 @@
         "@babel/preset-env": "^7.1.6",
         "@rainbow-me/rainbowkit": "^0.4.8",
         "@typescript-eslint/parser": "^4.0.0",
+        "@walletconnect/encoding": "^1.0.2",
         "apollo-client": "^2.6.10",
         "ethers": "^5.7.2",
         "graphql": "^15.8.0",

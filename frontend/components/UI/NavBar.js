@@ -4,32 +4,46 @@ import Image from 'next/image';
 import logo from '../../public/logoHeader.svg';
 import classes from '../../styles/NavBar.module.css';
 import Button from '../UI/Button';
-/*
-Fake data only
-import ConnectButton from './ConnectButton';
-import ConnectedMenu from './ConnectedMenu';
-*/
 import { ConnectButton } from '@rainbow-me/rainbowkit';
+import { client as lensClient, challenge, authenticate } from '../../api';
+import { ethers } from 'ethers';
 
 export default function NavBar(props) {
-    // use props when not wallet connect
     const [navbarOpen, setNavbarOpen] = useState(false);
-    /*
-  //When fake data is used
-  const [menu, setMenu] = useState(false);
-  // Event handlers
-  const handleConnectedMenu = () => {
-      if (props.connected) {
-        setMenu(pastMenu => !pastMenu);
-      } else {
-        props.connect();
-      }
-    };
-  */
 
     const handleHamburgerMenu = () => {
         setNavbarOpen(!navbarOpen);
     };
+
+    async function lensLogin(lensaddress) {
+        try {
+            const challengeInfo = await lensClient.query({
+                query: challenge,
+                variables: { address: lensaddress },
+            });
+            const provider = new ethers.providers.Web3Provider(window.ethereum);
+            const signer = provider.getSigner();
+            const signature = await signer.signMessage(
+                challengeInfo.data.challenge.text
+            );
+            const authData = await lensClient.mutate({
+                mutation: authenticate,
+                variables: {
+                    address: lensaddress,
+                    signature: signature,
+                },
+            });
+            const {
+                data: {
+                    authenticate: { accessToken },
+                },
+            } = authData;
+            console.log({ accessToken });
+            props.handleLensLogin(accessToken);
+        } catch (err) {
+            console.log('Error signing in: ', err);
+        }
+    }
 
     return (
         <nav className={classes.nav}>
@@ -62,25 +76,8 @@ export default function NavBar(props) {
                 }`}
             >
                 <div className='flex flex-wrap items-center'>
-                    {/*<input
-            type='text'
-            className='text-md w-72 border-2 px-4 py-2 border-darkblue rounded-full border-dashed text-darkblue-100 placeholder-darkblue hover:border-solid  hover:border-darkblue  focus:border-darkblue  focus:border-solid focus:outline-none'
-            placeholder='Search Fonts in the Universe'
-      ></input>*/}
                     <Link href='../../universe'>Universe</Link>
                 </div>
-                {/* <ConnectButton 
-            user={props.user}
-            connected={props.connected}
-            buttonText={props.buttonText}
-            onClick={handleConnectedMenu}
-          />
-          { props.connected && (
-            <ConnectedMenu
-              menu={menu}
-              user={props.user}
-              handleDisconnect={handleDisconnect}
-            /> */}
                 <ConnectButton.Custom>
                     {({
                         account,
@@ -167,33 +164,38 @@ export default function NavBar(props) {
                                                     onClick={openChainModal}
                                                     type='button'
                                                 >
-                                                    {/*{chain.hasIcon && (
-                            <div
-                              style={{
-                                background: chain.iconBackground,
-                                width: 12,
-                                height: 12,
-                                borderRadius: 999,
-                                overflow: 'hidden',
-                                marginRight: 4,
-                              }}
-                            >
-                              {chain.iconUrl && (
-                                <img
-                                  alt={chain.name ?? 'Chain icon'}
-                                  src={chain.iconUrl}
-                                  style={{ width: 12, height: 12 }}
-                                />
-                              )}
-                            </div>
-                          )}*/}
                                                     {chain.name}
                                                 </button>
                                                 <Link
                                                     href={`/user/${account.address}`}
                                                 >
-                                                    <button>Profile</button>
+                                                    <button
+                                                        style={{
+                                                            borderRight:
+                                                                '2px solid var(--red)',
+                                                        }}
+                                                    >
+                                                        Profile
+                                                    </button>
                                                 </Link>
+
+                                                {props.token ? (
+                                                    <Link href={`/universe`}>
+                                                        <button>
+                                                            Universe Profile
+                                                        </button>
+                                                    </Link>
+                                                ) : (
+                                                    <button
+                                                        onClick={() =>
+                                                            lensLogin(
+                                                                account.address
+                                                            )
+                                                        }
+                                                    >
+                                                        Lens Login
+                                                    </button>
+                                                )}
                                             </div>
                                         </div>
                                     );
