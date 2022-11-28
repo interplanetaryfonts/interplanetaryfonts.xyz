@@ -16,7 +16,7 @@ const authLink = setContext((_, { headers }) => {
     };
 });
 
-const API_URL = 'https://api.lens.dev';
+const API_URL = 'https://api-mumbai.lens.dev/';
 
 const httpLink = createHttpLink({
     uri: API_URL,
@@ -51,9 +51,9 @@ export const authenticate = gql`
     }
 `;
 
-export const refreshAuth = gql`
-    mutation Refresh($address: EthereumAddress!, $signature: Signature!) {
-        refresh(request: { address: $address, signature: $signature }) {
+export const refresh = gql`
+    mutation Refresh($refreshToken: Jwt!) {
+        refresh(request: { refreshToken: $refreshToken }) {
             accessToken
             refreshToken
         }

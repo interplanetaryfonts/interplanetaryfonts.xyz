@@ -34,6 +34,9 @@ const wagmiClient = createClient({
 import { ApolloProvider } from '@apollo/client';
 import { client as ipfontsClient } from '../apollo-client';
 
+// Lens API
+import { client as lensClient, refresh } from '../api';
+
 // Components
 import NavBar from '../components/UI/NavBar';
 import MainContainer from '../components/UI/MainContainer';
@@ -138,20 +141,39 @@ export default function MyApp({ Component, pageProps }) {
     };
 
     // Lens connection
+    async function refreshTkn(prevRefreshToken) {
+        try {
+            const refresher = await lensClient.mutate({
+                mutation: refresh,
+                variables: { refreshToken: prevRefreshToken },
+            });
+            const { accessToken, refreshToken } = refresher.data.refresh;
+            handleLensLogin(accessToken, refreshToken);
+        } catch (err) {
+            console.log("Couldn't refresh! ", err);
+        }
+    }
+
     useEffect(() => {
-        const localToken = window.localStorage.getItem('lens-auth-token');
+        const lclStrorage = window.localStorage;
+        const localToken = lclStrorage.getItem('lens-auth-token');
         if (localToken) {
+            const localRefreshToken = lclStrorage.getItem('lens-refresh-token');
+            if (localRefreshToken) refreshTkn(localRefreshToken);
             setToken(localToken);
-            console.log(token);
         }
     }, []);
-    async function handleLensLogin(token) {
+
+    async function handleLensLogin(token, refresh) {
         setToken(token);
         window.localStorage.setItem('lens-auth-token', token);
+        window.localStorage.setItem('lens-refresh-token', refresh);
     }
+
     async function handleLensLogout() {
         setToken('');
         window.localStorage.removeItem('lens-auth-token');
+        window.localStorage.removeItem('lens-refresh-token');
     }
 
     return (

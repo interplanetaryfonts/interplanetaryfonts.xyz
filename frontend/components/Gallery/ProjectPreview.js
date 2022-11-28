@@ -1,16 +1,31 @@
-import ABI from '../../abi.json';
-import { ethers } from 'ethers';
 import Link from 'next/link';
-const lensContract = '0x60Ae865ee4C725cd04353b5AAb364553f56ceF82';
+// Lens Mirror
+import { client as lensClient, getProfileId, mirror } from '../../api';
 
 export default function ProjectPreview(props) {
     async function mirrorPost() {
-        const provider = new ethers.providers.Web3Provider(window.ethereum),
-            signer = provider.getSigner(),
-            contract = new ethers.Contract(lensContract, ABI, signer);
         try {
-            console.log(contract);
-            const tx = await contract.mirror([props.address]);
+            const addressId = await lensClient.query({
+                query: getProfileId,
+                variables: {
+                    owner: [props.address],
+                },
+            });
+            console.log(addressId.data.profiles.items);
+            const profId = addressId.data.profiles.items[0];
+            if (profId) {
+                const result = await lensClient.mutate({
+                    mutation: mirror,
+                    variables: {
+                        id: profId,
+                    },
+                });
+                console.log(result);
+                console.log('Mirrored');
+                return result.data.createMirrorTypedData;
+            } else {
+                window.alert('You need a profile');
+            }
         } catch (err) {
             console.log('Error mirroring post: ', err);
         }
