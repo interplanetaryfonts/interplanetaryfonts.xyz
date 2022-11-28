@@ -61,6 +61,7 @@ export const refreshAuth = gql`
 `;
 
 // Lens data queries
+
 export const exploreProfiles = gql`
     query ExploreProfiles {
         exploreProfiles(request: { sortCriteria: MOST_FOLLOWERS }) {
@@ -235,6 +236,16 @@ export const getProfile = gql`
                 ... on RevertFollowModuleSettings {
                     type
                 }
+            }
+        }
+    }
+`;
+
+export const getProfileId = gql`
+    query Profiles($owner: [EthereumAddress!]) {
+        profiles(request: { ownedBy: $owner }) {
+            items {
+                id
             }
         }
     }

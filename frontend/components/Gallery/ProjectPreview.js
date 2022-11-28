@@ -1,16 +1,16 @@
+import ABI from '../../abi.json';
+import { ethers } from 'ethers';
 import Link from 'next/link';
-// Lens Mirror
-import { client as lensClient, mirror } from '../../api';
+const lensContract = '0x60Ae865ee4C725cd04353b5AAb364553f56ceF82';
 
 export default function ProjectPreview(props) {
     async function mirrorPost() {
+        const provider = new ethers.providers.Web3Provider(window.ethereum),
+            signer = provider.getSigner(),
+            contract = new ethers.Contract(lensContract, ABI, signer);
         try {
-            const result = await lensClient.mutate({
-                mutation: mirror,
-            });
-            console.log(result);
-            console.log('Mirrored');
-            return result.data.createMirrorTypedData;
+            console.log(contract);
+            const tx = await contract.mirror([props.address]);
         } catch (err) {
             console.log('Error mirroring post: ', err);
         }
