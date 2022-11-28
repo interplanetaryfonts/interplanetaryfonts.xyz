@@ -1,31 +1,29 @@
+import ABI from '../../abi.json';
+import { ethers } from 'ethers';
+import { formatBytes32String } from 'ethers/lib/utils';
 import Link from 'next/link';
-// Lens Mirror
-import { client as lensClient, getProfileId, mirror } from '../../api';
+const lensContract = '0x60Ae865ee4C725cd04353b5AAb364553f56ceF82';
 
 export default function ProjectPreview(props) {
     async function mirrorPost() {
         try {
-            const addressId = await lensClient.query({
-                query: getProfileId,
-                variables: {
-                    owner: [props.address],
-                },
+            const provider = new ethers.providers.Web3Provider(window.ethereum),
+                signer = provider.getSigner(),
+                contract = new ethers.Contract(lensContract, ABI, signer);
+            const mockPost = {
+                profileId: '0x4fab',
+                profileIdPointed: 21,
+                pubIdPointed: 64,
+                referenceModuleData: formatBytes32String(0),
+                referenceModule: '0x0000000000000000000000000000000000000000',
+                referenceModuleInitData: formatBytes32String(0),
+            };
+            console.log(mockPost);
+            const tx = await contract.mirror(mockPost, {
+                gasLimit: 3000000,
             });
-            console.log(addressId.data.profiles.items);
-            const profId = addressId.data.profiles.items[0];
-            if (profId) {
-                const result = await lensClient.mutate({
-                    mutation: mirror,
-                    variables: {
-                        id: profId,
-                    },
-                });
-                console.log(result);
-                console.log('Mirrored');
-                return result.data.createMirrorTypedData;
-            } else {
-                window.alert('You need a profile');
-            }
+            await tx.wait();
+            console.log('Mirrored ', tx);
         } catch (err) {
             console.log('Error mirroring post: ', err);
         }
