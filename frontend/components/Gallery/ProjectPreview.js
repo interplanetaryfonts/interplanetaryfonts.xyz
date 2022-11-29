@@ -1,28 +1,42 @@
-import ABI from '../../abi.json';
-import { ethers } from 'ethers';
+import {
+    client as lensClient,
+    mirror,
+    getProfileId,
+    createProfile,
+} from '../../api';
 import Link from 'next/link';
 const lensContract = '0x60Ae865ee4C725cd04353b5AAb364553f56ceF82';
 
 export default function ProjectPreview(props) {
     async function mirrorPost() {
         try {
-            const provider = new ethers.providers.Web3Provider(window.ethereum),
-                signer = provider.getSigner(),
-                contract = new ethers.Contract(lensContract, ABI, signer);
-            const testPost = {
-                profileId: '0x4983',
-                profileIdPointed: 0,
-                pubIdPointed: 0,
-                referenceModuleData: '0x',
-                referenceModule: '0x0000000000000000000000000000000000000000',
-                referenceModuleInitData: '0x',
-            };
-            console.log(testPost);
-            const tx = await contract.mirror(testPost, {
-                gasLimit: 3000000,
+            const addressId = await lensClient.query({
+                query: getProfileId,
+                variables: {
+                    owner: [props.address],
+                },
             });
-            await tx.wait();
-            console.log('Mirrored ', tx);
+            if (addressId.data.profiles.items.length > 0) {
+                const mirrored = await lensClient.mutate({
+                    mutation: mirror,
+                    variables: {
+                        profileId: addressId.data.profiles.items[0].id,
+                        publicationId: '0x5691-0x0c',
+                    },
+                });
+                console.log('Mirrored ', mirrored);
+            } else {
+                try {
+                    console.log('Create a new profile!');
+                    /*
+                    await lensClient.mutate({
+                        mutation: createProfile,
+                    });
+                    */
+                } catch (err) {
+                    console.log('Cannot create a new profile ', err);
+                }
+            }
         } catch (err) {
             console.log('Error mirroring post: ', err);
         }

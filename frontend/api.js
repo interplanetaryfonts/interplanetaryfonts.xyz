@@ -36,12 +36,6 @@ export const challenge = gql`
     }
 `;
 
-export const verify = gql`
-    query Query($address: EthereumAddress!) {
-        verify(request: { address: $address, signature: $signature })
-    }
-`;
-
 export const authenticate = gql`
     mutation Authenticate($address: EthereumAddress!, $signature: Signature!) {
         authenticate(request: { address: $address, signature: $signature }) {
@@ -61,6 +55,27 @@ export const refresh = gql`
 `;
 
 // Lens data queries
+
+export const createProfile = gql`
+    mutation CreateProfile {
+        createProfile(
+            request: {
+                handle: "your-handle"
+                profilePictureUri: null
+                followNFTURI: null
+                followModule: null
+            }
+        ) {
+            ... on RelayerResult {
+                txHash
+            }
+            ... on RelayError {
+                reason
+            }
+            __typename
+        }
+    }
+`;
 
 export const exploreProfiles = gql`
     query ExploreProfiles {
@@ -276,11 +291,14 @@ export const getPublications = gql`
 `;
 
 export const mirror = gql`
-    mutation CreateMirrorTypedData {
+    mutation CreateMirrorTypedData(
+        $profileId: ProfileId!
+        $publicationId: InternalPublicationId!
+    ) {
         createMirrorTypedData(
             request: {
-                profileId: "0x03"
-                publicationId: "0x01-0x01"
+                profileId: $profileId
+                publicationId: $publicationId
                 referenceModule: { followerOnlyReferenceModule: false }
             }
         ) {
