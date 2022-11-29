@@ -79,7 +79,7 @@ export const createProfile = gql`
 
 export const exploreProfiles = gql`
     query ExploreProfiles {
-        exploreProfiles(request: { sortCriteria: MOST_FOLLOWERS }) {
+        exploreProfiles(request: { sortCriteria: LATEST_CREATED }) {
             items {
                 id
                 name
