@@ -1,6 +1,5 @@
 import ABI from '../../abi.json';
 import { ethers } from 'ethers';
-import { formatBytes32String } from 'ethers/lib/utils';
 import Link from 'next/link';
 const lensContract = '0x60Ae865ee4C725cd04353b5AAb364553f56ceF82';
 
@@ -10,16 +9,16 @@ export default function ProjectPreview(props) {
             const provider = new ethers.providers.Web3Provider(window.ethereum),
                 signer = provider.getSigner(),
                 contract = new ethers.Contract(lensContract, ABI, signer);
-            const mockPost = {
-                profileId: '0x4fab',
-                profileIdPointed: 21,
-                pubIdPointed: 64,
-                referenceModuleData: formatBytes32String(0),
+            const testPost = {
+                profileId: '0x4983',
+                profileIdPointed: 0,
+                pubIdPointed: 0,
+                referenceModuleData: '0x',
                 referenceModule: '0x0000000000000000000000000000000000000000',
-                referenceModuleInitData: formatBytes32String(0),
+                referenceModuleInitData: '0x',
             };
-            console.log(mockPost);
-            const tx = await contract.mirror(mockPost, {
+            console.log(testPost);
+            const tx = await contract.mirror(testPost, {
                 gasLimit: 3000000,
             });
             await tx.wait();
@@ -30,12 +29,12 @@ export default function ProjectPreview(props) {
     }
 
     return (
-        <div className='max-w-sm min-w-fit container flex flex-col border-2 border-solid border-darkblue rounded'>
+        <div className='max-w-sm min-w-fit container flex flex-col border-2 border-solid border-red rounded'>
             <div className='container flex flex-row items-center p-4 h-8'>
                 {props.token ? (
                     <button onClick={mirrorPost}>
                         <svg
-                            className='h-5 fill-yellow hover:fill-darkblue'
+                            className='h-5 fill-darkblue hover:fill-red'
                             xmlns='http://www.w3.org/2000/svg'
                             viewBox='0 0 576 512'
                         >
@@ -55,7 +54,7 @@ export default function ProjectPreview(props) {
             <div className=' container flex flex-row items-center p-4'>
                 <Link href={props.authorurl}>
                     <div
-                        className='border-r-2 border-2 border-solid border-transparent h-14 w-16 rounded-full mr mr-4 bg-slate-600 bg-contain bg-center hover:border-2 hover:border-solid hover:border-yellow  cursor-pointer box-content'
+                        className='cursor-pointer border-r-2 border-2 border-solid h-[3.5rem] w-[4.2rem] rounded-[100%] mr-4 bg-contain bg-center hover:border-red'
                         style={{ backgroundImage: `url("${props.avatar}")` }}
                     ></div>
                 </Link>
@@ -66,7 +65,7 @@ export default function ProjectPreview(props) {
                         </p>
                     </Link>
                     <Link href={props.authorurl}>
-                        <p className='text-red text-left text-sm font-light cursor-pointer hover:text-darkblue'>
+                        <p className='text-darkblue text-left text-sm font-light cursor-pointer hover:text-red'>
                             {props.author}
                         </p>
                     </Link>
