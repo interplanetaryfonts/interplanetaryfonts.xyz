@@ -6,7 +6,7 @@ import logo from '../../public/logoHeader.svg';
 import classes from '../../styles/NavBar.module.css';
 import Button from '../UI/Button';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
-import { client as lensClient, challenge, authenticate, getProfileByAddress, createIPFontsUser } from '../../api';
+import { client as lensClient, challenge, authenticate, getProfileByAddress, createIPFontsUser } from '../../clientApi';
 import { ethers } from 'ethers';
 
 export default function NavBar(props) {

@@ -1,9 +1,9 @@
 import {
     client as lensClient,
     mirror,
-    getProfileId,
+    getProfileByAddress,
     createProfile,
-} from '../../api';
+} from '../../clientApi';
 import Link from 'next/link';
 const lensContract = '0x60Ae865ee4C725cd04353b5AAb364553f56ceF82';
 
@@ -11,9 +11,9 @@ export default function ProjectPreview(props) {
     async function mirrorPost() {
         try {
             const addressId = await lensClient.query({
-                query: getProfileId,
+                query: getProfileByAddress,
                 variables: {
-                    owner: [props.address],
+                    owner: props.address,
                 },
             });
             if (addressId.data.profiles.items.length > 0) {
