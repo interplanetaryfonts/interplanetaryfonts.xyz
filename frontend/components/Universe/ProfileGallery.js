@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { client as lensClient, exploreProfiles } from '../../api';
+import { client as lensClient, exploreProfiles } from '../../clientApi';
 import ProfilePreview from './ProfilePreview';
 
 export default function ProfileGallery() {

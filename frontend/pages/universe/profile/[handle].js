@@ -4,7 +4,7 @@ import MainContainer from "../../../components/UI/MainContainer";
 /* pages/profile/[handle].js */
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import { client, getPublications, getProfile } from "../../../api";
+import { client, getPublications, getProfileByHandle } from "../../../clientApi";
 import FollowButton from "../../../components/Universe/FollowButton";
 
 export default function Profile() {
@@ -24,7 +24,7 @@ export default function Profile() {
     try {
       /* fetch the user profile using their handle */
       const returnedProfile = await client.query({
-        query: getProfile,
+        query: getProfileByHandle,
         variables: { handle },
       });
 

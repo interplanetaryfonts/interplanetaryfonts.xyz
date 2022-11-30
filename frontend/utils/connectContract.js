@@ -3,9 +3,14 @@ import { ethers } from "ethers";
 
 const contractAddress = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS;
 
+let fontContract;
+
 function connectContract() {
+  if (fontContract) {
+    return fontContract;
+  }
+
   const contractABI = abiJSON.abi;
-  let fontContract;
   try {
     const { ethereum } = window;
 

@@ -35,7 +35,7 @@ import { ApolloProvider } from '@apollo/client';
 import { client as ipfontsClient } from '../apollo-client';
 
 // Lens API
-import { client as lensClient, refresh } from '../api';
+import { client as lensClient, refresh } from '../clientApi';
 
 // Components
 import NavBar from '../components/UI/NavBar';
