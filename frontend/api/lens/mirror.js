@@ -1,3 +1,5 @@
+import { gql } from '@apollo/client';
+
 export const mirror = gql`
     mutation CreateMirrorTypedData(
         $profileId: ProfileId!

@@ -1,3 +1,5 @@
+import { gql } from '@apollo/client';
+
 export const exploreProfiles = gql`
     query ExploreProfiles {
         exploreProfiles(request: { sortCriteria: LATEST_CREATED }) {

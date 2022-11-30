@@ -1,4 +1,6 @@
-export const getProfile = gql`
+import { gql } from '@apollo/client';
+
+export const getProfileByHandle = gql`
     query Profile($handle: Handle!) {
         profile(request: { handle: $handle }) {
             isFollowedByMe

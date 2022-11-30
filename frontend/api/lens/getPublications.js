@@ -1,3 +1,5 @@
+import { gql } from '@apollo/client';
+
 export const getPublications = gql`
     query Publications($id: ProfileId!, $limit: LimitScalar) {
         publications(

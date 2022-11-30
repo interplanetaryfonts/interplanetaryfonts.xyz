@@ -1,6 +1,6 @@
 import connectContract from '../../utils/connectContract';
 
-export async function createUser({
+export async function createIPFontsUser({
   lensHandle,
   email,
   name,

@@ -1,8 +1,10 @@
+import { gql } from '@apollo/client';
+
 export const createProfile = gql`
     mutation CreateProfile {
         createProfile(
             request: {
-                handle: "your-handle"
+                handle: "jptestdev"
                 profilePictureUri: null
                 followNFTURI: null
                 followModule: null
