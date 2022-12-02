@@ -125,6 +125,7 @@ export default function NavBar(props) {
                             chain &&
                             (!authenticationStatus ||
                                 authenticationStatus === 'authenticated');
+                        // eslint-disable-next-line react-hooks/rules-of-hooks
                         useEffect(() => {
                             props.handleConnected(
                                 ...(connected

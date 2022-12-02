@@ -18,7 +18,7 @@ export default function CreateProject(props) {
           <p>Upload font files</p>
           <Button>Upload</Button>
           <div className={classes['elements-block']}>
-            <label for='price'>{`Set Price`}</label>
+            <label htmlFor='price'>{`Set Price`}</label>
             <input
               className={classes.price}
               type='number'
@@ -60,8 +60,8 @@ export default function CreateProject(props) {
                     y2='15.4947'
                     gradientUnits='userSpaceOnUse'
                   >
-                    <stop stop-color='#FF6848' />
-                    <stop offset='1' stop-color='#4940E0' />
+                    <stop stopColor='#FF6848' />
+                    <stop offset='1' stopColor='#4940E0' />
                   </linearGradient>
                   <linearGradient
                     id='paint1_linear_24_9'
@@ -71,8 +71,8 @@ export default function CreateProject(props) {
                     y2='41.8521'
                     gradientUnits='userSpaceOnUse'
                   >
-                    <stop stop-color='#FF6848' />
-                    <stop offset='1' stop-color='#4940E0' />
+                    <stop stopColor='#FF6848' />
+                    <stop offset='1' stopColor='#4940E0' />
                   </linearGradient>
                 </defs>
               </svg>
