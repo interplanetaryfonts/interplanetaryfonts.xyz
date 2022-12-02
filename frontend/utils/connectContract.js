@@ -17,7 +17,7 @@ function connectContract() {
     if (ethereum) {
       const provider = new ethers.providers.Web3Provider(ethereum);
       const signer = provider.getSigner();
-      console.log("contractABI", contractABI);
+
       fontContract = new ethers.Contract(
         contractAddress,
         contractABI,

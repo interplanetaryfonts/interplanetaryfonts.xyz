@@ -1,6 +1,12 @@
+import { readContract } from '@wagmi/core'
 import connectContract from '../../utils/connectContract';
+import abiJSON from "../../utils/FontProject.json";
+import { ethers } from 'ethers';
+
+const contractAddress = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS;
 
 export async function createIPFontsUser({
+  lensAddress,
   lensHandle,
   email,
   name,
@@ -16,7 +22,21 @@ export async function createIPFontsUser({
 
   const ipfontsContract = connectContract();
 
-  if (ipfontsContract) {
+  if (!ipfontsContract) {
+    console.log('Cound not connect to contract');
+    return;
+  }
+
+  const { createdAt} = await readContract({
+    address: contractAddress,
+    abi: abiJSON.abi,
+    functionName: 'addressToUser',
+    args: [lensAddress]
+  });
+
+  const isRegistered = !ethers.BigNumber.from(createdAt).isZero;
+  
+  if (!isRegistered) {
     const createdAt = Date.now();
 
     const txn = await ipfontsContract.createUser(
@@ -30,6 +50,6 @@ export async function createIPFontsUser({
     const wait = await txn.wait();
     console.log("IPFonts : User entity created", txn.hash);
   } else {
-    console.log("Error getting contract.");
+    console.log('User alread registered');
   }
 }

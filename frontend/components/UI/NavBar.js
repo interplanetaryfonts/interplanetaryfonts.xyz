@@ -51,10 +51,10 @@ export default function NavBar(props) {
                 },
             });
 
-            const lensHandle = profileData?.profiles?.items[0].handle;
+            const lensHandle = profileData?.profiles?.items[0]?.handle;
 
             if (lensHandle) {
-                await createIPFontsUser({ lensHandle });
+                await createIPFontsUser({ lensAddress: lensaddress, lensHandle });
             }
         } catch (err) {
             window.localStorage.removeItem('lens-auth-token');
