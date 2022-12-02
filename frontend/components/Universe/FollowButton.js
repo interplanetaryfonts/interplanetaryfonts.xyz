@@ -20,9 +20,8 @@ export default function FollowButton(props) {
         }
     }
     return (
-        <Button
-            onClick={followUser}
-            children={props.isFollowedByMe ? 'Following' : 'Follow'}
-        ></Button>
+        <Button onClick={followUser}>
+            {props.isFollowedByMe ? 'Following' : 'Follow'}
+        </Button>
     );
 }

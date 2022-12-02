@@ -16,48 +16,49 @@ export default function Profile() {
   const { handle } = router.query;
 
   useEffect(() => {
+    async function fetchProfile() {
+      try {
+        /* fetch the user profile using their handle */
+        const returnedProfile = await client.query({
+          query: getProfileByHandle,
+          variables: { handle },
+        });
+
+        const profileData = { ...returnedProfile.data.profile };
+        console.log(JSON.stringify(profileData));
+        /* format their picture if it is not in the right format */
+        const picture = profileData.picture;
+        if (picture && picture.original && picture.original.url) {
+          if (picture.original.url.startsWith("ipfs://")) {
+            let result = picture.original.url.substring(
+              7,
+              picture.original.url.length
+            );
+            profileData.avatarUrl = `http://lens.infura-ipfs.io/ipfs/${result}`;
+          } else {
+            profileData.avatarUrl = profileData.picture.original.url;
+          }
+        }
+        setProfile(profileData);
+        /* fetch the user's publications from the Lens API and set them in the state */
+        const pubs = await client.query({
+          query: getPublications,
+          variables: {
+            id: profileData.id,
+            limit: 10,
+          },
+        });
+
+        setPublications(pubs.data.publications.items);
+      } catch (err) {
+        console.log("error fetching profile...", err);
+      }
+    }
+
     if (handle) {
       fetchProfile();
     }
   }, [handle]);
-  async function fetchProfile() {
-    try {
-      /* fetch the user profile using their handle */
-      const returnedProfile = await client.query({
-        query: getProfileByHandle,
-        variables: { handle },
-      });
-
-      const profileData = { ...returnedProfile.data.profile };
-      console.log(JSON.stringify(profileData));
-      /* format their picture if it is not in the right format */
-      const picture = profileData.picture;
-      if (picture && picture.original && picture.original.url) {
-        if (picture.original.url.startsWith("ipfs://")) {
-          let result = picture.original.url.substring(
-            7,
-            picture.original.url.length
-          );
-          profileData.avatarUrl = `http://lens.infura-ipfs.io/ipfs/${result}`;
-        } else {
-          profileData.avatarUrl = profileData.picture.original.url;
-        }
-      }
-      setProfile(profileData);
-      /* fetch the user's publications from the Lens API and set them in the state */
-      const pubs = await client.query({
-        query: getPublications,
-        variables: {
-          id: profileData.id,
-          limit: 10,
-        },
-      });
-
-      setPublications(pubs.data.publications.items);
-    } catch (err) {
-      console.log("error fetching profile...", err);
-    }
-  }
 
   if (!profile) return null;
 
@@ -67,7 +68,9 @@ export default function Profile() {
         <div className="flex flex-col justify-center items-center  w-8/12">
           {/* Avatar Handle and name  */}
           <div className=" flex flex-col sm:flex-row justify-center items-center space-x-20 p-5 w-full  ">
+            { /* eslint-disable-next-line @next/next/no-img-element */}
             <img
+              alt="avatar"
               className="w-40 h-40 rounded-full border-solid border-red  border-4 "
               src={profile.avatarUrl}
             />

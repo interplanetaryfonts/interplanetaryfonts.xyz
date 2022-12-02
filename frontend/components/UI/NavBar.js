@@ -132,7 +132,7 @@ export default function NavBar(props) {
                                     ? [true, account.address]
                                     : [false, ''])
                             );
-                        }, [connected]);
+                        }, [connected, account.address]);
                         return (
                             <div
                                 {...(!ready && {

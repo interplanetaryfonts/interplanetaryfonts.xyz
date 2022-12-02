@@ -140,21 +140,21 @@ export default function MyApp({ Component, pageProps }) {
         setAddress(currentAddress);
     };
 
-    // Lens connection
-    async function refreshTkn(prevRefreshToken) {
-        try {
-            const refresher = await lensClient.mutate({
-                mutation: refresh,
-                variables: { refreshToken: prevRefreshToken },
-            });
-            const { accessToken, refreshToken } = refresher.data.refresh;
-            handleLensLogin(accessToken, refreshToken);
-        } catch (err) {
-            console.log("Couldn't refresh! ", err);
-        }
-    }
-
     useEffect(() => {
+        // Lens connection
+        async function refreshTkn(prevRefreshToken) {
+            try {
+                const refresher = await lensClient.mutate({
+                    mutation: refresh,
+                    variables: { refreshToken: prevRefreshToken },
+                });
+                const { accessToken, refreshToken } = refresher.data.refresh;
+                handleLensLogin(accessToken, refreshToken);
+            } catch (err) {
+                console.log("Couldn't refresh! ", err);
+            }
+        }
+        
         const lclStrorage = window.localStorage;
         const localToken = lclStrorage.getItem('lens-auth-token');
         if (localToken) {
