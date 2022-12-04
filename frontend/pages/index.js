@@ -9,7 +9,7 @@ export default function Home(props) {
                 <title>InterplanetaryFonts</title>
                 <meta
                     name='description'
-                    content='A decentralized NFT marketplace & collaboration platform for creators and collectors of Fonts'
+                    content='A decentralized NFT marketplace & collaboration platform for creators and collectors of Fonts.'
                 />
                 <link rel='apple-touch-icon' href='/logo192.png' />
                 <link rel='manifest' href='/manifest.json' />

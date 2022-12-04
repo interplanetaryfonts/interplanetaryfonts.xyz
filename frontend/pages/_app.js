@@ -40,6 +40,7 @@ import { client as lensClient, refresh } from '../clientApi';
 // Components
 import NavBar from '../components/UI/NavBar';
 import MainContainer from '../components/UI/MainContainer';
+import Footer from '../components/UI/Footer';
 
 // Dummy Data
 const fakeUser = {
@@ -154,7 +155,7 @@ export default function MyApp({ Component, pageProps }) {
                 console.log("Couldn't refresh! ", err);
             }
         }
-        
+
         const lclStrorage = window.localStorage;
         const localToken = lclStrorage.getItem('lens-auth-token');
         if (localToken) {
@@ -205,6 +206,7 @@ export default function MyApp({ Component, pageProps }) {
                             token={token}
                             address={address}
                         />
+                        <Footer />
                     </MainContainer>
                 </ApolloProvider>
             </RainbowKitProvider>

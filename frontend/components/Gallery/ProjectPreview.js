@@ -2,10 +2,8 @@ import {
     client as lensClient,
     mirror,
     getProfileByAddress,
-    createProfile,
 } from '../../clientApi';
 import Link from 'next/link';
-const lensContract = '0x60Ae865ee4C725cd04353b5AAb364553f56ceF82';
 
 export default function ProjectPreview(props) {
     async function mirrorPost() {

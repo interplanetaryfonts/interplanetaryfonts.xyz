@@ -1,25 +1,15 @@
-import Document, { Html, Head, Main, NextScript } from "next/document";
-import Script from "next/script";
+import { Html, Head, Main, NextScript } from 'next/document';
 
-export default class MyDocument extends Document {
-  render() {
+export default function Document() {
     return (
-      <Html>
-        <Head>
-          <link rel="stylesheet" href="https://lens.xyz/widget-styles.css" />
-          <Script
-            id="Lens"
-            src="https://lens.xyz/widget.js"
-            strategy="beforeInteractive"
-          />
-        </Head>
-        <body>
-          <Main />
-          <div id="backdrop-root" />
-          <div id="overlay-root" />
-          <NextScript />
-        </body>
-      </Html>
+        <Html lang='eng_US'>
+            <Head />
+            <body>
+                <Main />
+                <div id='backdrop-root' />
+                <div id='overlay-root' />
+                <NextScript />
+            </body>
+        </Html>
     );
-  }
 }
