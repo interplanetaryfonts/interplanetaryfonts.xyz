@@ -8,7 +8,11 @@ import tw from '../../public/Icons/social/twitter.svg';
 console.log(dc);
 
 const socials = [
-    { name: 'twitter', icon: tw.src, url: 'https://twitter.com/IPFonts' },
+    {
+        name: 'twitter',
+        icon: tw.src,
+        url: 'https://twitter.com/IPFonts',
+    },
     {
         name: 'lens',
         icon: ls.src,
@@ -19,7 +23,11 @@ const socials = [
         icon: ig.src,
         url: 'https://instagram.com/interplanetaryfonts',
     },
-    { name: 'discord', icon: dc.src, url: 'https://discord.gg/keBVqbMrhr' },
+    {
+        name: 'discord',
+        icon: dc.src,
+        url: 'https://discord.gg/BbCXz8Dsfu',
+    },
     {
         name: 'github',
         icon: gh.src,

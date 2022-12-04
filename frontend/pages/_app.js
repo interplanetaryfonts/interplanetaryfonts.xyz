@@ -41,6 +41,7 @@ import { client as lensClient, refresh } from '../clientApi';
 import NavBar from '../components/UI/NavBar';
 import MainContainer from '../components/UI/MainContainer';
 import Footer from '../components/UI/Footer';
+import Disclaimer from '../components/UI/Disclaimer';
 
 // Dummy Data
 const fakeUser = {
@@ -192,6 +193,7 @@ export default function MyApp({ Component, pageProps }) {
             >
                 <ApolloProvider client={ipfontsClient}>
                     <MainContainer>
+                        <Disclaimer />
                         <NavBar
                             handleConnected={handleConnected}
                             handleLensLogin={handleLensLogin}
