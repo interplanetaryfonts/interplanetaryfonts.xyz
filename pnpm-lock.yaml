@@ -30,6 +30,7 @@ importers:
       '@nomiclabs/hardhat-truffle5': ^2.0.7
       '@nomiclabs/hardhat-web3': ^2.0.0
       '@openzeppelin/contracts': ^4.7.3
+      '@openzeppelin/contracts-upgradeable': ^4.8.0
       '@superfluid-finance/ethereum-contracts': ^1.4.3
       '@superfluid-finance/sdk-core': ^0.5.8
       '@typechain/ethers-v5': ^10.1.0
@@ -49,6 +50,7 @@ importers:
       web3: ^1.8.0
     dependencies:
       '@openzeppelin/contracts': 4.7.3
+      '@openzeppelin/contracts-upgradeable': 4.8.0
       '@superfluid-finance/ethereum-contracts': 1.4.3
       '@superfluid-finance/sdk-core': 0.5.8_sup44lqfolz3u7wyp5ytwzo2j4
       dotenv: 16.0.2
@@ -2939,6 +2941,10 @@ packages:
       - utf-8-validate
     dev: true
 
+  /@openzeppelin/contracts-upgradeable/4.8.0:
+    resolution: {integrity: sha512-5GeFgqMiDlqGT8EdORadp1ntGF0qzWZLmEY7Wbp/yVhN7/B3NNzCxujuI77ktlyG81N3CUZP8cZe3ZAQ/cW10w==}
+    dev: false
+
   /@openzeppelin/contracts/4.7.3:
     resolution: {integrity: sha512-dGRS0agJzu8ybo44pCIf3xBaPQN/65AIXNgK8+4gzKd5kbvlqyxryUYVLJv7fK98Seyd2hDZzVEHSWAh0Bt1Yw==}
     dev: false
@@ -3416,7 +3422,7 @@ packages:
   /@superfluid-finance/js-sdk/0.6.3:
     resolution: {integrity: sha512-bSeV//KLAyseYwFVMGwrZmmS0iIZWx5FLGEEjXfi0oS42NFomD0MEt+iRyF7o/Jx6/8bfHGMH9I4s8LAWR27bQ==}
     dependencies:
-      '@superfluid-finance/metadata': github.com/superfluid-finance/metadata/aa1f9158956355fa1224cdf973b2dc972f3e5703
+      '@superfluid-finance/metadata': github.com/superfluid-finance/metadata/680a8020da870e28853182de5ae7f297992ac498
       '@truffle/contract': 4.5.23
       auto-bind: 4.0.0
       node-fetch: 2.6.7
@@ -3435,7 +3441,7 @@ packages:
       graphql: ^16.0.0
     dependencies:
       '@superfluid-finance/ethereum-contracts': 1.4.3
-      '@superfluid-finance/metadata': github.com/superfluid-finance/metadata/aa1f9158956355fa1224cdf973b2dc972f3e5703
+      '@superfluid-finance/metadata': github.com/superfluid-finance/metadata/680a8020da870e28853182de5ae7f297992ac498
       browserify: 17.0.0
       ethers: 5.7.1
       graphql: 16.6.0
@@ -15958,8 +15964,8 @@ packages:
       ethereumjs-util: 6.2.1
     dev: false
 
-  github.com/superfluid-finance/metadata/aa1f9158956355fa1224cdf973b2dc972f3e5703:
-    resolution: {tarball: https://codeload.github.com/superfluid-finance/metadata/tar.gz/aa1f9158956355fa1224cdf973b2dc972f3e5703}
+  github.com/superfluid-finance/metadata/680a8020da870e28853182de5ae7f297992ac498:
+    resolution: {tarball: https://codeload.github.com/superfluid-finance/metadata/tar.gz/680a8020da870e28853182de5ae7f297992ac498}
     name: '@superfluid-finance/metadata'
     version: 1.1.0
     dev: false
