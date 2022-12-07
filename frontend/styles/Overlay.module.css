@@ -9,17 +9,19 @@
 }
 
 .modal {
-  width: 500px;
+  width: 50%;
   padding-bottom: 2rem;
   position: fixed;
   top: 20vh;
-  left: calc(50% - 150px);
+  left: calc(50% - 25%);
   right: auto;
   background-color: var(--light);
   border-radius: var(--global-radius);
   border: 2px solid var(--red);
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
   gap: 1rem;
 }
 

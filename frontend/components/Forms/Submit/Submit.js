@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { FormContext } from "../../Overlay/CreateProject.js";
+import classes from "../../../styles/Forms.module.css";
 
 export default function Submit() {
   const { activeStepIndex, setActiveStepIndex, formData, setFormData } =
@@ -13,17 +14,13 @@ export default function Submit() {
   };
   return (
     <>
-      <div className="rounded-md border-2  border-red-500 font-medium text-red-500 my-2 p-2  w-fit  text-2xl px-5">
-        Price: ${formData.SetPrice}
-      </div>
-      <div className="rounded-md border-2  border-red-500 font-medium text-red-500 my-2 p-2  w-fit  text-2xl px-5">
+      <div className={classes.title}>Your Font Project Name</div>
+      <div className={classes.formValues}>Price: ${formData.SetPrice}</div>
+      <div className={classes.formValues}>
         LensHandle: @{formData.lensHandle}
       </div>
 
-      <button
-        onClick={submit}
-        className="rounded-md bg-red-500 font-medium text-white my-2 p-2  w-fit "
-      >
+      <button onClick={submit} className={classes.continue}>
         Create Project
       </button>
     </>

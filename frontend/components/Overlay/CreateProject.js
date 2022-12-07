@@ -23,10 +23,8 @@ export default function CreateProject(props) {
         <FormContext.Provider
           value={{ activeStepIndex, setActiveStepIndex, formData, setFormData }}
         >
-          <div className="w-fit h-fit flex flex-col items-center justify-start">
-            <Stepper />
-            <Step />
-          </div>
+          <Stepper />
+          <Step />
         </FormContext.Provider>
       </Modal>
       <Worldcoin handleMount={handleMount} mounted={mounted} />

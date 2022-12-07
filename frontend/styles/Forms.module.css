@@ -1,0 +1,58 @@
+.errorMessage {
+  font-style: italic;
+  color: var(--blue);
+}
+
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  justify-items: center;
+  align-items: center;
+  margin-bottom: 1rem;
+  color: var(--red);
+}
+.title {
+  font-size: xx-large;
+  font-weight: bold;
+  align-self: center;
+  margin-bottom: 1rem;
+  color: var(--red);
+}
+
+.continue {
+  border-radius: 5px;
+  background-color: var(--red);
+  font-weight: normal;
+  font-size: large;
+  color: white;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+  padding: 0.5rem 2rem;
+}
+.continue:hover {
+  background-color: var(--darkblue);
+}
+.lens {
+  border-radius: 3rem;
+  border: solid 2px;
+  border-color: #00501e;
+  font-weight: normal;
+  font-size: large;
+  color: #00501e;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+  padding: 0.5rem 2rem;
+}
+.lens:hover {
+  background-color: #00501e;
+  color: white;
+}
+
+.formValues {
+  font-size: xx-large;
+  font-weight: bold;
+  align-self: center;
+  margin-bottom: 0.5rem;
+  color: var(--red);
+}
