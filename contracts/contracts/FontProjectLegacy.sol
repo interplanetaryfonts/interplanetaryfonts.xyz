@@ -11,7 +11,7 @@ import {IInstantDistributionAgreementV1} from "@superfluid-finance/ethereum-cont
 
 import {IDAv1Library} from "@superfluid-finance/ethereum-contracts/contracts/apps/IDAv1Library.sol";
 
-contract FontProject {
+contract FontProjectLegacy {
   InterPlanetaryFontNFT private fontNFT = new InterPlanetaryFontNFT();
 
   uint8 constant TOTAL_DISTRIBUTION_UNITS = 100;

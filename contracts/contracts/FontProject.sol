@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.16;
 
-// import "hardhat/console.sol";
+import "hardhat/console.sol";
 import "./InterPlanetaryFontNFT.sol";
 
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
@@ -25,7 +25,7 @@ contract FontProject is Initializable, OwnableUpgradeable, UUPSUpgradeable {
   /// @notice IDA Library
   using IDAv1Library for IDAv1Library.InitData;
   IDAv1Library.InitData internal _idaV1;
-  uint32 private currentIDAIndex = 0;
+  uint32 private currentIDAIndex;
 
     /// @custom:oz-upgrades-unsafe-allow constructor
     constructor() {
@@ -35,6 +35,8 @@ contract FontProject is Initializable, OwnableUpgradeable, UUPSUpgradeable {
   function initialize(ISuperfluid _host, IInstantDistributionAgreementV1 _ida, InterPlanetaryFontNFT _ipfToken) initializer public {
     __Ownable_init();
     __UUPSUpgradeable_init();
+
+    currentIDAIndex = 0;
 
     fontNFT = _ipfToken;
     // TODO : Set reference to FontStream contract here
@@ -87,6 +89,14 @@ contract FontProject is Initializable, OwnableUpgradeable, UUPSUpgradeable {
   );
 
   event UserCreated(
+    address walletAddress,
+    string profileInfoCID,
+    uint256 createdAt,
+    uint256 updatedAt,
+    string lensHandle
+  );
+
+  event UserEdited (
     address walletAddress,
     string profileInfoCID,
     uint256 createdAt,
@@ -155,7 +165,7 @@ contract FontProject is Initializable, OwnableUpgradeable, UUPSUpgradeable {
 
     addressToUser[msg.sender] = user;
 
-    emit UserCreated(
+    emit UserEdited(
       msg.sender, 
       profileInfoCID, 
       currentUser.createdAt, 
