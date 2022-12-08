@@ -1,0 +1,1191 @@
+{
+  "manifestVersion": "3.2",
+  "proxies": [
+    {
+      "address": "0x129c56c75F449E78045A429a9334451Ffb6B7F67",
+      "txHash": "0x2fefe2fc74db06d4ad9c1ea76130ae8b95b96399359bd19ae5a6109116787c56",
+      "kind": "uups"
+    },
+    {
+      "address": "0x94F24Dbf0c81006284c76Ba59bBABc5a24De1817",
+      "txHash": "0x698c6aaef433455dad01820310a5ccc44b665ed64a515a64f7fcb866f4086b5b",
+      "kind": "uups"
+    }
+  ],
+  "impls": {
+    "96273e92fcce47253aeede4fab82d4dd122a52a959702d2e121ae377401fa051": {
+      "address": "0x90A72E40Ac7578a2695506355EfC7F3a296b99Db",
+      "txHash": "0x31b40a7138955e72b45f4c35e189c481701a142e1d6b9cf391e5db0ef51b6593",
+      "layout": {
+        "solcVersion": "0.8.16",
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:62",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:67"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:36"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ERC165Upgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/utils/introspection/ERC165Upgradeable.sol:41"
+          },
+          {
+            "label": "_name",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_string_storage",
+            "contract": "ERC721Upgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol:25"
+          },
+          {
+            "label": "_symbol",
+            "offset": 0,
+            "slot": "102",
+            "type": "t_string_storage",
+            "contract": "ERC721Upgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol:28"
+          },
+          {
+            "label": "_owners",
+            "offset": 0,
+            "slot": "103",
+            "type": "t_mapping(t_uint256,t_address)",
+            "contract": "ERC721Upgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol:31"
+          },
+          {
+            "label": "_balances",
+            "offset": 0,
+            "slot": "104",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "ERC721Upgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol:34"
+          },
+          {
+            "label": "_tokenApprovals",
+            "offset": 0,
+            "slot": "105",
+            "type": "t_mapping(t_uint256,t_address)",
+            "contract": "ERC721Upgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol:37"
+          },
+          {
+            "label": "_operatorApprovals",
+            "offset": 0,
+            "slot": "106",
+            "type": "t_mapping(t_address,t_mapping(t_address,t_bool))",
+            "contract": "ERC721Upgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol:40"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "107",
+            "type": "t_array(t_uint256)44_storage",
+            "contract": "ERC721Upgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol:514"
+          },
+          {
+            "label": "_tokenURIs",
+            "offset": 0,
+            "slot": "151",
+            "type": "t_mapping(t_uint256,t_string_storage)",
+            "contract": "ERC721URIStorageUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/token/ERC721/extensions/ERC721URIStorageUpgradeable.sol:21"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "152",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "ERC721URIStorageUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/token/ERC721/extensions/ERC721URIStorageUpgradeable.sol:74"
+          },
+          {
+            "label": "_paused",
+            "offset": 0,
+            "slot": "201",
+            "type": "t_bool",
+            "contract": "PausableUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol:29"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "202",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "PausableUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol:116"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "251",
+            "type": "t_address",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:22"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "252",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:94"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "301",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ERC721BurnableUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/token/ERC721/extensions/ERC721BurnableUpgradeable.sol:38"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "351",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ERC1967UpgradeUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/ERC1967/ERC1967UpgradeUpgradeable.sol:211"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "401",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "UUPSUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol:107"
+          },
+          {
+            "label": "_tokenIdCounter",
+            "offset": 0,
+            "slot": "451",
+            "type": "t_struct(Counter)2610_storage",
+            "contract": "InterPlanetaryFontNFT",
+            "src": "contracts/InterPlanetaryFontNFT.sol:16"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)44_storage": {
+            "label": "uint256[44]",
+            "numberOfBytes": "1408"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_mapping(t_address,t_bool))": {
+            "label": "mapping(address => mapping(address => bool))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_address)": {
+            "label": "mapping(uint256 => address)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_string_storage)": {
+            "label": "mapping(uint256 => string)",
+            "numberOfBytes": "32"
+          },
+          "t_string_storage": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_struct(Counter)2610_storage": {
+            "label": "struct CountersUpgradeable.Counter",
+            "members": [
+              {
+                "label": "_value",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        }
+      }
+    },
+    "018c6d3d52ce2af0687313a801c2e85694415dd4330451d1121b009121583ba4": {
+      "address": "0x39985f058257d97493CcC52916a35B65338da04C",
+      "txHash": "0x07b41ce686d31d24b525d69a3157d594fb24cd057eaf4cc483034523a7453e7b",
+      "layout": {
+        "solcVersion": "0.8.16",
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:62",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:67"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:36"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_address",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:22"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "52",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:94"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ERC1967UpgradeUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/ERC1967/ERC1967UpgradeUpgradeable.sol:211"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "151",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "UUPSUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol:107"
+          },
+          {
+            "label": "fontNFT",
+            "offset": 0,
+            "slot": "201",
+            "type": "t_contract(InterPlanetaryFontNFT)8620",
+            "contract": "FontProject",
+            "src": "contracts/FontProject.sol:21"
+          },
+          {
+            "label": "currentIDAIndex",
+            "offset": 20,
+            "slot": "201",
+            "type": "t_uint32",
+            "contract": "FontProject",
+            "src": "contracts/FontProject.sol:22"
+          },
+          {
+            "label": "addressToUser",
+            "offset": 0,
+            "slot": "202",
+            "type": "t_mapping(t_address,t_struct(User)8080_storage)",
+            "contract": "FontProject",
+            "src": "contracts/FontProject.sol:24"
+          },
+          {
+            "label": "idToFontProject",
+            "offset": 0,
+            "slot": "203",
+            "type": "t_mapping(t_bytes32,t_struct(FontProjectEntity)8104_storage)",
+            "contract": "FontProject",
+            "src": "contracts/FontProject.sol:27"
+          },
+          {
+            "label": "fontProjectIdToMints",
+            "offset": 0,
+            "slot": "204",
+            "type": "t_mapping(t_bytes32,t_array(t_uint256)dyn_storage)",
+            "contract": "FontProject",
+            "src": "contracts/FontProject.sol:30"
+          },
+          {
+            "label": "_idaV1",
+            "offset": 0,
+            "slot": "205",
+            "type": "t_struct(InitData)4092_storage",
+            "contract": "FontProject",
+            "src": "contracts/FontProject.sol:41"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_array(t_uint256)dyn_storage": {
+            "label": "uint256[]",
+            "numberOfBytes": "32"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_bytes32": {
+            "label": "bytes32",
+            "numberOfBytes": "32"
+          },
+          "t_contract(IInstantDistributionAgreementV1)5837": {
+            "label": "contract IInstantDistributionAgreementV1",
+            "numberOfBytes": "20"
+          },
+          "t_contract(ISuperfluid)7491": {
+            "label": "contract ISuperfluid",
+            "numberOfBytes": "20"
+          },
+          "t_contract(ISuperfluidToken)7906": {
+            "label": "contract ISuperfluidToken",
+            "numberOfBytes": "20"
+          },
+          "t_contract(InterPlanetaryFontNFT)8620": {
+            "label": "contract InterPlanetaryFontNFT",
+            "numberOfBytes": "20"
+          },
+          "t_mapping(t_address,t_struct(User)8080_storage)": {
+            "label": "mapping(address => struct FontProject.User)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_bytes32,t_array(t_uint256)dyn_storage)": {
+            "label": "mapping(bytes32 => uint256[])",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_bytes32,t_struct(FontProjectEntity)8104_storage)": {
+            "label": "mapping(bytes32 => struct FontProject.FontProjectEntity)",
+            "numberOfBytes": "32"
+          },
+          "t_string_storage": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_struct(FontProjectEntity)8104_storage": {
+            "label": "struct FontProject.FontProjectEntity",
+            "members": [
+              {
+                "label": "id",
+                "type": "t_bytes32",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "creatorAddress",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "perCharacterMintPrice",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "metaDataCID",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "royaltyIDAIndex",
+                "type": "t_uint32",
+                "offset": 0,
+                "slot": "4"
+              },
+              {
+                "label": "idaDistributionToken",
+                "type": "t_contract(ISuperfluidToken)7906",
+                "offset": 4,
+                "slot": "4"
+              },
+              {
+                "label": "fontFilesCID",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "5"
+              },
+              {
+                "label": "mintLimit",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "6"
+              },
+              {
+                "label": "launchDateTime",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "7"
+              },
+              {
+                "label": "createdAt",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "8"
+              },
+              {
+                "label": "updatedAt",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "9"
+              }
+            ],
+            "numberOfBytes": "320"
+          },
+          "t_struct(InitData)4092_storage": {
+            "label": "struct IDAv1Library.InitData",
+            "members": [
+              {
+                "label": "host",
+                "type": "t_contract(ISuperfluid)7491",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "ida",
+                "type": "t_contract(IInstantDistributionAgreementV1)5837",
+                "offset": 0,
+                "slot": "1"
+              }
+            ],
+            "numberOfBytes": "64"
+          },
+          "t_struct(User)8080_storage": {
+            "label": "struct FontProject.User",
+            "members": [
+              {
+                "label": "walletAddress",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "profileInfoCID",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "createdAt",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "updatedAt",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "lensHandle",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "4"
+              }
+            ],
+            "numberOfBytes": "160"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint32": {
+            "label": "uint32",
+            "numberOfBytes": "4"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        }
+      }
+    },
+    "89007ba456c9f6c00e9344ef8c2f12e953a8d2289c0a80dffbc2dd81870b4abe": {
+      "address": "0x9Ba76E5dFC7b455Ff24B685d2588AF87a651C6B4",
+      "txHash": "0xc6e558053f1496a9f17ec049f25c0d272991d935cd4fc62cfdb4fdbbcfee5d14",
+      "layout": {
+        "solcVersion": "0.8.16",
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:62",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:67"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:36"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_address",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:22"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "52",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:94"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ERC1967UpgradeUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/ERC1967/ERC1967UpgradeUpgradeable.sol:211"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "151",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "UUPSUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol:107"
+          },
+          {
+            "label": "fontNFT",
+            "offset": 0,
+            "slot": "201",
+            "type": "t_contract(InterPlanetaryFontNFT)8625",
+            "contract": "FontProject",
+            "src": "contracts/FontProject.sol:22"
+          },
+          {
+            "label": "currentIDAIndex",
+            "offset": 20,
+            "slot": "201",
+            "type": "t_uint32",
+            "contract": "FontProject",
+            "src": "contracts/FontProject.sol:23"
+          },
+          {
+            "label": "addressToUser",
+            "offset": 0,
+            "slot": "202",
+            "type": "t_mapping(t_address,t_struct(User)8085_storage)",
+            "contract": "FontProject",
+            "src": "contracts/FontProject.sol:25"
+          },
+          {
+            "label": "idToFontProject",
+            "offset": 0,
+            "slot": "203",
+            "type": "t_mapping(t_bytes32,t_struct(FontProjectEntity)8109_storage)",
+            "contract": "FontProject",
+            "src": "contracts/FontProject.sol:28"
+          },
+          {
+            "label": "fontProjectIdToMints",
+            "offset": 0,
+            "slot": "204",
+            "type": "t_mapping(t_bytes32,t_array(t_uint256)dyn_storage)",
+            "contract": "FontProject",
+            "src": "contracts/FontProject.sol:31"
+          },
+          {
+            "label": "_idaV1",
+            "offset": 0,
+            "slot": "205",
+            "type": "t_struct(InitData)4092_storage",
+            "contract": "FontProject",
+            "src": "contracts/FontProject.sol:42"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_array(t_uint256)dyn_storage": {
+            "label": "uint256[]",
+            "numberOfBytes": "32"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_bytes32": {
+            "label": "bytes32",
+            "numberOfBytes": "32"
+          },
+          "t_contract(IInstantDistributionAgreementV1)5837": {
+            "label": "contract IInstantDistributionAgreementV1",
+            "numberOfBytes": "20"
+          },
+          "t_contract(ISuperfluid)7491": {
+            "label": "contract ISuperfluid",
+            "numberOfBytes": "20"
+          },
+          "t_contract(ISuperfluidToken)7906": {
+            "label": "contract ISuperfluidToken",
+            "numberOfBytes": "20"
+          },
+          "t_contract(InterPlanetaryFontNFT)8625": {
+            "label": "contract InterPlanetaryFontNFT",
+            "numberOfBytes": "20"
+          },
+          "t_mapping(t_address,t_struct(User)8085_storage)": {
+            "label": "mapping(address => struct FontProject.User)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_bytes32,t_array(t_uint256)dyn_storage)": {
+            "label": "mapping(bytes32 => uint256[])",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_bytes32,t_struct(FontProjectEntity)8109_storage)": {
+            "label": "mapping(bytes32 => struct FontProject.FontProjectEntity)",
+            "numberOfBytes": "32"
+          },
+          "t_string_storage": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_struct(FontProjectEntity)8109_storage": {
+            "label": "struct FontProject.FontProjectEntity",
+            "members": [
+              {
+                "label": "id",
+                "type": "t_bytes32",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "creatorAddress",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "perCharacterMintPrice",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "metaDataCID",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "royaltyIDAIndex",
+                "type": "t_uint32",
+                "offset": 0,
+                "slot": "4"
+              },
+              {
+                "label": "idaDistributionToken",
+                "type": "t_contract(ISuperfluidToken)7906",
+                "offset": 4,
+                "slot": "4"
+              },
+              {
+                "label": "fontFilesCID",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "5"
+              },
+              {
+                "label": "mintLimit",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "6"
+              },
+              {
+                "label": "launchDateTime",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "7"
+              },
+              {
+                "label": "createdAt",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "8"
+              },
+              {
+                "label": "updatedAt",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "9"
+              }
+            ],
+            "numberOfBytes": "320"
+          },
+          "t_struct(InitData)4092_storage": {
+            "label": "struct IDAv1Library.InitData",
+            "members": [
+              {
+                "label": "host",
+                "type": "t_contract(ISuperfluid)7491",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "ida",
+                "type": "t_contract(IInstantDistributionAgreementV1)5837",
+                "offset": 0,
+                "slot": "1"
+              }
+            ],
+            "numberOfBytes": "64"
+          },
+          "t_struct(User)8085_storage": {
+            "label": "struct FontProject.User",
+            "members": [
+              {
+                "label": "walletAddress",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "profileInfoCID",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "createdAt",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "updatedAt",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "lensHandle",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "4"
+              }
+            ],
+            "numberOfBytes": "160"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint32": {
+            "label": "uint32",
+            "numberOfBytes": "4"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        }
+      }
+    },
+    "7e344220a70e525c7336bb03841d61ca332f13114120fe4aaa333c915da58ad5": {
+      "address": "0xACE623747189818db7AA8057C9d50c36C44575F1",
+      "txHash": "0x277a90013ca41c214bc69d1df9a88b4d653f6443fedebc35672538c9a1d987f7",
+      "layout": {
+        "solcVersion": "0.8.16",
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:62",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:67"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:36"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_address",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:22"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "52",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:94"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ERC1967UpgradeUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/ERC1967/ERC1967UpgradeUpgradeable.sol:211"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "151",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "UUPSUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol:107"
+          },
+          {
+            "label": "fontNFT",
+            "offset": 0,
+            "slot": "201",
+            "type": "t_contract(InterPlanetaryFontNFT)8628",
+            "contract": "FontProject",
+            "src": "contracts/FontProject.sol:22"
+          },
+          {
+            "label": "currentIDAIndex",
+            "offset": 20,
+            "slot": "201",
+            "type": "t_uint32",
+            "contract": "FontProject",
+            "src": "contracts/FontProject.sol:23"
+          },
+          {
+            "label": "addressToUser",
+            "offset": 0,
+            "slot": "202",
+            "type": "t_mapping(t_address,t_struct(User)8085_storage)",
+            "contract": "FontProject",
+            "src": "contracts/FontProject.sol:25"
+          },
+          {
+            "label": "idToFontProject",
+            "offset": 0,
+            "slot": "203",
+            "type": "t_mapping(t_bytes32,t_struct(FontProjectEntity)8109_storage)",
+            "contract": "FontProject",
+            "src": "contracts/FontProject.sol:28"
+          },
+          {
+            "label": "fontProjectIdToMints",
+            "offset": 0,
+            "slot": "204",
+            "type": "t_mapping(t_bytes32,t_array(t_uint256)dyn_storage)",
+            "contract": "FontProject",
+            "src": "contracts/FontProject.sol:31"
+          },
+          {
+            "label": "_idaV1",
+            "offset": 0,
+            "slot": "205",
+            "type": "t_struct(InitData)4092_storage",
+            "contract": "FontProject",
+            "src": "contracts/FontProject.sol:42"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_array(t_uint256)dyn_storage": {
+            "label": "uint256[]",
+            "numberOfBytes": "32"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_bytes32": {
+            "label": "bytes32",
+            "numberOfBytes": "32"
+          },
+          "t_contract(IInstantDistributionAgreementV1)5837": {
+            "label": "contract IInstantDistributionAgreementV1",
+            "numberOfBytes": "20"
+          },
+          "t_contract(ISuperfluid)7491": {
+            "label": "contract ISuperfluid",
+            "numberOfBytes": "20"
+          },
+          "t_contract(ISuperfluidToken)7906": {
+            "label": "contract ISuperfluidToken",
+            "numberOfBytes": "20"
+          },
+          "t_contract(InterPlanetaryFontNFT)8628": {
+            "label": "contract InterPlanetaryFontNFT",
+            "numberOfBytes": "20"
+          },
+          "t_mapping(t_address,t_struct(User)8085_storage)": {
+            "label": "mapping(address => struct FontProject.User)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_bytes32,t_array(t_uint256)dyn_storage)": {
+            "label": "mapping(bytes32 => uint256[])",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_bytes32,t_struct(FontProjectEntity)8109_storage)": {
+            "label": "mapping(bytes32 => struct FontProject.FontProjectEntity)",
+            "numberOfBytes": "32"
+          },
+          "t_string_storage": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_struct(FontProjectEntity)8109_storage": {
+            "label": "struct FontProject.FontProjectEntity",
+            "members": [
+              {
+                "label": "id",
+                "type": "t_bytes32",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "creatorAddress",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "perCharacterMintPrice",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "metaDataCID",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "royaltyIDAIndex",
+                "type": "t_uint32",
+                "offset": 0,
+                "slot": "4"
+              },
+              {
+                "label": "idaDistributionToken",
+                "type": "t_contract(ISuperfluidToken)7906",
+                "offset": 4,
+                "slot": "4"
+              },
+              {
+                "label": "fontFilesCID",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "5"
+              },
+              {
+                "label": "mintLimit",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "6"
+              },
+              {
+                "label": "launchDateTime",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "7"
+              },
+              {
+                "label": "createdAt",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "8"
+              },
+              {
+                "label": "updatedAt",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "9"
+              }
+            ],
+            "numberOfBytes": "320"
+          },
+          "t_struct(InitData)4092_storage": {
+            "label": "struct IDAv1Library.InitData",
+            "members": [
+              {
+                "label": "host",
+                "type": "t_contract(ISuperfluid)7491",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "ida",
+                "type": "t_contract(IInstantDistributionAgreementV1)5837",
+                "offset": 0,
+                "slot": "1"
+              }
+            ],
+            "numberOfBytes": "64"
+          },
+          "t_struct(User)8085_storage": {
+            "label": "struct FontProject.User",
+            "members": [
+              {
+                "label": "walletAddress",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "profileInfoCID",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "createdAt",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "updatedAt",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "lensHandle",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "4"
+              }
+            ],
+            "numberOfBytes": "160"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint32": {
+            "label": "uint32",
+            "numberOfBytes": "4"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        }
+      }
+    }
+  }
+}

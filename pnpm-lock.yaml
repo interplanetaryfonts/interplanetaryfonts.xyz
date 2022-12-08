@@ -30,6 +30,8 @@ importers:
       '@nomiclabs/hardhat-truffle5': ^2.0.7
       '@nomiclabs/hardhat-web3': ^2.0.0
       '@openzeppelin/contracts': ^4.7.3
+      '@openzeppelin/contracts-upgradeable': ^4.8.0
+      '@openzeppelin/hardhat-upgrades': ^1.21.0
       '@superfluid-finance/ethereum-contracts': ^1.4.3
       '@superfluid-finance/sdk-core': ^0.5.8
       '@typechain/ethers-v5': ^10.1.0
@@ -49,6 +51,7 @@ importers:
       web3: ^1.8.0
     dependencies:
       '@openzeppelin/contracts': 4.7.3
+      '@openzeppelin/contracts-upgradeable': 4.8.0
       '@superfluid-finance/ethereum-contracts': 1.4.3
       '@superfluid-finance/sdk-core': 0.5.8_sup44lqfolz3u7wyp5ytwzo2j4
       dotenv: 16.0.2
@@ -61,6 +64,7 @@ importers:
       '@nomiclabs/hardhat-etherscan': 3.1.0_hardhat@2.11.2
       '@nomiclabs/hardhat-truffle5': 2.0.7_slt5ny4avuapdd7kgmro5uo4dm
       '@nomiclabs/hardhat-web3': 2.0.0_hardhat@2.11.2+web3@1.8.0
+      '@openzeppelin/hardhat-upgrades': 1.21.0_3ntlt5ghd7r3aszcba4cjdg5su
       '@typechain/ethers-v5': 10.1.0_ebgjhvw57cwzehnvbiq2qzlmhy
       '@typechain/hardhat': 6.1.3_kfdcpgjugygj6jn4axyder6ikm
       '@types/chai': 4.3.3
@@ -2939,9 +2943,52 @@ packages:
       - utf-8-validate
     dev: true
 
+  /@openzeppelin/contracts-upgradeable/4.8.0:
+    resolution: {integrity: sha512-5GeFgqMiDlqGT8EdORadp1ntGF0qzWZLmEY7Wbp/yVhN7/B3NNzCxujuI77ktlyG81N3CUZP8cZe3ZAQ/cW10w==}
+    dev: false
+
   /@openzeppelin/contracts/4.7.3:
     resolution: {integrity: sha512-dGRS0agJzu8ybo44pCIf3xBaPQN/65AIXNgK8+4gzKd5kbvlqyxryUYVLJv7fK98Seyd2hDZzVEHSWAh0Bt1Yw==}
     dev: false
+
+  /@openzeppelin/hardhat-upgrades/1.21.0_3ntlt5ghd7r3aszcba4cjdg5su:
+    resolution: {integrity: sha512-Kwl7IN0Hlhj4HluMTTl0DrtU90OI/Q6rG3sAyd2pv3fababe9EuZqs9DydOlkWM45JwTzC+eBzX3TgHsqI13eA==}
+    hasBin: true
+    peerDependencies:
+      '@nomiclabs/hardhat-ethers': ^2.0.0
+      '@nomiclabs/hardhat-etherscan': ^3.1.0
+      '@nomiclabs/harhdat-etherscan': '*'
+      ethers: ^5.0.5
+      hardhat: ^2.0.2
+    peerDependenciesMeta:
+      '@nomiclabs/harhdat-etherscan':
+        optional: true
+    dependencies:
+      '@nomiclabs/hardhat-ethers': 2.1.1_liuail6phkx7un26teqxcf6yx4
+      '@nomiclabs/hardhat-etherscan': 3.1.0_hardhat@2.11.2
+      '@openzeppelin/upgrades-core': 1.20.5
+      chalk: 4.1.2
+      debug: 4.3.4
+      ethers: 5.7.1
+      hardhat: 2.11.2_qv3zdqwr5cvvfboiktsp7a3dfa
+      proper-lockfile: 4.1.2
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
+  /@openzeppelin/upgrades-core/1.20.5:
+    resolution: {integrity: sha512-Wp4uUov9/8cY0H4xHYsGCkLh0EItrpusSdQPWOTI1Q/YDDfu4uTH3LYyTeVAavzEvkAuKCCuTOPnZBibLZGxSw==}
+    dependencies:
+      cbor: 8.1.0
+      chalk: 4.1.2
+      compare-versions: 5.0.1
+      debug: 4.3.4
+      ethereumjs-util: 7.1.5
+      proper-lockfile: 4.1.2
+      solidity-ast: 0.4.38
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
 
   /@pedrouid/environment/1.0.1:
     resolution: {integrity: sha512-HaW78NszGzRZd9SeoI3JD11JqY+lubnaOx7Pewj5pfjqWXOEATpeKIFb9Z4t2WBUK2iryiXX3lzWwmYWgUL0Ug==}
@@ -3416,7 +3463,7 @@ packages:
   /@superfluid-finance/js-sdk/0.6.3:
     resolution: {integrity: sha512-bSeV//KLAyseYwFVMGwrZmmS0iIZWx5FLGEEjXfi0oS42NFomD0MEt+iRyF7o/Jx6/8bfHGMH9I4s8LAWR27bQ==}
     dependencies:
-      '@superfluid-finance/metadata': github.com/superfluid-finance/metadata/aa1f9158956355fa1224cdf973b2dc972f3e5703
+      '@superfluid-finance/metadata': github.com/superfluid-finance/metadata/680a8020da870e28853182de5ae7f297992ac498
       '@truffle/contract': 4.5.23
       auto-bind: 4.0.0
       node-fetch: 2.6.7
@@ -3435,7 +3482,7 @@ packages:
       graphql: ^16.0.0
     dependencies:
       '@superfluid-finance/ethereum-contracts': 1.4.3
-      '@superfluid-finance/metadata': github.com/superfluid-finance/metadata/aa1f9158956355fa1224cdf973b2dc972f3e5703
+      '@superfluid-finance/metadata': github.com/superfluid-finance/metadata/680a8020da870e28853182de5ae7f297992ac498
       browserify: 17.0.0
       ethers: 5.7.1
       graphql: 16.6.0
@@ -5863,6 +5910,13 @@ packages:
       bignumber.js: 9.1.0
       nofilter: 1.0.4
 
+  /cbor/8.1.0:
+    resolution: {integrity: sha512-DwGjNW9omn6EwP70aXsn7FQJx5kO12tX0bZkaTjzdVFM6/7nhA4t0EENocKGx6D2Bch9PE2KzCUf5SceBdeijg==}
+    engines: {node: '>=12.19'}
+    dependencies:
+      nofilter: 3.1.0
+    dev: true
+
   /cborg/1.9.5:
     resolution: {integrity: sha512-fLBv8wmqtlXqy1Yu+pHzevAIkW6k2K0ZtMujNzWphLsA34vzzg9BHn+5GmZqOJkSA9V7EMKsWrf6K976c1QMjQ==}
     hasBin: true
@@ -6225,6 +6279,10 @@ packages:
   /commondir/1.0.1:
     resolution: {integrity: sha512-W9pAhw0ja1Edb5GVdIF1mjZw/ASI0AlShXM83UUGe2DVr5TdAPEA1OA8m/g8zWp9x6On7gqufY+FatDbC3MDQg==}
     dev: false
+
+  /compare-versions/5.0.1:
+    resolution: {integrity: sha512-v8Au3l0b+Nwkp4G142JcgJFh1/TUhdxut7wzD1Nq1dyp5oa3tXaqb03EXOAB6jS4gMlalkjAUPZBMiAfKUixHQ==}
+    dev: true
 
   /component-emitter/1.3.0:
     resolution: {integrity: sha512-Rd3se6QB+sO1TwqZjscQrurpEPIfO0/yYnSin6Q/rD3mOutHvUrCAhJub3r90uNb+SESBuE0QYoB90YdfatsRg==}
@@ -11510,6 +11568,11 @@ packages:
     resolution: {integrity: sha512-N8lidFp+fCz+TD51+haYdbDGrcBWwuHX40F5+z0qkUjMJ5Tp+rdSuAkMJ9N9eoolDlEVTf6u5icM+cNKkKW2mA==}
     engines: {node: '>=8'}
 
+  /nofilter/3.1.0:
+    resolution: {integrity: sha512-l2NNj07e9afPnhAhvgVrCD/oy2Ai1yfLpuo3EpiO1jFTsB4sFz6oIfAfSZyQzVpkZQ9xS8ZS5g1jCBgq4Hwo0g==}
+    engines: {node: '>=12.19'}
+    dev: true
+
   /nopt/1.0.10:
     resolution: {integrity: sha512-NWmpvLSqUrgrAC9HCuxEvb+PSloHpqVu+FqcO4eeF2h5qYRhA7ev6KvelyQAKtegUbC6RypJnlEOhd8vloNKYg==}
     hasBin: true
@@ -12304,6 +12367,14 @@ packages:
       object-assign: 4.1.1
       react-is: 16.13.1
 
+  /proper-lockfile/4.1.2:
+    resolution: {integrity: sha512-TjNPblN4BwAWMXU8s9AEz4JmQxnD1NNL7bNOY/AKUzyamc379FWASUhc/K1pL2noVb+XmZKLL68cjzLsiOAMaA==}
+    dependencies:
+      graceful-fs: 4.2.10
+      retry: 0.12.0
+      signal-exit: 3.0.7
+    dev: true
+
   /protobufjs/6.11.3:
     resolution: {integrity: sha512-xL96WDdCZYdU7Slin569tFX712BxsxslWwAfAhCYjQKGTq7dAU91Lomy6nLLhh/dyGhk/YH4TwTSRxTzhuHyZg==}
     hasBin: true
@@ -13035,6 +13106,11 @@ packages:
     resolution: {integrity: sha512-KLXY85WkEq2V2bKex/LOO1ViXVn2KGYe4PYysAdYdjmraYIUsVkXu8O4am+8+5UbaaGl1qho4aqAAPHNQ4GSbg==}
     dev: false
 
+  /retry/0.12.0:
+    resolution: {integrity: sha512-9LkiTwjUh6rT555DtE9rTX+BKByPfrMzEAtnlEtdEwr3Nkffwiihqe2bWADg+OQRjt9gl6ICdmB/ZFDCGAtSow==}
+    engines: {node: '>= 4'}
+    dev: true
+
   /retry/0.13.1:
     resolution: {integrity: sha512-XQBQ3I8W1Cge0Seh+6gjj03LbmRFWuoszgK9ooCpwYIrhhoO80pfq4cUkU5DkknwfOfFteRwlZ56PYOGYyFWdg==}
     engines: {node: '>= 4'}
@@ -13386,7 +13462,6 @@ packages:
 
   /signal-exit/3.0.7:
     resolution: {integrity: sha512-wnD2ZE+l+SPC/uoS0vXeE9L1+0wuaMqKlfz9AMUo38JsyLSBWSFcHR1Rri62LZc12vLr1gb3jl7iwQhgwpAbGQ==}
-    dev: false
 
   /simple-concat/1.0.1:
     resolution: {integrity: sha512-cSFtAPtRhljv69IK0hTVZQ+OfE9nePi/rtJmw5UjHeVyVroEqJXP1sFztKUy1qU+xvz3u/sfYJLa947b7nAN2Q==}
@@ -13493,6 +13568,10 @@ packages:
       tmp: 0.0.33
     transitivePeerDependencies:
       - debug
+    dev: true
+
+  /solidity-ast/0.4.38:
+    resolution: {integrity: sha512-e7gT6g8l8M2rAzH648QA3/IihCNy/anFoWyChVD+T+zfX4FjXbT8AO2DB3wG1iEmIBib9/+vD+GvTElWWpdw+w==}
     dev: true
 
   /solidity-coverage/0.8.2_hardhat@2.11.2:
@@ -15958,8 +16037,8 @@ packages:
       ethereumjs-util: 6.2.1
     dev: false
 
-  github.com/superfluid-finance/metadata/aa1f9158956355fa1224cdf973b2dc972f3e5703:
-    resolution: {tarball: https://codeload.github.com/superfluid-finance/metadata/tar.gz/aa1f9158956355fa1224cdf973b2dc972f3e5703}
+  github.com/superfluid-finance/metadata/680a8020da870e28853182de5ae7f297992ac498:
+    resolution: {tarball: https://codeload.github.com/superfluid-finance/metadata/tar.gz/680a8020da870e28853182de5ae7f297992ac498}
     name: '@superfluid-finance/metadata'
     version: 1.1.0
     dev: false

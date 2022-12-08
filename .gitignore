@@ -144,3 +144,5 @@ dist
 # typescript
 next-env.d.ts
 
+# openzepplin
+/contracts/.openzeppelin/unknown-*.json
