@@ -84,6 +84,10 @@ strong {
     font-weight: 600;
 }
 
+input {
+    padding: 0.25rem;
+}
+
 @media (hover) {
     a:hover {
         color: var(--darkblue);
