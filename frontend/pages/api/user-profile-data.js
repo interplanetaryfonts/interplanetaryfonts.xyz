@@ -13,8 +13,8 @@ export default async function handler(req, res) {
 async function storeUserData(req, res) {
     const body = req.body;
     try {
-        const files = await makeFileObjects(body);
-        const cid = await storeFiles(files);
+        const file = await makeFileObject(body),
+            cid = await storeFile(file);
         return res.status(200).json({ success: true, cid: cid });
     } catch (err) {
         return res
@@ -23,17 +23,13 @@ async function storeUserData(req, res) {
     }
 }
 
-async function makeFileObjects(body) {
+async function makeFileObject(body) {
     const buffer = Buffer.from(JSON.stringify(body));
     return new File([buffer], 'data.json');
 }
 
-function makeStorageClient() {
-    return new Web3Storage({ token: process.env.WEB3STORAGE_TOKEN });
-}
-
-async function storeFiles(files) {
-    const client = makeStorageClient(),
-        cid = await client.put(files);
+async function storeFile(file) {
+    const client = new Web3Storage({ token: process.env.WEB3STORAGE_TOKEN });
+    const cid = await client.put([file]);
     return cid;
 }
