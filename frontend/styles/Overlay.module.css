@@ -9,11 +9,11 @@
 }
 
 .modal {
-  width: 50%;
+  width: 300px;
   padding-bottom: 2rem;
   position: fixed;
   top: 20vh;
-  left: calc(50% - 25%);
+  left: calc(50% - 150px);
   right: auto;
   background-color: var(--light);
   border-radius: var(--global-radius);

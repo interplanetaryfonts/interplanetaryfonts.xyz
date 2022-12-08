@@ -4,8 +4,10 @@ import { createPortal } from "react-dom";
 export default function Modal(props) {
   return props.mounted
     ? createPortal(
-        <div className={classes.modal}>
-          <div className="w-full h-2 p-0"></div>
+        <div
+          className={` ${props.styleModal ? props.styleModal : classes.modal}`}
+        >
+          <div className={classes.header}></div>
           {props.children}
           <button className="text-xs " onClick={() => props.handleMount(false)}>
             Cancel

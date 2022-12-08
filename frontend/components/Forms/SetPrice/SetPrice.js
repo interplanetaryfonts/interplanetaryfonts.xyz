@@ -19,6 +19,14 @@ export default function SetPrice() {
       .positive()
       .required("A valid price is required")
       .min(1),
+    minLimit: yup
+      .number()
+      .label("Mint Limit")
+      .positive()
+      .required("A valid number is required")
+      .min(1)
+      .max(100)
+      .integer(),
   });
 
   return (
@@ -36,14 +44,21 @@ export default function SetPrice() {
       <Form className={classes.formContainer}>
         <div className={classes.title}>Set the price!</div>
         <div className={classes.formContainer}>
+          <label className={classes.labelField}>Price</label>
           <Field
             name="SetPrice"
             className=" text-red-500 placeholder:italic placeholder:text-red-100 block bg-white w-full border border-red-300 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-red-500 focus:ring-red-500 focus:ring-1 sm:text-sm"
             placeholder="00.00 USCD"
           />
+          <ErrorMessage name="SetPrice" render={renderError} />
+          <label className={classes.labelField}>Mint Limit</label>
+          <Field
+            name="minLimit"
+            className=" text-red-500 placeholder:italic placeholder:text-red-100 block bg-white w-full border border-red-300 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-red-500 focus:ring-red-500 focus:ring-1 sm:text-sm"
+            placeholder="100 units"
+          />
+          <ErrorMessage name="minLimit" render={renderError} />
         </div>
-        <ErrorMessage name="SetPrice" render={renderError} />
-
         <button className={classes.continue} type="submit">
           Continue
         </button>

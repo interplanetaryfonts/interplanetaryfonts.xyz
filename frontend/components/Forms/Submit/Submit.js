@@ -14,10 +14,11 @@ export default function Submit() {
   };
   return (
     <>
-      <div className={classes.title}>Your Font Project Name</div>
+      <div className={classes.formValues}>Name: {formData.projectName}</div>
       <div className={classes.formValues}>Price: ${formData.SetPrice}</div>
-      <div className={classes.formValues}>
-        LensHandle: @{formData.lensHandle}
+      <div className={classes.formValues}>Mint Limit: {formData.minLimit}</div>
+      <div className={classes.formValuesDescription}>
+        Description: {formData.description}
       </div>
 
       <button onClick={submit} className={classes.continue}>

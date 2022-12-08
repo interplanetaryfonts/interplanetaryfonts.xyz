@@ -1,10 +1,10 @@
 import { useState } from "react";
 import Modal from "./Modal";
 import Backdrop from "./Backdrop";
-import Worldcoin from "./Worldcoin";
 import Step from "../Step/Step";
 import Stepper from "../Stepper";
 import { createContext } from "react";
+import classes from "../../styles/Forms.module.css";
 
 export const FormContext = createContext();
 
@@ -19,7 +19,11 @@ export default function CreateProject(props) {
   return (
     <>
       <Backdrop mounted={props.mounted} handleMount={props.handleMount} />
-      <Modal mounted={props.mounted} handleMount={props.handleMount}>
+      <Modal
+        mounted={props.mounted}
+        handleMount={props.handleMount}
+        styleModal={classes.modalCreateProject}
+      >
         <FormContext.Provider
           value={{ activeStepIndex, setActiveStepIndex, formData, setFormData }}
         >
@@ -27,7 +31,6 @@ export default function CreateProject(props) {
           <Step />
         </FormContext.Provider>
       </Modal>
-      <Worldcoin handleMount={handleMount} mounted={mounted} />
     </>
   );
 }
