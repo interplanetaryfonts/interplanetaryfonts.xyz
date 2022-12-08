@@ -145,4 +145,4 @@ dist
 next-env.d.ts
 
 # openzepplin
-/contracts/.openzeppelin
+/contracts/.openzeppelin/unknown-*.json

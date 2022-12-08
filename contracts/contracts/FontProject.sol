@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.16;
 
-import "hardhat/console.sol";
 import "./InterPlanetaryFontNFT.sol";
 
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
