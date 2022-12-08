@@ -5,8 +5,6 @@ import ig from '../../public/Icons/social/instagram.svg';
 import ls from '../../public/Icons/social/lens.svg';
 import tw from '../../public/Icons/social/twitter.svg';
 
-console.log(dc);
-
 const socials = [
     {
         name: 'twitter',
