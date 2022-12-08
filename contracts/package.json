@@ -6,6 +6,7 @@
   "scripts": {
     "compile": "npx hardhat compile",
     "deploy": "npx hardhat run scripts/deploy.js --network mumbai",
+    "upgrade": "pnpm compile && npx hardhat run scripts/upgrade.js --network mumbai",
     "integration-test": "node scripts/run.js",
     "test": "npx hardhat test --network hardhat",
     "verify": "npx hardhat run scripts/verify.js --network mumbai"
@@ -28,6 +29,7 @@
     "@nomiclabs/hardhat-etherscan": "^3.0.0",
     "@nomiclabs/hardhat-truffle5": "^2.0.7",
     "@nomiclabs/hardhat-web3": "^2.0.0",
+    "@openzeppelin/hardhat-upgrades": "^1.21.0",
     "@typechain/ethers-v5": "^10.1.0",
     "@typechain/hardhat": "^6.1.2",
     "@types/chai": "^4.2.0",
@@ -44,6 +46,7 @@
   },
   "dependencies": {
     "@openzeppelin/contracts": "^4.7.3",
+    "@openzeppelin/contracts-upgradeable": "^4.8.0",
     "@superfluid-finance/ethereum-contracts": "^1.4.3",
     "@superfluid-finance/sdk-core": "^0.5.8",
     "dotenv": "^16.0.2",

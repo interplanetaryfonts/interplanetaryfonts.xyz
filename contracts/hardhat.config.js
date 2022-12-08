@@ -1,5 +1,7 @@
 require("@nomiclabs/hardhat-truffle5");
 require("@nomicfoundation/hardhat-toolbox");
+require("@nomiclabs/hardhat-etherscan");
+require('@openzeppelin/hardhat-upgrades');
 require("dotenv").config();
 
 /** @type import('hardhat/config').HardhatUserConfig */

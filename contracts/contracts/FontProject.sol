@@ -1,220 +1,275 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.16;
 
-// import "hardhat/console.sol";
 import "./InterPlanetaryFontNFT.sol";
 
-import { IERC20 } from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import {ISuperfluid, ISuperToken} from "@superfluid-finance/ethereum-contracts/contracts/apps/SuperAppBase.sol";
+import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
+
+import { ISuperfluid, ISuperfluidToken } from "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol";
 import { ISETH } from "@superfluid-finance/ethereum-contracts/contracts/interfaces/tokens/ISETH.sol";
 import {IInstantDistributionAgreementV1} from "@superfluid-finance/ethereum-contracts/contracts/interfaces/agreements/IInstantDistributionAgreementV1.sol";
 
-import {IDAv1Library} from "@superfluid-finance/ethereum-contracts/contracts/apps/IDAv1Library.sol";
+import { IDAv1Library } from "@superfluid-finance/ethereum-contracts/contracts/apps/IDAv1Library.sol";
 
-contract FontProject {
-  InterPlanetaryFontNFT private fontNFT = new InterPlanetaryFontNFT();
+contract FontProject is Initializable, OwnableUpgradeable, UUPSUpgradeable {
+  // State variable section 
+  // Keep the state variables in the same order
+  // https://docs.openzeppelin.com/upgrades-plugins/1.x/writing-upgradeable#modifying-your-contracts
+
+  InterPlanetaryFontNFT private fontNFT;
+  uint32 private currentIDAIndex;
+    // Map of created users
+  mapping(address => User) public addressToUser;
+
+  // Map of create font projects
+  mapping(bytes32 => FontProjectEntity) public idToFontProject;
+
+  // Map of project to project mints
+  mapping(bytes32 => uint256[]) public fontProjectIdToMints;
+
+  // End state variable section
+
 
   uint8 constant TOTAL_DISTRIBUTION_UNITS = 100;
-  uint8 constant OWNER_DISTRIBUTION_UNITS = 60;
+  uint8 constant OWNER_DISTRIBUTION_UNITS = 50;
   uint8 constant COLLABORATOR_DISTRIBUTION_UNITS = TOTAL_DISTRIBUTION_UNITS - OWNER_DISTRIBUTION_UNITS;
-
-  // address constant MATIC_MUMBAI_CONTRACT = 0x0000000000000000000000000000000000001010;
-  // address constant MATICX_MUMBAI_CONTRACT = 0x96B82B65ACF7072eFEb00502F45757F254c2a0D4;
 
   /// @notice IDA Library
   using IDAv1Library for IDAv1Library.InitData;
   IDAv1Library.InitData internal _idaV1;
-  address private superToken;
-  
-  mapping(bytes32 => CreateFontProject) public idToFontProject;
 
-  uint32 private currentIDAIndex = 0;
+  /// @custom:oz-upgrades-unsafe-allow constructor
+  constructor() {
+      _disableInitializers();
+  }
 
-  constructor(ISuperfluid _host, IInstantDistributionAgreementV1 _ida, address _superToken) {
+  function initialize(ISuperfluid _host, IInstantDistributionAgreementV1 _ida, InterPlanetaryFontNFT _ipfToken) initializer public {
+    __Ownable_init();
+    __UUPSUpgradeable_init();
+
+    currentIDAIndex = 0;
+
+    fontNFT = _ipfToken;
+    // TODO : Set reference to FontStream contract here
 
     // IDA Library Initialize.
     _idaV1 = IDAv1Library.InitData(
         _host,
         _ida
     );
-
-    superToken = _superToken;
   }
 
-  event NewFontProjectCreated(
-    bytes32 fontId,
+  struct User {
+    address walletAddress;
+    string profileInfoCID; // email, name, website, bio description, social links
+    uint256 createdAt;
+    uint256 updatedAt;
+    string lensHandle;
+  }
+
+  struct FontProjectEntity {
+    bytes32 id;
+    address creatorAddress; // foreign key to User struct
+    uint256 perCharacterMintPrice;
+    string metaDataCID; // name, description
+
+    // Superfluid IDA (Immediate Distribution Agreement) related data for distributing royaltys when minting
+    uint32 royaltyIDAIndex;
+    ISuperfluidToken idaDistributionToken;
+
+    string fontFilesCID; // IPFS CID pointing to source font files
+    uint256 mintLimit;
+
+    uint256 launchDateTime;
+    uint256 createdAt;
+    uint256 updatedAt;
+  }
+
+  event FontProjectCreated(
+    bytes32 id,
+    
     string metaDataCID,
     address creatorAddress,
-    uint256 mintPrice,
+    
+    uint256 perCharacterMintPrice,
+    uint256 mintLimit,
+
+    uint256 launchDateTime,
+    uint256 createdAt
+  );
+
+  event UserCreated(
+    address walletAddress,
+    string profileInfoCID,
     uint256 createdAt,
-    uint256 startDateTime
+    uint256 updatedAt,
+    string lensHandle
+  );
+
+  event UserEdited (
+    address walletAddress,
+    string profileInfoCID,
+    uint256 createdAt,
+    uint256 updatedAt,
+    string lensHandle
   );
 
   event FontProjectMinted(
-    bytes32 fontId,
+    bytes32 id,
     uint256 tokenId
   );
 
-  struct CreateFontProject {
-    bytes32 id;
-    string metaDataCID;
-    address creatorAddress;
-    uint256 mintPrice;
-    uint256[] mints;
-    address[] collaborators;
+  function createUser(
+    string calldata lensHandle,
+    string calldata profileInfoCID,
+    uint256 createdAt
+  ) external {
 
-    ISuperToken idaDistributionToken;
-    uint32 royaltyIDAIndex;
-    // uint256[] fundingStreamIds; TBD
+    require(addressToUser[msg.sender].walletAddress == address(0), "USER IS ALREADY REGISTERED");
 
-    uint256 createdAt;
-    uint256 startDateTime;
+    User memory user = User(
+      msg.sender,
+      profileInfoCID,
+      createdAt,
+      createdAt,
+      lensHandle
+    );
+
+    addressToUser[msg.sender] = user;
+
+    emit UserCreated(
+      msg.sender, 
+      profileInfoCID, 
+      createdAt, 
+      createdAt, 
+      lensHandle
+    );
   }
 
-  function createNewFontProject(
+  function editUser(
+    string calldata lensHandle,
+    string calldata profileInfoCID,
+    uint256 updatedAt
+  ) external {
+
+    require(addressToUser[msg.sender].createdAt != 0, "USER DOES NOT EXIST, PLEASE FIRST CREATE A USER USING createUser");
+
+    User memory currentUser = addressToUser[msg.sender];
+
+    User memory user = User(
+      msg.sender,
+      bytes(profileInfoCID).length == 0 ? currentUser.profileInfoCID : profileInfoCID,
+      currentUser.createdAt,
+      updatedAt,
+      bytes(lensHandle).length == 0 ? currentUser.lensHandle : lensHandle
+    );
+
+    addressToUser[msg.sender] = user;
+
+    emit UserEdited(
+      msg.sender, 
+      profileInfoCID, 
+      currentUser.createdAt, 
+      updatedAt, 
+      lensHandle
+    );
+  }
+
+  function createFontProject(
     uint256 createdAt,
-    uint256 startDateTime,
-    uint256 mintPrice,
-    string calldata metaDataCID
+    uint256 launchDateTime,
+    uint256 perCharacterMintPrice,
+    uint256 mintLimit,
+    address distributionSuperToken,
+    string calldata metaDataCID,
+    string calldata fontFilesCID
   ) external {
     bytes32 fontId = keccak256(
         abi.encodePacked(
             msg.sender,
             address(this),
             createdAt,
-            startDateTime,
-            mintPrice
+            launchDateTime,
+            perCharacterMintPrice
         )
     );
 
-    require(idToFontProject[fontId].startDateTime == 0, "FONT IS ALREADY REGISTERED");
-
-    uint256[] memory mints;
-    address[] memory collaborators;
+    require(idToFontProject[fontId].createdAt == 0, "FONT IS ALREADY REGISTERED");
 
     currentIDAIndex = currentIDAIndex + 1;
 
-    ISuperToken idaDistributionToken = ISuperToken(superToken);
-
-    CreateFontProject memory font = CreateFontProject(
+    // create font project struct
+    FontProjectEntity memory font = FontProjectEntity(
         fontId,
-        metaDataCID,
         msg.sender,
-        mintPrice,
-        mints,
-        collaborators,
-        idaDistributionToken,
+        perCharacterMintPrice,
+        metaDataCID,
         currentIDAIndex,
+        ISuperfluidToken(distributionSuperToken),
+        fontFilesCID,
+        mintLimit,
+        launchDateTime,
         createdAt,
-        startDateTime
+        createdAt
     );
     idToFontProject[fontId] = font;
 
+    // create SuperFluid IDA subscription
     _idaV1.createIndex(
       font.idaDistributionToken,
       font.royaltyIDAIndex
     );
 
+    // Give the project created the full share of the minting royalties 
+    // Once they get collaborators they still get 50% and collaborators will split
+    // the other 50%
     _idaV1.updateSubscriptionUnits(
       font.idaDistributionToken,
       font.royaltyIDAIndex,
       msg.sender,
-      1
+      TOTAL_DISTRIBUTION_UNITS
     );
 
-    emit NewFontProjectCreated(
-      fontId,
-      metaDataCID, 
-      msg.sender,
-      mintPrice, 
-      createdAt,
-      startDateTime
+    emitFontProjectCreated(font);
+  }
+
+  function emitFontProjectCreated(FontProjectEntity memory font) internal {
+    // emit FontProjectCreated event to aid in subgraph creation
+    emit FontProjectCreated(
+      font.id,
+      font.metaDataCID,
+      font.creatorAddress,
+      font.perCharacterMintPrice,
+      font.mintLimit,
+      font.launchDateTime,
+      font.createdAt
     );
   }
 
-  function addCollaborator(bytes32 fontId, address collaborator) external {
-    CreateFontProject storage font = idToFontProject[fontId];
+  function minFontProject(
 
-    require(font.startDateTime != 0, "FONT NOT FOUND");
-    require(font.creatorAddress == msg.sender, "ONLY FONT CREATOR CAN UPDATE COLLABORATORS");
-    require(!contains(font.collaborators, collaborator), "ALREADY A COLLABORATOR");
-
-    font.collaborators.push(collaborator);
-
-    setFontCollaboratorProfitDistribution(font.id, COLLABORATOR_DISTRIBUTION_UNITS);
-  }
-
-
-  function mintFontProject(
-    bytes32 fontId,
-    string memory uri
   ) external payable {
-    CreateFontProject storage font = idToFontProject[fontId];
 
-    require(font.startDateTime != 0, "FONT NOT FOUND");
-    require(msg.value == font.mintPrice, "NOT ENOUGH ETH SENT");
-
-
-    ISETH(superToken).upgradeByETHTo{ value : msg.value }(address(this));
-    // console.log("Contract Super ETH Balance", ISuperToken(superToken).balanceOf(address(this)));
-    // console.log("Contract Regular Balance", address(this).balance);
-    
-    uint256 tokenId = fontNFT.safeMint(msg.sender, uri);
-    font.mints.push(tokenId);
-
-    distributeFontProfit(fontId);
-
-    emit FontProjectMinted(
-      fontId,
-      tokenId
-    );
-  }
-
-  function contains(address[] memory arr, address searchFor) private pure returns (bool) {
-    for (uint256 i = 0; i < arr.length; i++) {
-      if (arr[i] == searchFor) {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  function setFontCollaboratorProfitDistribution(bytes32 fontId, uint128 distributionUnits) private {
-    CreateFontProject memory font = idToFontProject[fontId];
-
-    require(font.startDateTime != 0, "FONT NOT FOUND");
-    require(font.creatorAddress == msg.sender, "ONLY FONT CREATOR CAN UPDATE COLLABORATOR PROFIT DISTRIBUTION");
-
-    uint128 perCollaboratorDistributionUnits = uint128(distributionUnits / font.collaborators.length);
-
-    for (uint256 i = 0; i < font.collaborators.length; i++) {
-      _idaV1.updateSubscriptionUnits(
-        font.idaDistributionToken,
-        font.royaltyIDAIndex,
-        font.collaborators[i],
-        perCollaboratorDistributionUnits
-      );
-    }
   }
 
   function distributeFontProfit(bytes32 fontId) public {
-    CreateFontProject memory font = idToFontProject[fontId];
 
-    require(font.startDateTime != 0, "FONT NOT FOUND");
-
-    uint256 spreaderTokenBalance = font.idaDistributionToken.balanceOf(address(this));
-
-    // console.log("spreaderTokenBalance", spreaderTokenBalance);
-
-    (uint256 actualDistributionAmount, ) = _idaV1.ida.calculateDistribution(
-        font.idaDistributionToken,
-        address(this),
-        font.royaltyIDAIndex,
-        spreaderTokenBalance
-    );
-
-    _idaV1.distribute(font.idaDistributionToken, font.royaltyIDAIndex, actualDistributionAmount);
-
-    // console.log("Contract SETH balance after distribution", ISuperToken(superToken).balanceOf(address(this)));
   }
+
+  function addFontStreamCollaborator(
+    bytes32 fontProjectId, 
+    address collaborator,
+    string calldata deliverablesCID,
+    bytes32 fontStreamId
+  ) external {
+
+  }
+
+  function _authorizeUpgrade(address newImplementation)
+    internal
+    onlyOwner
+    override
+  {}
 }

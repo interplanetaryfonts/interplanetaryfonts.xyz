@@ -15,15 +15,21 @@ async function main() {
     provider
   });
 
+  console.log("Deploying InterPlanetaryFontNFT contract...");
+  const InterPlanetaryFontNFT = await ethers.getContractFactory('InterPlanetaryFontNFT');
+  const interPlanetaryFontNFTInstance = await hre.upgrades.deployProxy(InterPlanetaryFontNFT, []);
+  await interPlanetaryFontNFTInstance.deployed();
+  console.log("InterPlanetaryFontNFT contract deployed to:", interPlanetaryFontNFTInstance.address);
 
-  const fontProjectFactory = await hre.ethers.getContractFactory("FontProjectV2");
-  const fontProjectContract = await fontProjectFactory.deploy(
+  console.log("Deploying FontProject contract...");
+  const FontProject = await hre.ethers.getContractFactory("FontProject");
+  const fontProjectContractInstance = await hre.upgrades.deployProxy(FontProject, [
     sf.settings.config.hostAddress,
-    sf.settings.config.idaV1Address
-  );
-
-  await fontProjectContract.deployed();
-  console.log("Contract deployed to:", fontProjectContract.address);
+    sf.settings.config.idaV1Address,
+    interPlanetaryFontNFTInstance.address
+  ])
+  await fontProjectContractInstance.deployed();
+  console.log("FontProject contract deployed to:", fontProjectContractInstance.address);
 }
 
 async function runMain() {

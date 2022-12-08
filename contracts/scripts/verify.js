@@ -16,14 +16,13 @@ async function main() {
     provider
   });
 
+  const currentFontProjectImplAddress = await hre.upgrades.erc1967.getImplementationAddress(process.env.FONT_PROJECT_CONTRACT_ADDRESS);
+  console.log('currentFontProjectImplAddress', currentFontProjectImplAddress);
 
   // Verify the contract after deploying
   await hre.run("verify:verify", {
-    address: process.env.CONTRACT_ADDRESS,
-    constructorArguments: [
-      sf.settings.config.hostAddress,
-      sf.settings.config.idaV1Address
-    ],
+    address: currentFontProjectImplAddress,
+    constructorArguments: [],
   });
 }
 // Call the main function and catch if there is any error
