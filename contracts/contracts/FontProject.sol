@@ -12,10 +12,25 @@ import { ISuperfluid, ISuperfluidToken } from "@superfluid-finance/ethereum-cont
 import { ISETH } from "@superfluid-finance/ethereum-contracts/contracts/interfaces/tokens/ISETH.sol";
 import {IInstantDistributionAgreementV1} from "@superfluid-finance/ethereum-contracts/contracts/interfaces/agreements/IInstantDistributionAgreementV1.sol";
 
-import {IDAv1Library} from "@superfluid-finance/ethereum-contracts/contracts/apps/IDAv1Library.sol";
+import { IDAv1Library } from "@superfluid-finance/ethereum-contracts/contracts/apps/IDAv1Library.sol";
 
 contract FontProject is Initializable, OwnableUpgradeable, UUPSUpgradeable {
+  // State variable section 
+  // Keep the state variables in the same order
+  // https://docs.openzeppelin.com/upgrades-plugins/1.x/writing-upgradeable#modifying-your-contracts
+
   InterPlanetaryFontNFT private fontNFT;
+  uint32 private currentIDAIndex;
+    // Map of created users
+  mapping(address => User) public addressToUser;
+
+  // Map of create font projects
+  mapping(bytes32 => FontProjectEntity) public idToFontProject;
+
+  // Map of project to project mints
+  mapping(bytes32 => uint256[]) public fontProjectIdToMints;
+
+  // End state variable section
 
 
   uint8 constant TOTAL_DISTRIBUTION_UNITS = 100;
@@ -25,12 +40,11 @@ contract FontProject is Initializable, OwnableUpgradeable, UUPSUpgradeable {
   /// @notice IDA Library
   using IDAv1Library for IDAv1Library.InitData;
   IDAv1Library.InitData internal _idaV1;
-  uint32 private currentIDAIndex;
 
-    /// @custom:oz-upgrades-unsafe-allow constructor
-    constructor() {
-        _disableInitializers();
-    }
+  /// @custom:oz-upgrades-unsafe-allow constructor
+  constructor() {
+      _disableInitializers();
+  }
 
   function initialize(ISuperfluid _host, IInstantDistributionAgreementV1 _ida, InterPlanetaryFontNFT _ipfToken) initializer public {
     __Ownable_init();
@@ -47,7 +61,6 @@ contract FontProject is Initializable, OwnableUpgradeable, UUPSUpgradeable {
         _ida
     );
   }
-
 
   struct User {
     address walletAddress;
@@ -103,15 +116,6 @@ contract FontProject is Initializable, OwnableUpgradeable, UUPSUpgradeable {
     uint256 updatedAt,
     string lensHandle
   );
-
-  // Map of created users
-  mapping(address => User) public addressToUser;
-
-  // Map of create font projects
-  mapping(bytes32 => FontProjectEntity) public idToFontProject;
-
-  // Map of project to project mints
-  mapping(bytes32 => uint256[]) public fontProjectIdToMints;
 
   event FontProjectMinted(
     bytes32 id,

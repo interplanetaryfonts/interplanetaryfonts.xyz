@@ -13,6 +13,8 @@ let sf;
 let nativeSuperTokenAddress;
 let fontProjectContractInstance;
 
+const createdAt = 1718926200;
+const updatedAt = 1718926300;
 
 before(async () => {
   [admin, alice, bob] = await ethers.getSigners();
@@ -55,7 +57,6 @@ describe('FontProject (Proxy) Contract', () => {
   it('should allow for creating a user', async () => {
     const lensHandle = 'jptest.lens';
     const profileInfoCID = 'aprofileInfoCID5rymsxmkdxpmkfwyvbjrrwcl7cekmbzlupmp5ypkyfi';
-    const createdAt = 1718926200;
     const txn = await fontProjectContractInstance.connect(alice).createUser(
       lensHandle,
       profileInfoCID,
@@ -105,8 +106,39 @@ describe('FontProject (Proxy) Contract', () => {
       'USER IS ALREADY REGISTERED'
     );
   });
+  it('should allow for editing a user', async () => {
+    const lensHandle = 'jptest.lens';
+    const profileInfoCID = 'anewprofileInfoCID5rymsxmkdxpmkfwyvbjrrwcl7cekmbzlupmp5ypkyfi';
+    const txn = await fontProjectContractInstance.connect(alice).editUser(
+      lensHandle,
+      profileInfoCID,
+      updatedAt
+    );
+
+    const wait = await txn.wait();
+
+    // Assert UserCreated event was emitted
+    expect(wait.events[0].event).to.equal('UserEdited');
+    expect(wait.events[0].args.slice(0, 5)).to.deep.equal([
+      alice.address,
+      profileInfoCID,
+      ethers.BigNumber.from(1718926200),
+      ethers.BigNumber.from(updatedAt),
+      lensHandle
+    ]);
+
+    const user = await fontProjectContractInstance.addressToUser(alice.address);
+
+    // Assert user was added to addressToUser map
+    expect(user.slice(0, 5)).to.deep.equal([
+      alice.address,
+      profileInfoCID,
+      ethers.BigNumber.from(1718926200),
+      ethers.BigNumber.from(updatedAt),
+      lensHandle
+    ]);
+  });
   it('should allow for creating a font project', async () => {
-    const createdAt = 1718926200;
     const launchDateTime = 1718926900;
     const perCharacterMintPrice = 1;
     const mintLimit = 100;
@@ -174,7 +206,6 @@ describe('FontProject (Proxy) Contract', () => {
     await expect(aliceSubscription.units).to.equal('100');
   });
   it('shouldn\'t allow creating the same font project twice', async () => {
-    const createdAt = 1718926200;
     const launchDateTime = 1718926900;
     const perCharacterMintPrice = 1;
     const mintLimit = 100;
