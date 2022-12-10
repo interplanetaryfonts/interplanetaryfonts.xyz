@@ -1,15 +1,35 @@
-import React, { useImperativeHandle, useRef } from 'react';
+import React, { useRef, useImperativeHandle } from 'react';
 import classes from '../../styles/Form.module.css';
 
-export default function Input(props, ref) {
-    const inputRef = useRef();
+const Input = React.forwardRef((props, ref) => {
+    const inputRef = useRef(),
+        activate = () => {
+            inputRef.current.focus();
+        };
+    useImperativeHandle(ref, () => {
+        return { focus: activate };
+    });
 
     return (
-        <div className={classes.field}>
-            <label className={classes.label} htmlFor={props.htmlFor}>
+        <div
+            className={`${classes.field}  ${
+                props.isValid === false ? classes.invalid : ''
+            }`}
+        >
+            <label className={classes.label} htmlFor={props.id}>
                 {props.label}
             </label>
-            <input id={props.id} />
+            <input
+                ref={inputRef}
+                id={props.id}
+                type={props.type}
+                value={props.value}
+                onChange={props.onChange}
+                onBlur={props.onBlur}
+            />
         </div>
     );
-}
+});
+
+Input.displayName = 'Input';
+export default Input;

@@ -4,13 +4,15 @@
     gap: 0.5rem;
     width: 100%;
     max-width: 350px;
+    padding: 1rem;
+    border: 2px solid var(--red);
+    border-radius: var(--global-radius);
 }
 
 .field {
     display: flex;
     flex-direction: column;
     gap: 0.25rem;
-    padding: 0.5rem;
     color: var(--darkblue);
 }
 
@@ -22,4 +24,8 @@
 .input {
     padding: 0.5rem;
     color: var(--darkblue);
+}
+
+.invalid {
+    color: var(--red);
 }

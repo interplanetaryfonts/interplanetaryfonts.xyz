@@ -1,54 +1,91 @@
-import { useReducer } from 'react';
+import { useRef, useReducer } from 'react';
 // Components
-import Button from '../components/UI/Button';
 import Form from '../components/UI/Form';
 import Input from '../components/UI/Input';
 
 const userFormReducer = (state, action) => {
-    console.log('Reducer');
+    const validators = {
+        email: /[^@]+@[A-Za-z0-9-]+\.[A-Za-z]+/,
+        username: { grep: /[A-Za-z0-9-]+/, len: 2 },
+        website: { grep: /[A-Za-z0-9-]+\.[A-Za-z]+/, len: 5 },
+        bio: { min: 1, max: 120 },
+        links: 1,
+    };
+    switch (action.type) {
+        case 'EMAIL_INPUT':
+            return {
+                ...state,
+                email: action.val,
+                emailIsValid: action.val.match(validators.email),
+            };
+        case 'USERNAME_INPUT':
+            return {
+                ...state,
+                username: action.val,
+                usernameIsValid:
+                    action.val.match(validators.username.grep) &&
+                    action.val.trim().length > validators.username.len,
+            };
+        case 'WEBSITE_INPUT':
+            return {
+                ...state,
+                website: action.val,
+                websiteIsValid:
+                    action.val.match(validators.website.grep) &&
+                    action.val.trim().length > validators.website.len,
+            };
+        case 'BIO_INPUT':
+            return {
+                ...state,
+                bio: action.val,
+                bioIsValid:
+                    action.val.trim().length >= validators.bio.min &&
+                    action.val.trim().length <= validators.bio.max,
+            };
+        case 'LINKS_INPUT':
+            return {
+                ...state,
+                lnks: action.val,
+                linksAreValid: action.val.trim().length >= validators.links,
+            };
+        case 'INPUT_BLUR':
+            return state;
+    }
 };
 
 export default function UserTest() {
-    const [userFormState, dispatchUserForm] = useReducer(userFormReducer, {
+    const [emailRef, usernameRef, websiteRef, bioRef, linksRef] = [
+            useRef(),
+            useRef(),
+            useRef(),
+            useRef(),
+            useRef(),
+        ],
+        [userFormState, dispatchUserForm] = useReducer(userFormReducer, {
             email: '',
+            emailIsValid: null,
             username: '',
+            usernameIsValid: null,
             website: '',
+            websiteIsValid: null,
             bio: '',
-            links: [],
+            bioIsValid: null,
+            links: '', // Will change to an array later
+            linksAreValid: null,
         }),
         formInputChangeHandler = e => {
-            if (e.target.id === 'user-email') {
-                dispatchUserForm({
-                    type: 'EMAIL_INPUT',
-                    val: e.target.value,
-                });
-            } else if (e.target.id === 'username') {
-                dispatchUserForm({
-                    type: 'USERNAME_INPUT',
-                    val: e.target.value,
-                });
-            } else if (e.target.id === 'user-website') {
-                dispatchUserForm({
-                    type: 'WEBSITE_INPUT',
-                    val: e.target.value,
-                });
-            } else if (e.target.id === 'user-bio') {
-                dispatchUserForm({
-                    type: 'BIO_INPUT',
-                    val: e.target.value,
-                });
-            } else if (e.target.id === 'user-links') {
-                dispatchUserForm({
-                    type: 'LINKS_INPUT',
-                    val: e.target.value,
-                });
-            }
+            const rawID = e.target.id.replace('user-', '');
+            dispatchUserForm({
+                type: `${rawID.toUpperCase()}_INPUT`,
+                val: e.target.value,
+            });
         },
-        validateFormInputHandler = e => {
+        validateFormInputHandler = _ => {
             dispatchUserForm({ type: 'INPUT_BLUR' });
         };
 
-    async function handleCreateUser() {
+    async function handleCreateUser(e) {
+        e.preventDefault();
         const body = {
             email: userFormState.email,
             name: userFormState.username,
@@ -79,9 +116,58 @@ export default function UserTest() {
         }
     }
     return (
-        <Form>
-            <Input id='user-email' htmlFor='user-email' label='E-Mail' />
-            <Button onClick={handleCreateUser}>Create User</Button>
+        <Form onSubmit={handleCreateUser}>
+            <Input
+                ref={emailRef}
+                id='user-email'
+                label='E-Mail'
+                type='email'
+                onChange={formInputChangeHandler}
+                onBlur={validateFormInputHandler}
+                value={userFormState.email}
+                isValid={userFormState.emailIsValid}
+            />
+            <Input
+                ref={usernameRef}
+                id='username'
+                label='Username'
+                type='text'
+                onChange={formInputChangeHandler}
+                onBlur={validateFormInputHandler}
+                value={userFormState.username}
+                isValid={userFormState.usernameIsValid}
+            />
+            <Input
+                ref={websiteRef}
+                id='user-website'
+                label='Website'
+                type='url'
+                onChange={formInputChangeHandler}
+                onBlur={validateFormInputHandler}
+                value={userFormState.website}
+                isValid={userFormState.websiteIsValid}
+            />
+            <Input
+                ref={bioRef}
+                id='user-bio'
+                label='Biography'
+                type='text'
+                onChange={formInputChangeHandler}
+                onBlur={validateFormInputHandler}
+                value={userFormState.bio}
+                isValid={userFormState.bioIsValid}
+            />
+            <Input
+                ref={linksRef}
+                id='user-links'
+                label='Links'
+                type='url'
+                onChange={formInputChangeHandler}
+                onBlur={validateFormInputHandler}
+                value={userFormState.links}
+                isValid={userFormState.linksAreValid}
+            />
+            <input type='submit' value='Create User' />
         </Form>
     );
 }
