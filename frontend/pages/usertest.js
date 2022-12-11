@@ -45,7 +45,7 @@ const userFormReducer = (state, action) => {
         case 'LINKS_INPUT':
             return {
                 ...state,
-                lnks: action.val,
+                links: action.val,
                 linksAreValid: action.val.trim().length >= validators.links,
             };
         case 'INPUT_BLUR':
@@ -53,7 +53,7 @@ const userFormReducer = (state, action) => {
     }
 };
 
-export default function UserTest() {
+export default function UserTest(props) {
     const [emailRef, usernameRef, websiteRef, bioRef, linksRef] = [
             useRef(),
             useRef(),
@@ -115,59 +115,72 @@ export default function UserTest() {
             );
         }
     }
+    console.log(props);
     return (
-        <Form onSubmit={handleCreateUser}>
-            <Input
-                ref={emailRef}
-                id='user-email'
-                label='E-Mail'
-                type='email'
-                onChange={formInputChangeHandler}
-                onBlur={validateFormInputHandler}
-                value={userFormState.email}
-                isValid={userFormState.emailIsValid}
-            />
-            <Input
-                ref={usernameRef}
-                id='username'
-                label='Username'
-                type='text'
-                onChange={formInputChangeHandler}
-                onBlur={validateFormInputHandler}
-                value={userFormState.username}
-                isValid={userFormState.usernameIsValid}
-            />
-            <Input
-                ref={websiteRef}
-                id='user-website'
-                label='Website'
-                type='url'
-                onChange={formInputChangeHandler}
-                onBlur={validateFormInputHandler}
-                value={userFormState.website}
-                isValid={userFormState.websiteIsValid}
-            />
-            <Input
-                ref={bioRef}
-                id='user-bio'
-                label='Biography'
-                type='text'
-                onChange={formInputChangeHandler}
-                onBlur={validateFormInputHandler}
-                value={userFormState.bio}
-                isValid={userFormState.bioIsValid}
-            />
-            <Input
-                ref={linksRef}
-                id='user-links'
-                label='Links'
-                type='url'
-                onChange={formInputChangeHandler}
-                onBlur={validateFormInputHandler}
-                value={userFormState.links}
-                isValid={userFormState.linksAreValid}
-            />
-            <input type='submit' value='Create User' />
-        </Form>
+        <>
+            <h1>Create/Edit user</h1>
+            {props.connected && (
+                <Form onSubmit={handleCreateUser}>
+                    <Input
+                        ref={emailRef}
+                        id='user-email'
+                        label='E-Mail'
+                        type='email'
+                        onChange={formInputChangeHandler}
+                        onBlur={validateFormInputHandler}
+                        value={userFormState.email}
+                        isValid={userFormState.emailIsValid}
+                    />
+                    <Input
+                        ref={usernameRef}
+                        id='username'
+                        label='Username'
+                        type='text'
+                        onChange={formInputChangeHandler}
+                        onBlur={validateFormInputHandler}
+                        value={userFormState.username}
+                        isValid={userFormState.usernameIsValid}
+                    />
+                    <Input
+                        ref={websiteRef}
+                        id='user-website'
+                        label='Website'
+                        type='url'
+                        onChange={formInputChangeHandler}
+                        onBlur={validateFormInputHandler}
+                        value={userFormState.website}
+                        isValid={userFormState.websiteIsValid}
+                    />
+                    <Input
+                        ref={bioRef}
+                        id='user-bio'
+                        label='Biography'
+                        type='text'
+                        onChange={formInputChangeHandler}
+                        onBlur={validateFormInputHandler}
+                        value={userFormState.bio}
+                        isValid={userFormState.bioIsValid}
+                    />
+                    <Input
+                        ref={linksRef}
+                        id='user-links'
+                        label='Links'
+                        type='url'
+                        onChange={formInputChangeHandler}
+                        onBlur={validateFormInputHandler}
+                        value={userFormState.links}
+                        isValid={userFormState.linksAreValid}
+                    />
+                    <input
+                        type='submit'
+                        value={
+                            props.connected && props.token
+                                ? 'Edit User'
+                                : 'Create User'
+                        }
+                    />
+                </Form>
+            )}
+        </>
     );
 }
