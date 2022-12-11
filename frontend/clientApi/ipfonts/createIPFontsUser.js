@@ -35,21 +35,21 @@ export async function createIPFontsUser({
   });
 
   const isRegistered = !ethers.BigNumber.from(createdAt).isZero;
-  console.log(isRegistered);
-  // if (!isRegistered) {
-  //   const createdAt = Date.now();
+  
+  if (!isRegistered) {
+    const createdAt = Date.now();
 
-  //   const txn = await ipfontsContract.createUser(
-  //     lensHandle,
-  //     profileInfoCID,
-  //     createdAt,
-  //     { gasLimit: 900000 }
-  //   );
-  //   console.log("IPFonts : Creating user entity", txn.hash);
+    const txn = await ipfontsContract.createUser(
+      lensHandle,
+      profileInfoCID,
+      createdAt,
+      { gasLimit: 900000 }
+    );
+    console.log("IPFonts : Creating user entity", txn.hash);
 
-  //   const wait = await txn.wait();
-  //   console.log("IPFonts : User entity created", txn.hash);
-  // } else {
-  //   console.log('User alread registered');
-  // }
+    const wait = await txn.wait();
+    console.log("IPFonts : User entity created", txn.hash);
+  } else {
+    console.log('User alread registered');
+  }
 }
