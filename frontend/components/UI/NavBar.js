@@ -41,21 +41,6 @@ export default function NavBar(props) {
                 },
             } = authData;
             props.handleLensLogin(accessToken, refreshToken);
-
-            // TODO - check for user existing in our contract using graph call
-            // before going on and creating the user 
-            const { data: profileData } = await lensClient.query({
-                query: getProfileByAddress,
-                variables: {
-                    owner: lensaddress,
-                },
-            });
-
-            const lensHandle = profileData?.profiles?.items[0]?.handle;
-
-            if (lensHandle) {
-                await createIPFontsUser({ lensAddress: lensaddress, lensHandle });
-            }
         } catch (err) {
             window.localStorage.removeItem('lens-auth-token');
             console.log('Error signing in: ', err);
