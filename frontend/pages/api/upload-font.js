@@ -1,7 +1,23 @@
 import { withIronSessionApiRoute } from 'iron-session/next';
-import { Web3Storage, File, getFilesFromPath } from "web3.storage";
+import multer from 'multer';
 import ironOptions from '../../config/ironOptions';
 import { storeFilesIPFS } from '../../utils/storeFilesIPFS';
+import { runMiddleware } from '../../utils/runMiddleware';
+
+const upload = multer({
+  dest: 'font-uploads/',
+  fileFilter : (req, file, cb) => {
+    if (!file.mimetype.includes('font/')) {
+      cb(null, false);
+    } else {
+      cb(null, true);
+    }
+  },
+  limits: {
+    fields: 0,
+    fileSize: 2097152
+  }
+});
 
 const handler = async (req, res) => {
   const { method } = req;
@@ -9,13 +25,21 @@ const handler = async (req, res) => {
     case 'POST':
       try {
         // Check that user has signed in and is authorized to uplaod files
-        if (!req.session.siwe) {
-          return res.status(401).json({ message: 'You have to sign-in first' });
-        } 
-        // TODO: Validate and Upload fonts to IPFS
-        // await storeFilesIPFS(files);
+        // if (!req.session.siwe) {
+        //   return res.status(401).json({ message: 'You have to sign-in first' });
+        // } 
+        // Parse multi-part upload request with multer middleware
+        await runMiddleware(req, res, upload.array('fonts', 4));
 
-        res.json({ ok: true });
+        // Get all the local paths of the uploaded files
+        const filePaths = req.files.map(file => path);
+        // Upload files to IPFS
+        const cid = await storeFilesIPFS(filePaths);
+
+        res.json({
+          ok: true,
+          cid 
+        });
       } catch (_error) {
         res.json({ ok: false });
       }
@@ -27,3 +51,9 @@ const handler = async (req, res) => {
 }
 
 export default withIronSessionApiRoute(handler, ironOptions)
+
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+}
