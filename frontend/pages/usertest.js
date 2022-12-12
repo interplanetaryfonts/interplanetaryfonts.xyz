@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef, useReducer } from 'react';
 import { client as lensClient, getProfileByAddress } from '../clientApi';
-import { ethers } from 'ethers';
 import connectContract from '../utils/connectContract';
 // Components
 import Form from '../components/UI/Form';
