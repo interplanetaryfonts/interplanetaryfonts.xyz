@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import classes from '../../styles/Overlay.module.css';
 import Modal from './Modal';
 import Backdrop from './Backdrop';
