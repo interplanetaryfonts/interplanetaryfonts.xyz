@@ -42,6 +42,9 @@ function Files() {
         <div className={classes.title}>Upload OTF and/or TTF files!</div>
         <div className={classes.formContainer}>
           <Field
+            accept=".ttf,.otf,.woff,.woff2"
+            name="fonts"
+            multiple="multiple"
             type="file"
             name="files"
             className="rounded-md mx-auto border-0 p-2block w-full text-l text-darkblue

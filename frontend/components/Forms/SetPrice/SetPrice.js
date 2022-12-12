@@ -13,7 +13,7 @@ export default function SetPrice() {
   );
 
   const ValidationSchema = yup.object().shape({
-    SetPrice: yup
+    setPrice: yup
       .number()
       .label("Price")
       .positive()
@@ -32,7 +32,8 @@ export default function SetPrice() {
   return (
     <Formik
       initialValues={{
-        SetPrice: "",
+        setPrice: 0,
+        minLimit: 0,
       }}
       validationSchema={ValidationSchema}
       onSubmit={(values) => {
@@ -46,11 +47,11 @@ export default function SetPrice() {
         <div className={classes.formContainer}>
           <label className={classes.labelField}>Price</label>
           <Field
-            name="SetPrice"
+            name="setPrice"
             className=" text-red-500 placeholder:italic placeholder:text-red-100 block bg-white w-full border border-red-300 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-red-500 focus:ring-red-500 focus:ring-1 sm:text-sm"
             placeholder="00.00 USCD"
           />
-          <ErrorMessage name="SetPrice" render={renderError} />
+          <ErrorMessage name="setPrice" render={renderError} />
           <label className={classes.labelField}>Mint Limit</label>
           <Field
             name="minLimit"
