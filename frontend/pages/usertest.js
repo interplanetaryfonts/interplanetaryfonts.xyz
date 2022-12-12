@@ -173,6 +173,9 @@ export default function UserTest(props) {
 
     return (
         <Form onSubmit={handleCreateUser}>
+            {!props.connected && (
+                <h5>Connect your wallet to create or edit your user</h5>
+            )}
             {props.connected && (
                 <>
                     <h5>{hasIPFonts ? 'Welcome back!' : 'Welcome!'}</h5>
