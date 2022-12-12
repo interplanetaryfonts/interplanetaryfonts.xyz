@@ -1,4 +1,6 @@
-import { useRef, useReducer } from 'react';
+import { useState, useEffect, useRef, useReducer } from 'react';
+import { client as lensClient, getProfileByAddress } from '../clientApi';
+import connectContract from '../utils/connectContract';
 // Components
 import Form from '../components/UI/Form';
 import Input from '../components/UI/Input';
@@ -73,6 +75,8 @@ export default function UserTest(props) {
             links: '', // Will change to an array later
             linksAreValid: null,
         }),
+        [hasIPFonts, setHasIPFonts] = useState(false),
+        [hasLens, setHasLens] = useState(false),
         formInputChangeHandler = e => {
             const rawID = e.target.id.replace('user-', '');
             dispatchUserForm({
@@ -83,6 +87,33 @@ export default function UserTest(props) {
         validateFormInputHandler = _ => {
             dispatchUserForm({ type: 'INPUT_BLUR' });
         };
+
+    // Check if the user has IPFonts and lens profile
+    useEffect(() => {
+        async function checkLens() {
+            try {
+                // Has IPFonts profile
+                const ipfontsContract = await connectContract();
+                if (!ipfontsContract) {
+                    console.log('Cound not connect to contract');
+                    return;
+                }
+                const ipfontsProfile = await ipfontsContract.addressToUser(
+                    props.address
+                );
+                setHasIPFonts(Boolean(ipfontsProfile.createdAt));
+                // Has Lens profile
+                const getLensUser = await lensClient.mutate({
+                    mutation: getProfileByAddress,
+                    variables: { owner: props.address },
+                });
+                setHasLens(Boolean(getLensUser.data.profiles.items));
+            } catch (err) {
+                console.log(`Couldn't get the data: ${err}`);
+            }
+        }
+        checkLens();
+    }, [props.address]);
 
     async function handleCreateUser(e) {
         e.preventDefault();
@@ -115,12 +146,12 @@ export default function UserTest(props) {
             );
         }
     }
-    console.log(props);
+
     return (
-        <>
-            <h1>Create/Edit user</h1>
+        <Form onSubmit={handleCreateUser}>
             {props.connected && (
-                <Form onSubmit={handleCreateUser}>
+                <>
+                    <h5>{hasIPFonts ? 'Welcome back!' : 'Welcome!'}</h5>
                     <Input
                         ref={emailRef}
                         id='user-email'
@@ -173,14 +204,10 @@ export default function UserTest(props) {
                     />
                     <input
                         type='submit'
-                        value={
-                            props.connected && props.token
-                                ? 'Edit User'
-                                : 'Create User'
-                        }
+                        value={hasIPFonts ? 'Edit User' : 'Create User'}
                     />
-                </Form>
+                </>
             )}
-        </>
+        </Form>
     );
 }
