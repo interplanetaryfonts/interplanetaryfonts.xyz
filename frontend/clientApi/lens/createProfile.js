@@ -1,13 +1,12 @@
 import { gql } from '@apollo/client';
 
-export const createProfile = gql`
+export const createProfile = handle => gql`
     mutation CreateProfile {
         createProfile(
             request: {
-                handle: "jptestdev"
+                handle: "${handle}"
                 profilePictureUri: null
-                followNFTURI: null
-                followModule: null
+                followModule: { freeFollowModule: true }
             }
         ) {
             ... on RelayerResult {
