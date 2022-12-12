@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useReducer } from 'react';
 import { client as lensClient, getProfileByAddress } from '../clientApi';
+import { ethers } from 'ethers';
 import connectContract from '../utils/connectContract';
 // Components
 import Form from '../components/UI/Form';
@@ -76,7 +77,7 @@ export default function UserTest(props) {
             linksAreValid: null,
         }),
         [hasIPFonts, setHasIPFonts] = useState(false),
-        [hasLens, setHasLens] = useState(false),
+        [lensHandle, setLensHandle] = useState(''),
         formInputChangeHandler = e => {
             const rawID = e.target.id.replace('user-', '');
             dispatchUserForm({
@@ -98,16 +99,20 @@ export default function UserTest(props) {
                     console.log('Cound not connect to contract');
                     return;
                 }
+                console.log(ipfontsContract);
                 const ipfontsProfile = await ipfontsContract.addressToUser(
                     props.address
                 );
-                setHasIPFonts(Boolean(ipfontsProfile.createdAt));
+                setHasIPFonts(Boolean(ipfontsProfile.createdAt.toNumber()));
                 // Has Lens profile
                 const getLensUser = await lensClient.mutate({
-                    mutation: getProfileByAddress,
-                    variables: { owner: props.address },
-                });
-                setHasLens(Boolean(getLensUser.data.profiles.items));
+                        mutation: getProfileByAddress,
+                        variables: { owner: props.address },
+                    }),
+                    hasLens = Boolean(getLensUser.data.profiles.items.length);
+                setLensHandle(
+                    hasLens ? getLensUser.data.profiles.items[0].handle : ''
+                );
             } catch (err) {
                 console.log(`Couldn't get the data: ${err}`);
             }
@@ -135,10 +140,29 @@ export default function UserTest(props) {
                     'Oops! Something went wrong. Please refresh and try again.'
                 );
             } else {
-                let responseJSON = await response.json();
-                alert(
-                    `User data successfully submitted! Check it at https://${responseJSON.cid}.ipfs.w3s.link/data.json`
-                );
+                const ipfontsContract = await connectContract();
+                if (ipfontsContract) {
+                    let responseJSON = await response.json();
+                    const cid = `https://${responseJSON.cid}.ipfs.w3s.link/data.json`;
+                    let txn;
+                    if (!hasIPFonts) {
+                        txn = await ipfontsContract.createUser(
+                            lensHandle,
+                            cid,
+                            Date.now(),
+                            { gasLimit: 900000 }
+                        );
+                        console.log('Sending transaction');
+                        const wait = await txn.wait();
+                        alert(
+                            `User data successfully submitted! Check it at ${cid}`
+                        );
+                    } else {
+                        console.log('Modify user logic goes here');
+                    }
+                } else {
+                    alert("Couldn't connect contract!");
+                }
             }
         } catch (error) {
             alert(
