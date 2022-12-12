@@ -6,42 +6,16 @@ import Button from '../UI/Button';
 import Worldcoin from './Worldcoin';
 
 export default function CreateProject(props) {
-  const fileInputRef = useRef(null);
-
   const [mounted, setMounted] = useState(false),
     handleMount = bool => {
       setMounted(bool);
     };
-
-  const onSubmit = async (event) => {
-    event.preventDefault();
-
-    const formData = new FormData();
-    const { files } = fileInputRef.current;
-    for (let i = 0; i < files.length; i++) {
-      formData.append('fonts', files[i]);
-    };
-
-    const res = await fetch('/api/upload-font', {
-      method: 'POST',
-      body: formData,
-    });
-
-    console.log(res);
-  };
-
   return (
     <>
       <Backdrop mounted={props.mounted} handleMount={props.handleMount} />
       <Modal mounted={props.mounted} handleMount={props.handleMount}>
         <div className={classes['modal-content']}>
           <p>Upload font files</p>
-          <form onSubmit={onSubmit}>
-            <div>
-              <input accept=".ttf,.otf,.woff,.woff2" ref={fileInputRef} type="file" name="fonts" multiple="multiple" />
-              <input type="submit" value="Get me the stats!" />
-            </div>
-          </form>
           <Button>Upload</Button>
           <div className={classes['elements-block']}>
             <label htmlFor='price'>{`Set Price`}</label>

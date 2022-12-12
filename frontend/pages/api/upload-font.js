@@ -51,9 +51,9 @@ const handler = async (req, res) => {
     case 'POST':
       try {
         // Check that user has signed in and is authorized to uplaod files
-        // if (!req.session.siwe) {
-        //   return res.status(401).json({ message: 'You have to sign-in first' });
-        // }
+        if (!req.session.siwe) {
+          return res.status(401).json({ message: 'You have to sign-in first' });
+        }
         // Parse multi-part upload request with multer middleware
         await runMiddleware(req, res, uploadMiddleware.array('fonts', 4));
 
