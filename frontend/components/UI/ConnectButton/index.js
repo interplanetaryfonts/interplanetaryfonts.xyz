@@ -6,7 +6,6 @@ import ConnectionStatus from '../ConnectionStatus';
 import classes from './ConnectButton.module.css';
 
 export default function ConnectButton({
-  handleConnected,
   handleLensLogout,
   isLoggedInWithLens,
   onLensLogin
@@ -30,12 +29,6 @@ export default function ConnectButton({
           account &&
           chain &&
           (!authenticationStatus || authenticationStatus === 'authenticated');
-
-        if (connected) {
-          handleConnected(true, account.address);
-        } else {
-          handleConnected(false, '');
-        }
 
         const wrapperClasses = clsx({
           [classes.wrapperLoading] : !ready

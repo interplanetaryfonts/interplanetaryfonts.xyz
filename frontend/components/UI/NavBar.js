@@ -60,7 +60,6 @@ export default function NavBar(props) {
                     </Link>
                 </div>
                 <ConnectButton
-                    handleConnected={props.handleConnected}
                     handleLensLogout={props.handleLensLogout}
                     isLoggedInWithLens={props.token}
                     onLensLogin={props.handleLensLogin}

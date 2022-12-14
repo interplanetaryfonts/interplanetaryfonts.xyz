@@ -1,9 +1,9 @@
 import Link from 'next/link';
 import { client as lensClient, challenge, authenticate } from '../../../clientApi';
 import { ethers } from 'ethers';
+import clsx from 'clsx';
 
 import classes from './ConnectionStatus.module.css';
-
 
 export default function ConnectionStatus({
   accountAddress,
@@ -50,16 +50,15 @@ export default function ConnectionStatus({
   return (
     <div className={classes.connectedContainer}>
       <button
-        className={classes.displayNameButton}
+        className={clsx(classes.button, classes.displayNameButton)}
         onClick={onOpenAccountModal}
         type='button'
       >
-        {accountDisplayName}
-        {accountDisplayBalance ?? ''}
+        {accountDisplayName} ({accountDisplayBalance ?? ''})
       </button>
       <div className={classes.networkProfile}>
         <button
-          className={classes.networkProfileButton}
+          className={clsx(classes.button, classes.networkProfileButton)}
           onClick={onOpenChainModal}
           type='button'
         >
@@ -68,19 +67,21 @@ export default function ConnectionStatus({
         <Link
           href={`/user/${accountAddress}`}
         >
-          <button className={classes.button}>
+          <button className={clsx(classes.button, classes.dashBoardButton)}>
             Dashboard
           </button>
         </Link>
 
         {isLoggedInWithLens ? (
           <button
+            className={classes.button}
             onClick={onLensLogout}
           >
             Disconnect Lens
           </button>
         ) : (
           <button
+            className={classes.button}
             onClick={() =>
               lensLogin(
                 accountAddress

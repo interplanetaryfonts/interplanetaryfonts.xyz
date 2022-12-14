@@ -89,14 +89,15 @@ export default function useIronSessionRainbowAuthAdapter() {
       },
 
       signOut: async () => {
-        setAuthStatus('unauthenticated');
         await fetch('/api/logout');
+        setAuthStatus('unauthenticated');
       },
     });
   }, []);
 
   return {
     authAdapter,
-    authStatus
+    authStatus,
+    isConnected : authStatus === 'authenticated'
   };
 }

@@ -11,7 +11,7 @@ import {
     RainbowKitAuthenticationProvider,
     lightTheme,
 } from '@rainbow-me/rainbowkit';
-import { chain, configureChains, createClient, WagmiConfig } from 'wagmi';
+import { chain, configureChains, createClient, WagmiConfig, useAccount } from 'wagmi';
 import { infuraProvider } from 'wagmi/providers/infura';
 import { publicProvider } from 'wagmi/providers/public';
 import useIronSessionRainbowAuthAdapter from '../hooks/useIronSessionRainbowAuthAdapter';
@@ -133,21 +133,14 @@ const fakeUser = {
     };
 
 export default function MyApp({ Component, pageProps }) {
+    const { address } = useAccount();
     const {
         authAdapter,
-        authStatus
+        authStatus,
+        isConnected
     } = useIronSessionRainbowAuthAdapter();
-
-    const [font] = useState(fakeFont),
-        [user] = useState(fakeUser),
-        [connected, setConnected] = useState(true),
-        [address, setAddress] = useState(),
-        [token, setToken] = useState();
-
-    const handleConnected = (bool, currentAddress) => {
-        setConnected(bool);
-        setAddress(currentAddress);
-    };
+    
+    const [token, setToken] = useState();
 
     useEffect(() => {
         // Lens connection
@@ -168,7 +161,9 @@ export default function MyApp({ Component, pageProps }) {
         const localToken = lclStrorage.getItem('lens-auth-token');
         if (localToken) {
             const localRefreshToken = lclStrorage.getItem('lens-refresh-token');
-            if (localRefreshToken) refreshTkn(localRefreshToken);
+            if (localRefreshToken) {
+                refreshTkn(localRefreshToken);
+            }
             setToken(localToken);
         }
     }, []);
@@ -206,16 +201,15 @@ export default function MyApp({ Component, pageProps }) {
                         <MainContainer>
                             <Disclaimer />
                             <NavBar
-                                handleConnected={handleConnected}
                                 handleLensLogin={handleLensLogin}
                                 handleLensLogout={handleLensLogout}
                                 token={token}
                             />
                             <Component
                                 {...pageProps}
-                                font={font}
-                                user={user}
-                                connected={connected}
+                                font={fakeFont}
+                                user={fakeUser}
+                                connected={isConnected}
                                 token={token}
                                 address={address}
                             />
