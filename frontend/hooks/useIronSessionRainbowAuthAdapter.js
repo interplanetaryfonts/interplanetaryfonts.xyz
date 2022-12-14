@@ -52,7 +52,7 @@ export default function useIronSessionRainbowAuthAdapter() {
         return new SiweMessage({
           domain: window.location.host,
           address,
-          statement: 'Sign into font universe with InterplanetaryFonts.',
+          statement: 'Sign into the font universe with InterplanetaryFonts.',
           uri: window.location.origin,
           version: '1',
           chainId,

@@ -8,7 +8,8 @@ import classes from './ConnectButton.module.css';
 export default function ConnectButton({
   handleConnected,
   handleLensLogout,
-  isLoggedInWithLens
+  isLoggedInWithLens,
+  onLensLogin
 }) {
   return (
     <RainbowConnectButton.Custom>
@@ -48,14 +49,14 @@ export default function ConnectButton({
           onButtonText = 'Connect Wallet';
         }
 
-        if (chain.unsupported) {
+        if (chain?.unsupported) {
           onButtonClick = openChainModal;
           onButtonText = 'Wrong network';
         }
 
         return (
           <div className={wrapperClasses}>
-            {!connected || chain.unsupported ? (
+            {!connected || chain?.unsupported ? (
               <Button
                 onClick={onButtonClick}
                 type='button'
@@ -67,10 +68,12 @@ export default function ConnectButton({
                 accountAddress={account.address}
                 accountDisplayName={account.displayName}
                 accountDisplayBalance={account.displayBalance}
+                chainName={chain?.name}
                 onLensLogout={handleLensLogout}
                 isLoggedInWithLens={isLoggedInWithLens}
                 onOpenChainModal={openChainModal}
                 onOpenAccountModal={openAccountModal}
+                onLensLogin={onLensLogin}
               />
             )}
           </div>
