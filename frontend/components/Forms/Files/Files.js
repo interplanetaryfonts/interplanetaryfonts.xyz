@@ -1,12 +1,11 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { FormContext } from "../../Overlay/CreateProject.js";
 import * as yup from "yup";
 import classes from "../../../styles/Forms.module.css";
 
-function Files() {
-  const { activeStepIndex, setActiveStepIndex, formData, setFormData } =
-    useContext(FormContext);
+function Files({ formData, setFormData }) {
+  const { activeStepIndex, setActiveStepIndex } = useContext(FormContext);
 
   const renderError = (message) => (
     <p className={classes.errorMessage}>{message}</p>
@@ -16,28 +15,17 @@ function Files() {
     files: yup.mixed().required("OTFs or TTFs are required"),
     projectName: yup.string().required("A name is required"),
     description: yup.string().required("A description is required"),
-    /* .test(
-        "format",
-        "Only the following formats are accepted: .ttf or .otf",
-        (format) =>
-          SUPPORTED_FORMATS.includes(["application/x-font-ttf", "font/*"])
-      ) */
   });
 
   return (
     <Formik
       enableReinitialize={true}
-      initialValues={{
-        files: "",
-        projectName: "",
-        description: "",
-      }}
+      initialValues={formData}
       validationSchema={ValidationSchema}
       onSubmit={(values) => {
-        const data = { ...formData, ...values };
-        setFormData(data);
+        // const data = { ...formData, ...values };
+        // setFormData(data);
         setActiveStepIndex(activeStepIndex + 1);
-        
       }}
     >
       <Form className={classes.formContainer}>
@@ -58,9 +46,16 @@ function Files() {
           <ErrorMessage name="files" render={renderError} />
           <label className={classes.labelField}>Name</label>
           <Field
+            value={formData.projectName}
+            onChange={(e) => {
+              setFormData({
+                ...formData,
+                projectName: e.target.value,
+              });
+            }}
             type="text"
             name="projectName"
-            className=" text-red-500 placeholder:italic placeholder:text-red-100 block bg-white w-full border border-red-300 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-red-500 focus:ring-red-500 hover:border-red-500 hover:border-1 focus:ring-1 sm:text-sm"
+            className=" text-red-500 placeholder:italic placeholder:text-red-100 block bg-white w-full border border-red-300 rounded-md px-5 py-2 shadow-sm focus:outline-none focus:border-red-500 focus:ring-red-500 hover:border-red-500 hover:border-1 focus:ring-1 sm:text-sm"
           />
           <ErrorMessage name="projectName" render={renderError} />
           <label className={classes.labelField}>Description</label>
@@ -69,8 +64,15 @@ function Files() {
             component="textarea"
             rows="5"
             name="description"
-            className=" text-red-500 placeholder:italic placeholder:text-red-100 block bg-white w-full border border-red-300 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-red-500 focus:ring-red-500 hover:border-red-500 hover:border-1 focus:ring-1 sm:text-sm"
+            className=" text-red-500 placeholder:italic placeholder:text-red-100 block bg-white w-full border border-red-300 rounded-md px-5 py-2 shadow-sm focus:outline-none focus:border-red-500 focus:ring-red-500 hover:border-red-500 hover:border-1 focus:ring-1 sm:text-sm"
             placeholder="Awesome Description"
+            value={formData.description}
+            onChange={(e) => {
+              setFormData({
+                ...formData,
+                description: e.target.value,
+              });
+            }}
           ></Field>
           <ErrorMessage name="description" render={renderError} />
         </div>

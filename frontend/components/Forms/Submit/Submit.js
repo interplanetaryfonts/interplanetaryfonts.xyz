@@ -17,12 +17,13 @@ export default function Submit() {
 
   return (
     <>
+      <div className={classes.title}>Review your Project</div>
       <div className={classes.formValues}>Name: {formData.projectName}</div>
       <div className={classes.formValues}>Price: ${formData.setPrice}</div>
       <div className={classes.formValues}>Mint Limit: {formData.minLimit}</div>
-      <div className={classes.formValuesDescription}>
+      <p className={classes.formValuesDescription}>
         Description: {formData.description}
-      </div>
+      </p>
 
       <button onClick={submit} className={classes.continue}>
         Create Project

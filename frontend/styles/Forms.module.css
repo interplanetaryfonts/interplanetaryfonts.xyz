@@ -91,20 +91,19 @@
 }
 
 .formValues {
-  font-size: xx-large;
-  font-weight: bold;
+  font-size: x-large;
+  font-weight: medium;
   align-self: center;
   margin-bottom: 0.1rem;
   color: var(--red);
 }
 .formValuesDescription {
-  width: 60%;
+  width: 80%;
   font-size: large;
-  font-weight: normal;
+  color: var(--darkblue);
+  word-break: break-all;
+  white-space: normal;
   text-align: left;
-  align-self: left;
-  margin-bottom: 0.5rem;
-  color: var(--red);
 }
 
 .labelField {
