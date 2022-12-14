@@ -10,8 +10,11 @@ export default function Submit() {
     const data = { ...formData };
     setFormData(data);
     setActiveStepIndex(activeStepIndex + 1);
-    console.log(formData);
+    console.table(formData);
   };
+
+  const stepBack = () => setActiveStepIndex(activeStepIndex - 1);
+
   return (
     <>
       <div className={classes.formValues}>Name: {formData.projectName}</div>
@@ -23,6 +26,9 @@ export default function Submit() {
 
       <button onClick={submit} className={classes.continue}>
         Create Project
+      </button>
+      <button className={classes.back} onClick={stepBack}>
+        Back
       </button>
     </>
   );

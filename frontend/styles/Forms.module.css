@@ -60,6 +60,20 @@
 .continue:hover {
   background-color: var(--darkblue);
 }
+.back {
+  border-radius: 5px;
+  background-color: var(--light);
+  font-weight: lighter;
+  font-size: x-small;
+  color: var(--darkblue);
+  border: 2px solid;
+  margin-bottom: 1rem;
+  padding: 0.2rem 1rem;
+}
+.back:hover {
+  background-color: var(--darkblue);
+  color: var(--light);
+}
 .lens {
   border-radius: 3rem;
   border: solid 2px;

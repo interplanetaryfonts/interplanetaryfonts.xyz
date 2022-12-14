@@ -14,8 +14,8 @@ function Files() {
 
   const ValidationSchema = yup.object().shape({
     files: yup.mixed().required("OTFs or TTFs are required"),
-    projectName: yup.string(),
-    description: yup.string(),
+    projectName: yup.string().required("A name is required"),
+    description: yup.string().required("A description is required"),
     /* .test(
         "format",
         "Only the following formats are accepted: .ttf or .otf",
@@ -26,6 +26,7 @@ function Files() {
 
   return (
     <Formik
+      enableReinitialize={true}
       initialValues={{
         files: "",
         projectName: "",
@@ -36,6 +37,7 @@ function Files() {
         const data = { ...formData, ...values };
         setFormData(data);
         setActiveStepIndex(activeStepIndex + 1);
+        
       }}
     >
       <Form className={classes.formContainer}>
@@ -59,7 +61,6 @@ function Files() {
             type="text"
             name="projectName"
             className=" text-red-500 placeholder:italic placeholder:text-red-100 block bg-white w-full border border-red-300 rounded-md py-2 pl-9 pr-3 shadow-sm focus:outline-none focus:border-red-500 focus:ring-red-500 hover:border-red-500 hover:border-1 focus:ring-1 sm:text-sm"
-            placeholder="Awesome Project Name"
           />
           <ErrorMessage name="projectName" render={renderError} />
           <label className={classes.labelField}>Description</label>

@@ -11,6 +11,7 @@ export default function SetPrice() {
   const renderError = (message) => (
     <p className={classes.errorMessage}>{message}</p>
   );
+  const stepBack = () => setActiveStepIndex(activeStepIndex - 1);
 
   const ValidationSchema = yup.object().shape({
     setPrice: yup
@@ -62,6 +63,9 @@ export default function SetPrice() {
         </div>
         <button className={classes.continue} type="submit">
           Continue
+        </button>
+        <button className={classes.back} onClick={stepBack}>
+          Back
         </button>
       </Form>
     </Formik>

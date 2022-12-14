@@ -15,7 +15,7 @@ export default function VerifyHumanity() {
   const ValidationSchema = yup.object().shape({
     lensHandle: yup.string(),
   });
-
+  const stepBack = () => setActiveStepIndex(activeStepIndex - 1);
   return (
     <Formik
       initialValues={{
@@ -43,6 +43,9 @@ export default function VerifyHumanity() {
 
         <button type="submit" className={classes.continue}>
           Continue
+        </button>
+        <button className={classes.back} onClick={stepBack}>
+          Back
         </button>
       </Form>
     </Formik>

@@ -10,7 +10,14 @@ export const FormContext = createContext();
 
 export default function CreateProject(props) {
   const [activeStepIndex, setActiveStepIndex] = useState(0);
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState({
+    projectName: "",
+    description: "",
+    files: "",
+    lensHandle: "",
+    minLimit: "",
+    setPrice: "",
+  });
 
   const [mounted, setMounted] = useState(false),
     handleMount = (bool) => {
