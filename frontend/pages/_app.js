@@ -8,11 +8,13 @@ import '@rainbow-me/rainbowkit/styles.css';
 import {
     getDefaultWallets,
     RainbowKitProvider,
+    RainbowKitAuthenticationProvider,
     lightTheme,
 } from '@rainbow-me/rainbowkit';
 import { chain, configureChains, createClient, WagmiConfig } from 'wagmi';
 import { infuraProvider } from 'wagmi/providers/infura';
 import { publicProvider } from 'wagmi/providers/public';
+import useIronSessionRainbowAuthAdapter from '../hooks/useIronSessionRainbowAuthAdapter';
 
 // Wallet connect objects
 const infuraId = process.env.NEXT_PUBLIC_INFURA_ID;
@@ -131,6 +133,11 @@ const fakeUser = {
     };
 
 export default function MyApp({ Component, pageProps }) {
+    const {
+        authAdapter,
+        authStatus
+    } = useIronSessionRainbowAuthAdapter();
+
     const [font] = useState(fakeFont),
         [user] = useState(fakeUser),
         [connected, setConnected] = useState(true),
@@ -180,38 +187,43 @@ export default function MyApp({ Component, pageProps }) {
 
     return (
         <WagmiConfig client={wagmiClient}>
-            <RainbowKitProvider
-                chains={chains}
-                theme={lightTheme({
-                    accentColor: '#ff3b6a',
-                    accentColorForeground: '#ffffdd',
-                    borderRadius: 'small',
-                    fontStack: 'system',
-                    overlayBlur: 'none',
-                })}
-                modalSize='compact'
+            <RainbowKitAuthenticationProvider
+                adapter={authAdapter}
+                status={authStatus}
             >
-                <ApolloProvider client={ipfontsClient}>
-                    <MainContainer>
-                        <Disclaimer />
-                        <NavBar
-                            handleConnected={handleConnected}
-                            handleLensLogin={handleLensLogin}
-                            handleLensLogout={handleLensLogout}
-                            token={token}
-                        />
-                        <Component
-                            {...pageProps}
-                            font={font}
-                            user={user}
-                            connected={connected}
-                            token={token}
-                            address={address}
-                        />
-                        <Footer />
-                    </MainContainer>
-                </ApolloProvider>
-            </RainbowKitProvider>
+                <RainbowKitProvider
+                    chains={chains}
+                    theme={lightTheme({
+                        accentColor: '#ff3b6a',
+                        accentColorForeground: '#ffffdd',
+                        borderRadius: 'small',
+                        fontStack: 'system',
+                        overlayBlur: 'none',
+                    })}
+                    modalSize='compact'
+                >
+                    <ApolloProvider client={ipfontsClient}>
+                        <MainContainer>
+                            <Disclaimer />
+                            <NavBar
+                                handleConnected={handleConnected}
+                                handleLensLogin={handleLensLogin}
+                                handleLensLogout={handleLensLogout}
+                                token={token}
+                            />
+                            <Component
+                                {...pageProps}
+                                font={font}
+                                user={user}
+                                connected={connected}
+                                token={token}
+                                address={address}
+                            />
+                            <Footer />
+                        </MainContainer>
+                    </ApolloProvider>
+                </RainbowKitProvider>
+            </RainbowKitAuthenticationProvider>
         </WagmiConfig>
     );
 }
