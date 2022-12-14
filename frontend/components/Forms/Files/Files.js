@@ -43,7 +43,6 @@ function Files() {
         <div className={classes.formContainer}>
           <Field
             accept=".ttf,.otf,.woff,.woff2"
-            name="fonts"
             multiple="multiple"
             type="file"
             name="files"
