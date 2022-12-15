@@ -89,6 +89,7 @@ importers:
       '@walletconnect/encoding': ^1.0.2
       apollo-client: ^2.6.10
       autoprefixer: ^10.4.8
+      clsx: ^1.2.1
       eslint: 7.23.0
       eslint-config-next: 12.2.5
       ethers: ^5.7.2
@@ -115,6 +116,7 @@ importers:
       '@typescript-eslint/parser': 4.33.0_d6djodu674rxuopabqarwp27ee
       '@walletconnect/encoding': 1.0.2
       apollo-client: 2.6.10_graphql@15.8.0
+      clsx: 1.2.1
       ethers: 5.7.2
       graphql: 15.8.0
       iron-session: 6.3.1_next@12.2.5

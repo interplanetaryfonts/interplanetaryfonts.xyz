@@ -19,6 +19,7 @@
         "@typescript-eslint/parser": "^4.0.0",
         "@walletconnect/encoding": "^1.0.2",
         "apollo-client": "^2.6.10",
+        "clsx": "^1.2.1",
         "ethers": "^5.7.2",
         "graphql": "^15.8.0",
         "iron-session": "^6.3.1",

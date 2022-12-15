@@ -1,4 +1,5 @@
 import { withIronSessionApiRoute } from 'iron-session/next'
+import ironOptions from '../../config/ironOptions';
 
 const handler = async (req, res) => {
   const { method } = req;

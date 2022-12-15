@@ -8,11 +8,13 @@ import '@rainbow-me/rainbowkit/styles.css';
 import {
     getDefaultWallets,
     RainbowKitProvider,
+    RainbowKitAuthenticationProvider,
     lightTheme,
 } from '@rainbow-me/rainbowkit';
-import { chain, configureChains, createClient, WagmiConfig } from 'wagmi';
+import { chain, configureChains, createClient, WagmiConfig, useAccount } from 'wagmi';
 import { infuraProvider } from 'wagmi/providers/infura';
 import { publicProvider } from 'wagmi/providers/public';
+import useIronSessionRainbowAuthAdapter from '../hooks/useIronSessionRainbowAuthAdapter';
 
 // Wallet connect objects
 const infuraId = process.env.NEXT_PUBLIC_INFURA_ID;
@@ -131,16 +133,14 @@ const fakeUser = {
     };
 
 export default function MyApp({ Component, pageProps }) {
-    const [font] = useState(fakeFont),
-        [user] = useState(fakeUser),
-        [connected, setConnected] = useState(true),
-        [address, setAddress] = useState(),
-        [token, setToken] = useState();
-
-    const handleConnected = (bool, currentAddress) => {
-        setConnected(bool);
-        setAddress(currentAddress);
-    };
+    const { address } = useAccount();
+    const {
+        authAdapter,
+        authStatus,
+        isConnected
+    } = useIronSessionRainbowAuthAdapter();
+    
+    const [token, setToken] = useState();
 
     useEffect(() => {
         // Lens connection
@@ -161,7 +161,9 @@ export default function MyApp({ Component, pageProps }) {
         const localToken = lclStrorage.getItem('lens-auth-token');
         if (localToken) {
             const localRefreshToken = lclStrorage.getItem('lens-refresh-token');
-            if (localRefreshToken) refreshTkn(localRefreshToken);
+            if (localRefreshToken) {
+                refreshTkn(localRefreshToken);
+            }
             setToken(localToken);
         }
     }, []);
@@ -180,38 +182,42 @@ export default function MyApp({ Component, pageProps }) {
 
     return (
         <WagmiConfig client={wagmiClient}>
-            <RainbowKitProvider
-                chains={chains}
-                theme={lightTheme({
-                    accentColor: '#ff3b6a',
-                    accentColorForeground: '#ffffdd',
-                    borderRadius: 'small',
-                    fontStack: 'system',
-                    overlayBlur: 'none',
-                })}
-                modalSize='compact'
+            <RainbowKitAuthenticationProvider
+                adapter={authAdapter}
+                status={authStatus}
             >
-                <ApolloProvider client={ipfontsClient}>
-                    <MainContainer>
-                        <Disclaimer />
-                        <NavBar
-                            handleConnected={handleConnected}
-                            handleLensLogin={handleLensLogin}
-                            handleLensLogout={handleLensLogout}
-                            token={token}
-                        />
-                        <Component
-                            {...pageProps}
-                            font={font}
-                            user={user}
-                            connected={connected}
-                            token={token}
-                            address={address}
-                        />
-                        <Footer />
-                    </MainContainer>
-                </ApolloProvider>
-            </RainbowKitProvider>
+                <RainbowKitProvider
+                    chains={chains}
+                    theme={lightTheme({
+                        accentColor: '#ff3b6a',
+                        accentColorForeground: '#ffffdd',
+                        borderRadius: 'small',
+                        fontStack: 'system',
+                        overlayBlur: 'none',
+                    })}
+                    modalSize='compact'
+                >
+                    <ApolloProvider client={ipfontsClient}>
+                        <MainContainer>
+                            <Disclaimer />
+                            <NavBar
+                                handleLensLogin={handleLensLogin}
+                                handleLensLogout={handleLensLogout}
+                                token={token}
+                            />
+                            <Component
+                                {...pageProps}
+                                font={fakeFont}
+                                user={fakeUser}
+                                connected={isConnected}
+                                token={token}
+                                address={address}
+                            />
+                            <Footer />
+                        </MainContainer>
+                    </ApolloProvider>
+                </RainbowKitProvider>
+            </RainbowKitAuthenticationProvider>
         </WagmiConfig>
     );
 }
