@@ -1,0 +1,41 @@
+.connectedContainer {
+  display: flex;
+  gap: 2px;
+  flex-direction: column;
+  align-items: stretch;
+  align-content: center;
+  border: 2px solid var(--red);
+  border-radius: var(--global-radius);
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-basis: 50%;
+  padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+  border-radius: var(--global-radius);
+  transition: all 0.5s ease;
+}
+
+.displayNameButton {
+  border-radius: 0;
+}
+
+.networkProfile {
+  width: 100%;
+  display: flex;
+  border-top: 2px solid var(--red);
+}
+
+.networkProfileButton {
+  border: none;
+  border-radius: 0;
+  flex-basis: 50%;
+  border-right: 2px solid var(--red);
+}
+
+.dashBoardButton {
+  border-radius: 0;
+  border-right: 2px solid var(--red);
+}
