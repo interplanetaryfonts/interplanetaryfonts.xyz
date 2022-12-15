@@ -35,13 +35,20 @@ function Files({ formData, setFormData }) {
             accept=".ttf,.otf,.woff,.woff2"
             multiple="multiple"
             type="file"
-            name="files"
+            name="fileSelector"
             className="rounded-md mx-auto border-0 p-2block w-full text-l text-darkblue
             file:mr-4 file:py-2 file:px-12
             file:rounded-full file:border-0
             file:text-sm file:font-semibold
             file:bg-red file:text-darkblue
             hover:file:bg-red-100 cursor-pointer"
+            onChange={(event) => {
+              console.log(event.target.files);
+              setFormData({
+                ...formData,
+                files : [...event.target.files],
+              });
+            }}
           />
           <ErrorMessage name="files" render={renderError} />
           <label className={classes.labelField}>Name</label>
