@@ -19,14 +19,24 @@ const Input = React.forwardRef((props, ref) => {
             <label className={classes.label} htmlFor={props.id}>
                 {props.label}
             </label>
-            <input
-                ref={inputRef}
-                id={props.id}
-                type={props.type}
-                value={props.value}
-                onChange={props.onChange}
-                onBlur={props.onBlur}
-            />
+            {props.type === 'text-area' ? (
+                <textarea
+                    ref={inputRef}
+                    id={props.id}
+                    value={props.value}
+                    onChange={props.onChange}
+                    onBlur={props.onBlur}
+                ></textarea>
+            ) : (
+                <input
+                    ref={inputRef}
+                    id={props.id}
+                    type={props.type}
+                    value={props.value}
+                    onChange={props.onChange}
+                    onBlur={props.onBlur}
+                />
+            )}
         </div>
     );
 });

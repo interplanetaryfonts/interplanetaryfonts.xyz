@@ -3,6 +3,8 @@ import {
     client as lensClient,
     createProfile,
     getProfileByAddress,
+    getProfileByHandle,
+    createSetProfileWithMetadata,
 } from '../clientApi';
 import connectContract from '../utils/connectContract';
 // Components
@@ -10,6 +12,8 @@ import Form from '../components/UI/Form';
 import Input from '../components/UI/Input';
 
 const defaultFormValues = {
+        name: '',
+        nameIsValid: null,
         email: '',
         emailIsValid: null,
         username: '',
@@ -18,8 +22,13 @@ const defaultFormValues = {
         websiteIsValid: null,
         bio: '',
         bioIsValid: null,
-        links: '', // Will change to an array later
-        linksAreValid: null,
+        links: {
+            twitter: { value: '', isValid: null },
+            lenster: { value: '', isValid: null },
+            instagram: { value: '', isValid: null },
+            discord: { value: '', isValid: null },
+            github: { value: '', isValid: null },
+        },
     },
     userFormReducer = (state, action) => {
         const validators = {
@@ -27,9 +36,36 @@ const defaultFormValues = {
             username: { grep: /[A-Za-z0-9-]+/, len: 2 },
             website: { grep: /[A-Za-z0-9-]+\.[A-Za-z]+/, len: 5 },
             bio: { min: 1, max: 120 },
-            links: 1,
+            twitter: /https:\/\/twitter\.com\/[A-Za-z0-9]+/,
+            lenster: /https:\/\/lenster\.xyz\/u\/[A-Za-z0-9]+/,
+            instagram: /https:\/\/www.instagram.com\/[A-Za-z0-9]+/,
+            discord: /[A-Za-z0-9]+#\d{4}/,
+            github: /https:\/\/github\.com\/[A-Za-z0-9]+/,
         };
-        switch (action.type) {
+        let currentLink, actionType;
+        if (
+            [
+                'TWITTER_INPUT',
+                'LENSTER_INPUT',
+                'INSTAGRAM_INPUT',
+                'DISCORD_INPUT',
+                'GITHUB_INPUT',
+            ].includes(action.type)
+        ) {
+            currentLink = action.type.replace('_INPUT', '').toLowerCase();
+            actionType = 'LINKS_INPUT';
+        } else {
+            actionType = action.type;
+        }
+        switch (actionType) {
+            case 'NAME_INPUT':
+                return {
+                    ...state,
+                    name: action.val,
+                    nameIsValid:
+                        action.val.match(validators.username.grep) &&
+                        action.val.trim().length > validators.username.len,
+                };
             case 'EMAIL_INPUT':
                 return {
                     ...state,
@@ -63,8 +99,57 @@ const defaultFormValues = {
             case 'LINKS_INPUT':
                 return {
                     ...state,
-                    links: action.val,
-                    linksAreValid: action.val.trim().length >= validators.links,
+                    links: {
+                        ...state.links,
+                        [currentLink]: {
+                            value: action.val,
+                            isValid: action.val.match(validators[currentLink]),
+                        },
+                    },
+                };
+            case 'LENSTER_INPUT':
+                return {
+                    ...state,
+                    links: {
+                        ...links,
+                        lenster: {
+                            value: action.val,
+                            isValid: action.val.match(validators.lenster),
+                        },
+                    },
+                };
+            case 'INSTAGRAM_INPUT':
+                return {
+                    ...state,
+                    links: {
+                        ...links,
+                        instagram: {
+                            value: action.val,
+                            isValid: action.val.match(validators.instagram),
+                        },
+                    },
+                };
+            case 'DISCORD_INPUT':
+                return {
+                    ...state,
+                    links: {
+                        ...links,
+                        discord: {
+                            value: action.val,
+                            isValid: action.val.match(validators.discord),
+                        },
+                    },
+                };
+            case 'GITHUB_INPUT':
+                return {
+                    ...state,
+                    links: {
+                        ...links,
+                        github: {
+                            value: action.val,
+                            isValid: action.val.match(validators.github),
+                        },
+                    },
                 };
             case 'INPUT_BLUR':
                 return state;
@@ -74,12 +159,19 @@ const defaultFormValues = {
     };
 
 export default function UserTest(props) {
-    const [emailRef, usernameRef, websiteRef, bioRef, linksRef] = [
+    const [nameRef, emailRef, usernameRef, websiteRef, bioRef] = [
             useRef(),
             useRef(),
             useRef(),
             useRef(),
             useRef(),
+        ],
+        links = [
+            { name: 'Twitter', ref: useRef(), type: 'url' },
+            { name: 'Lenster', ref: useRef(), type: 'url' },
+            { name: 'Instagram', ref: useRef(), type: 'url' },
+            { name: 'Discord', ref: useRef(), type: 'text' },
+            { name: 'GitHub', ref: useRef(), type: 'url' },
         ],
         [userFormState, dispatchUserForm] = useReducer(userFormReducer, {
             ...defaultFormValues,
@@ -88,7 +180,7 @@ export default function UserTest(props) {
         [lensHandle, setLensHandle] = useState(''),
         [txStatus, setTxStatus] = useState('DEFAULT'),
         formInputChangeHandler = e => {
-            const rawID = e.target.id.replace('user-', '');
+            let rawID = e.target.id.replace('user-', '');
             dispatchUserForm({
                 type: `${rawID.toUpperCase()}_INPUT`,
                 val: e.target.value,
@@ -135,11 +227,19 @@ export default function UserTest(props) {
     async function handleCreateUser(e) {
         e.preventDefault();
         const body = {
+            name: userFormState.name,
             email: userFormState.email,
-            name: userFormState.username || lensHandle.replace('.test', ''),
+            username: userFormState.username || lensHandle.replace('.test', ''),
             website: userFormState.website,
             bio: userFormState.bio,
-            links: userFormState.links,
+            links: Object.fromEntries(
+                Object.entries(userFormState.links).map(([link, values]) => {
+                    console.log();
+                    if (values.value) {
+                        return [link, values.value];
+                    }
+                })
+            ),
         };
         // Deactivate inpute while waiting
         setTxStatus('WAIT');
@@ -171,9 +271,9 @@ export default function UserTest(props) {
                         'Oops! Something went wrong. Please refresh and try again.'
                     );
                 } else {
-                    const responseJSON = await response.json();
+                    const responseJSON = await response.json(),
+                        cid = `https://${responseJSON.cid}.ipfs.w3s.link/data.json`;
                     if (!hasIPFonts) {
-                        const cid = `https://${responseJSON.cid}.ipfs.w3s.link/data.json`;
                         const txn = await ipfontsContract.createUser(
                             lensHandle,
                             cid,
@@ -186,6 +286,20 @@ export default function UserTest(props) {
                         clearTimeout(reset);
                     } else {
                         alert('Modify user logic goes here!');
+                        if (lensHandle) {
+                            const getProfile = await lensClient.query({
+                                query: getProfileByHandle,
+                                variables: { handle: lensHandle },
+                            });
+                            console.log(getProfile.data.profile);
+                            const setLensProfile = await lensClient.mutate({
+                                mutation: createSetProfileWithMetadata(
+                                    getProfile.data.profile.id,
+                                    cid
+                                ),
+                            });
+                            console.log(setLensProfile.data);
+                        }
                         resetForm();
                     }
                 }
@@ -205,9 +319,17 @@ export default function UserTest(props) {
             )}
             {props.connected && (
                 <>
-                    <h5>
-                        {lensHandle ? `Welcome ${lensHandle}!` : 'Welcome!'}
-                    </h5>
+                    <h6>{lensHandle ? `Welcome ${lensHandle}` : 'Welcome'}</h6>
+                    <Input
+                        ref={nameRef}
+                        id='user-name'
+                        label='Full Name'
+                        type='text'
+                        onChange={formInputChangeHandler}
+                        onBlur={validateFormInputHandler}
+                        value={userFormState.name}
+                        isValid={userFormState.nameIsValid}
+                    />
                     <Input
                         ref={emailRef}
                         id='user-email'
@@ -246,22 +368,31 @@ export default function UserTest(props) {
                         ref={bioRef}
                         id='user-bio'
                         label='Biography'
-                        type='text'
+                        type='text-area'
                         onChange={formInputChangeHandler}
                         onBlur={validateFormInputHandler}
                         value={userFormState.bio}
                         isValid={userFormState.bioIsValid}
                     />
-                    <Input
-                        ref={linksRef}
-                        id='user-links'
-                        label='Links'
-                        type='url'
-                        onChange={formInputChangeHandler}
-                        onBlur={validateFormInputHandler}
-                        value={userFormState.links}
-                        isValid={userFormState.linksAreValid}
-                    />
+                    {links.map(link => (
+                        <Input
+                            key={`create-edit-user-link-${link.name}`}
+                            ref={link.ref}
+                            id={`user-${link.name.toLowerCase()}`}
+                            label={link.name}
+                            type={link.type}
+                            onChange={formInputChangeHandler}
+                            onBlur={validateFormInputHandler}
+                            value={
+                                userFormState.links[link.name.toLowerCase()]
+                                    .value
+                            }
+                            isValid={
+                                userFormState.links[link.name.toLowerCase()]
+                                    .isValid
+                            }
+                        />
+                    ))}
                     {txStatus === 'DEFAULT' ? (
                         <input
                             type='submit'

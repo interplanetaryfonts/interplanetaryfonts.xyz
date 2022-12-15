@@ -1,30 +1,25 @@
-import {
-  ApolloClient,
-  InMemoryCache,
-  gql,
-  createHttpLink,
-} from '@apollo/client';
+import { ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 
 const authLink = setContext((_, { headers }) => {
-  const token = window.localStorage.getItem('lens-auth-token');
-  return {
-    headers: {
-      ...headers,
-      authorization: token ? `${token}` : '',
-    },
-  };
+    const token = window.localStorage.getItem('lens-auth-token');
+    return {
+        headers: {
+            ...headers,
+            authorization: token ? `${token}` : '',
+        },
+    };
 });
 
 const API_URL = 'https://api-mumbai.lens.dev/';
 
 const httpLink = createHttpLink({
-  uri: API_URL,
+    uri: API_URL,
 });
 
 export const client = new ApolloClient({
-  link: authLink.concat(httpLink),
-  cache: new InMemoryCache(),
+    link: authLink.concat(httpLink),
+    cache: new InMemoryCache(),
 });
 
 export * from './lens/authenticate';
@@ -37,5 +32,6 @@ export * from './lens/getProfileByAddress';
 export * from './lens/getPublications';
 export * from './lens/mirror';
 export * from './lens/refresh';
+export * from './lens/createSetProfileWithMetadata';
 
 export * from './ipfonts/createIPFontsUser';

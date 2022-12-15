@@ -84,7 +84,8 @@ strong {
     font-weight: 600;
 }
 
-input {
+input,
+textarea {
     padding: 0.25rem;
     border: 1px solid var(--red);
     border-radius: var(--global-radius);
@@ -98,6 +99,13 @@ input[type='submit'] {
     border-radius: var(--global-radius);
     border: 1px solid var(--red);
     transition: all 0.5s ease;
+}
+
+input[type='submit']:disabled {
+    background-color: var(--light);
+    color: var(--darkblue);
+    border-color: var(--darkblue);
+    cursor: wait;
 }
 
 @media (hover) {
