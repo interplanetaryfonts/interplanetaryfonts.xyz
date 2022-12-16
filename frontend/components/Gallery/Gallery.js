@@ -78,14 +78,10 @@ const GET_FONTS = gql`
             name
             description
             perCharacterMintPrice
-            creator
-            idaRoyaltyIndex
             launchDateTime
             createdAt
             updatedAt
             fontFilesCID
-            mintings
-            distributionToken
         }
     }
 `;
