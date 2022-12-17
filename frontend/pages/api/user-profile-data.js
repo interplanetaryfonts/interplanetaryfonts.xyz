@@ -1,5 +1,6 @@
 import { Web3Storage, File } from 'web3.storage';
 import { withIronSessionApiRoute } from 'iron-session/next';
+import ironOptions from '../../config/ironOptions';
 
 async function handler(req, res) {
     if (req.method === 'POST') {

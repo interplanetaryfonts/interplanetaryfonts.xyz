@@ -1,14 +1,8 @@
 import { gql } from '@apollo/client';
 
-export const createProfile = handle => gql`
-    mutation CreateProfile {
-        createProfile(
-            request: {
-                handle: "${handle}"
-                profilePictureUri: null
-                followModule: { freeFollowModule: true }
-            }
-        ) {
+export const createProfile = gql`
+    mutation CreateProfile($request: CreateProfileRequest!) {
+        createProfile(request: $request) {
             ... on RelayerResult {
                 txHash
             }
