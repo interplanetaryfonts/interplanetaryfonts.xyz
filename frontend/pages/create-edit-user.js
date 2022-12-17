@@ -158,7 +158,7 @@ const defaultFormValues = {
         }
     };
 
-export default function UserTest(props) {
+export default function CreateEditUser(props) {
     const [nameRef, emailRef, usernameRef, websiteRef, bioRef] = [
             useRef(),
             useRef(),
