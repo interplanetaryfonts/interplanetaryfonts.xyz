@@ -1,6 +1,7 @@
 import { Web3Storage, File } from 'web3.storage';
+import { withIronSessionApiRoute } from 'iron-session/next';
 
-export default async function handler(req, res) {
+async function handler(req, res) {
     if (req.method === 'POST') {
         return await storeUserData(req, res);
     } else {
@@ -33,3 +34,5 @@ async function storeFile(file) {
     const cid = await client.put([file]);
     return cid;
 }
+
+export default withIronSessionApiRoute(handler, ironOptions);
