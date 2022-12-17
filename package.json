@@ -19,8 +19,8 @@
     "prepare": "husky install"
   },
   "lint-staged": {
-    "*.js": "cd ./frontend && pnpm run lint --fix",
-    "*": "cd ./frontend && pnpm run prettier"
+    "*.js": "cd ./frontend && pnpm--filter frontend run lint --fix",
+    "*": "cd ./frontend && pnpm --filter frontend run prettier"
   },
   "repository": {
     "type": "git",
