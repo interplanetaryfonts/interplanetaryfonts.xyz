@@ -13,7 +13,8 @@
         "integration-test:smart-contract": "pnpm --filter contracts run integration-test",
         "test:smart-contract": "pnpm --filter contracts run test",
         "dev:frontend": "pnpm --filter frontend run dev",
-        "dev:backend": "pnpm --filter backend run dev"
+        "dev:backend": "pnpm --filter backend run dev",
+        "prepare": "husky install"
     },
     "repository": {
         "type": "git",

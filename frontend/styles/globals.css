@@ -3,32 +3,32 @@
 @tailwind utilities;
 
 :root {
-    /* Brand colors */
-    --red: #ff3b6a;
-    --yellow: #ffff5a;
-    --light: #ffffdd;
-    --cyan: #32f9e1;
-    --darkblue: #020866;
-    /* Global values */
-    --global-radius: 4px;
+  /* Brand colors */
+  --red: #ff3b6a;
+  --yellow: #ffff5a;
+  --light: #ffffdd;
+  --cyan: #32f9e1;
+  --darkblue: #020866;
+  /* Global values */
+  --global-radius: 4px;
 }
 
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 html,
 body {
-    text-align: center;
-    font-family: sans-serif;
-    background-color: var(--light);
-    color: var(--darkblue);
+  text-align: center;
+  font-family: sans-serif;
+  background-color: var(--light);
+  color: var(--darkblue);
 }
 
 body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 h1,
@@ -37,55 +37,55 @@ h3,
 h4,
 h5,
 h6 {
-    font-weight: 600;
+  font-weight: 600;
 }
 
 h1 {
-    font-size: 3.5rem;
+  font-size: 3.5rem;
 }
 
 h2 {
-    font-size: 3rem;
+  font-size: 3rem;
 }
 
 h3 {
-    font-size: 2.5rem;
+  font-size: 2.5rem;
 }
 
 h4 {
-    font-size: 2rem;
+  font-size: 2rem;
 }
 
 h5 {
-    font-size: 1.5rem;
+  font-size: 1.5rem;
 }
 
 h6 {
-    font-size: 1rem;
+  font-size: 1rem;
 }
 
 p,
 a {
-    font-size: 1rem;
+  font-size: 1rem;
 }
 
 a {
-    color: var(--red);
-    font-style: italic;
-    transition: all 0.5s ease 0s;
-    cursor: pointer;
+  color: var(--red);
+  font-style: italic;
+  transition: all 0.5s ease 0s;
+  cursor: pointer;
 }
 
 em {
-    font-style: italic;
+  font-style: italic;
 }
 
 strong {
-    font-weight: 600;
+  font-weight: 600;
 }
 
 @media (hover) {
-    a:hover {
-        color: var(--darkblue);
-    }
+  a:hover {
+    color: var(--darkblue);
+  }
 }

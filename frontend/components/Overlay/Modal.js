@@ -1,5 +1,5 @@
-import classes from '../../styles/Overlay.module.css';
-import { createPortal } from 'react-dom';
+import classes from "../../styles/Overlay.module.css";
+import { createPortal } from "react-dom";
 
 export default function Modal(props) {
   return props.mounted
@@ -9,7 +9,7 @@ export default function Modal(props) {
           {props.children}
           <button onClick={() => props.handleMount(false)}>Cancel</button>
         </div>,
-        document.getElementById('overlay-root')
+        document.getElementById("overlay-root")
       )
     : null;
 }

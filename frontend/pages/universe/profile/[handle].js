@@ -4,7 +4,11 @@ import MainContainer from "../../../components/UI/MainContainer";
 /* pages/profile/[handle].js */
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import { client, getPublications, getProfileByHandle } from "../../../clientApi";
+import {
+  client,
+  getPublications,
+  getProfileByHandle,
+} from "../../../clientApi";
 import FollowButton from "../../../components/Universe/FollowButton";
 
 export default function Profile() {
@@ -68,7 +72,7 @@ export default function Profile() {
         <div className="flex flex-col justify-center items-center  w-8/12">
           {/* Avatar Handle and name  */}
           <div className=" flex flex-col sm:flex-row justify-center items-center space-x-20 p-5 w-full  ">
-            { /* eslint-disable-next-line @next/next/no-img-element */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               alt="avatar"
               className="w-40 h-40 rounded-full border-solid border-red  border-4 "

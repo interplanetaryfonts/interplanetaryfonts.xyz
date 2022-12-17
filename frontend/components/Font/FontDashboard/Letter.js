@@ -1,4 +1,4 @@
-import classes from '../../../styles/FontDashboard.module.css';
+import classes from "../../../styles/FontDashboard.module.css";
 
 export default function Letter(props) {
   return (

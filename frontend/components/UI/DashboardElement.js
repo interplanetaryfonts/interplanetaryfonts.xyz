@@ -1,4 +1,4 @@
-import classes from '../../styles/DashboardElement.module.css';
+import classes from "../../styles/DashboardElement.module.css";
 
 export default function DashboardElement(props) {
   return (

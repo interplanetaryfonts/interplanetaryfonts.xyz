@@ -1,56 +1,56 @@
-import { useState } from 'react';
+import { useState } from "react";
 // Components
-import ProfileCard from '../../components/Profile/ProfileCard/ProfileCard';
-import DashboardContainer from '../../components/UI/DashboardContainer';
-import ProfileDashboard from '../../components/Profile/ProfileDashboard/ProfileDashboard';
-import Created from '../../components/Profile/ProfileDashboard/Created';
-import Collabs from '../../components/Profile/ProfileDashboard/Collabs';
-import Treasury from '../../components/Profile/ProfileDashboard/Treasury';
-import Collected from '../../components/Profile/ProfileDashboard/Collected';
-import Funded from '../../components/Profile/ProfileDashboard/Funded';
+import ProfileCard from "../../components/Profile/ProfileCard/ProfileCard";
+import DashboardContainer from "../../components/UI/DashboardContainer";
+import ProfileDashboard from "../../components/Profile/ProfileDashboard/ProfileDashboard";
+import Created from "../../components/Profile/ProfileDashboard/Created";
+import Collabs from "../../components/Profile/ProfileDashboard/Collabs";
+import Treasury from "../../components/Profile/ProfileDashboard/Treasury";
+import Collected from "../../components/Profile/ProfileDashboard/Collected";
+import Funded from "../../components/Profile/ProfileDashboard/Funded";
 
 export default function Profile(props) {
   // Util
   const profileButtons = {
       creator: {
-        created: { txt: 'Created', active: true },
-        collabs: { txt: 'Collabs', active: false },
-        treasury: { txt: 'Treasury', active: false },
+        created: { txt: "Created", active: true },
+        collabs: { txt: "Collabs", active: false },
+        treasury: { txt: "Treasury", active: false },
       },
       collector: {
-        collected: { txt: 'Collected', active: true },
-        funded: { txt: 'Funded', active: false },
+        collected: { txt: "Collected", active: true },
+        funded: { txt: "Funded", active: false },
       },
     },
-    getActiveButton = btns =>
+    getActiveButton = (btns) =>
       Object.values(btns)
-        .filter(button => button.active)[0]
+        .filter((button) => button.active)[0]
         .txt.toLowerCase(),
     getCurrentDashboard = (cb, sp) => {
-      return cb === 'created' && sp === 'creator' ? (
+      return cb === "created" && sp === "creator" ? (
         <Created elements={props.user.created} />
-      ) : cb === 'collabs' && sp === 'creator' ? (
+      ) : cb === "collabs" && sp === "creator" ? (
         <Collabs elements={props.user.collabs} />
-      ) : cb === 'treasury' && sp === 'creator' ? (
+      ) : cb === "treasury" && sp === "creator" ? (
         <Treasury elements={props.user.treasury} />
-      ) : cb === 'collected' && sp === 'collector' ? (
+      ) : cb === "collected" && sp === "collector" ? (
         <Collected elements={props.user.collected} />
-      ) : cb === 'funded' && sp === 'collector' ? (
+      ) : cb === "funded" && sp === "collector" ? (
         <Funded elements={props.user.funded} />
       ) : (
-        ''
+        ""
       );
     };
   // State
-  const [subprofile, setSubprofile] = useState('creator'),
+  const [subprofile, setSubprofile] = useState("creator"),
     [buttons] = useState({ ...profileButtons }),
     [activeButtons, setActiveButtons] = useState(buttons[subprofile]),
-    [currentButton, setCurrentButton] = useState('created'),
+    [currentButton, setCurrentButton] = useState("created"),
     [activeDashboard, setActiveDashboard] = useState(
       getCurrentDashboard(currentButton, subprofile)
     );
   // Event Handlers
-  const handleSubprofile = sp => {
+  const handleSubprofile = (sp) => {
       const splower = sp.toLowerCase(),
         tempActive = buttons[splower],
         tempActiveButton = getActiveButton(tempActive);
@@ -59,10 +59,10 @@ export default function Profile(props) {
       setCurrentButton(tempActiveButton);
       setActiveDashboard(getCurrentDashboard(tempActiveButton, splower));
     },
-    handleActiveDashboard = e => {
-      setActiveButtons(prevButtons => {
+    handleActiveDashboard = (e) => {
+      setActiveButtons((prevButtons) => {
         const temp = Object.fromEntries(
-          Object.entries(prevButtons).map(entry => {
+          Object.entries(prevButtons).map((entry) => {
             if (entry[1].txt === e.target.textContent) {
               entry[1].active = true;
             } else {
@@ -95,7 +95,7 @@ export default function Profile(props) {
           {activeDashboard}
         </ProfileDashboard>
       ) : (
-        ''
+        ""
       )}
     </DashboardContainer>
   );

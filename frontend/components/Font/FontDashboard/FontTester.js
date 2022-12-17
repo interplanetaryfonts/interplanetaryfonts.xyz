@@ -1,5 +1,5 @@
-import { useRef } from 'react';
-import classes from '../../../styles/FontDashboard.module.css';
+import { useRef } from "react";
+import classes from "../../../styles/FontDashboard.module.css";
 
 export default function FontTester(props) {
   const testerInputRef = useRef();
@@ -8,7 +8,7 @@ export default function FontTester(props) {
     <textarea
       style={{ fontFamily: props.cssname, fontWeight: props.weight }}
       className={classes.tester}
-      placeholder='Font Tester'
+      placeholder="Font Tester"
       ref={testerInputRef}
     ></textarea>
   );

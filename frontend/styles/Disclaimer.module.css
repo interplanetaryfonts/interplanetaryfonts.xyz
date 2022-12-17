@@ -1,16 +1,16 @@
 .disclaimer {
-    width: 100vw;
-    background-color: var(--red);
-    color: var(--light);
-    padding: 0.75rem;
-    font-size: 0.75rem;
+  width: 100vw;
+  background-color: var(--red);
+  color: var(--light);
+  padding: 0.75rem;
+  font-size: 0.75rem;
 }
 
 .disclaimer a {
-    font-size: 0.75rem;
-    color: var(--light);
-    text-decoration: underline;
+  font-size: 0.75rem;
+  color: var(--light);
+  text-decoration: underline;
 }
 .disclaimer a:hover {
-    color: var(--darkblue);
+  color: var(--darkblue);
 }

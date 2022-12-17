@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useState } from "react";
 // Components
-import FontCard from '../../components/Font/FontCard/FontCard';
-import FontDashboard from '../../components/Font/FontDashboard/FontDashboard';
-import DashboardContainer from '../../components/UI/DashboardContainer';
+import FontCard from "../../components/Font/FontCard/FontCard";
+import FontDashboard from "../../components/Font/FontDashboard/FontDashboard";
+import DashboardContainer from "../../components/UI/DashboardContainer";
 
 export default function Font(props) {
   return (
