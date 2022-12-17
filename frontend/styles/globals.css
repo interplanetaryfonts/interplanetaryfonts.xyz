@@ -84,30 +84,6 @@ strong {
     font-weight: 600;
 }
 
-input,
-textarea {
-    padding: 0.25rem;
-    border: 1px solid var(--red);
-    border-radius: var(--global-radius);
-}
-
-input[type='submit'] {
-    margin-top: 1.5rem;
-    cursor: pointer;
-    background-color: var(--red);
-    color: var(--light);
-    border-radius: var(--global-radius);
-    border: 1px solid var(--red);
-    transition: all 0.5s ease;
-}
-
-input[type='submit']:disabled {
-    background-color: var(--light);
-    color: var(--darkblue);
-    border-color: var(--darkblue);
-    cursor: wait;
-}
-
 @media (hover) {
     a:hover {
         color: var(--darkblue);
