@@ -27,7 +27,7 @@ export default function MintModal(props) {
         setLoadingState("minting");
         setTxnHash(txn.hash);
 
-        const wait = await txn.wait();
+        await txn.wait();
         setLoadingState("minted");
       } else {
         console.log("Error getting contract.");

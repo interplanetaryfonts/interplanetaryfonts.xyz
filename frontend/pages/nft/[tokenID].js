@@ -16,11 +16,11 @@ const fakeNFT = {
 };
 
 export default function NFT() {
-  const [clicked, setClicked] = useState(""),
-    [mounted, setMounted] = useState(false),
-    handleMount = (bool) => {
-      setMounted(bool);
-    };
+  const [clicked, setClicked] = useState("");
+  const [mounted, setMounted] = useState(false);
+  const handleMount = (bool) => {
+    setMounted(bool);
+  };
   return (
     <>
       <NFTsAndStream
@@ -30,7 +30,12 @@ export default function NFT() {
       >
         <div className={classes.element}>
           Creators{" "}
-          <Button onClick={() => (setMounted(true), setClicked("see"))}>
+          <Button
+            onClick={() => {
+              setMounted(true);
+              setClicked("see");
+            }}
+          >
             See
           </Button>
         </div>
@@ -56,7 +61,12 @@ export default function NFT() {
         </div>
         <div className={classes.element}>
           Charset{" "}
-          <Button onClick={() => (setMounted(true), setClicked("download"))}>
+          <Button
+            onClick={() => {
+              setMounted(true);
+              setClicked("download");
+            }}
+          >
             Download
           </Button>
         </div>

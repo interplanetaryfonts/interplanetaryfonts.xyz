@@ -1,10 +1,8 @@
-import { useRouter } from "next/router";
 import Link from "next/link";
 import Button from "./Button";
 import classes from "../../styles/ConnectedMenu.module.css";
 
 export default function ConnectedMenu(props) {
-  const router = useRouter();
   return (
     <div className={`${classes.container} ${props.menu && classes.open}`}>
       <Link href={`/user/${props.user.address}`}>

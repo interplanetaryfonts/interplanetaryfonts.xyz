@@ -35,7 +35,7 @@ export default function ConnectionStatus({
         mutation: authenticate,
         variables: {
           address: lensaddress,
-          signature: signature,
+          signature,
         },
       });
       const {

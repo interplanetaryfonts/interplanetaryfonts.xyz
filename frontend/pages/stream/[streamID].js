@@ -16,11 +16,11 @@ const fakeStream = {
 };
 
 export default function Stream() {
-  const [clicked, setClicked] = useState(""),
-    [mounted, setMounted] = useState(false),
-    handleMount = (bool) => {
-      setMounted(bool);
-    };
+  const [clicked, setClicked] = useState("");
+  const [mounted, setMounted] = useState(false);
+  const handleMount = (bool) => {
+    setMounted(bool);
+  };
   return (
     <>
       <NFTsAndStream nme={fakeStream.nme} parentp={fakeStream.parentp}>
@@ -41,15 +41,30 @@ export default function Stream() {
         </div>
         <div className={classes.element}>
           <strong>Supporters</strong>{" "}
-          <Button onClick={() => (setMounted(true), setClicked("see"))}>
+          <Button
+            onClick={() => {
+              setMounted(true);
+              setClicked("see");
+            }}
+          >
             See
           </Button>
         </div>
         <div className={classes.buttons}>
-          <Button onClick={() => (setMounted(true), setClicked("collaborate"))}>
+          <Button
+            onClick={() => {
+              setMounted(true);
+              setClicked("collaborate");
+            }}
+          >
             Collaborate
           </Button>
-          <Button onClick={() => (setMounted(true), setClicked("fund"))}>
+          <Button
+            onClick={() => {
+              setMounted(true);
+              setClicked("fund");
+            }}
+          >
             Fund
           </Button>
         </div>

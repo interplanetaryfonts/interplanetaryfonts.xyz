@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import classes from "../../../styles/UserDashboard.module.css";
 // Components
 import DashboardElement from "../../UI/DashboardElement";
@@ -10,11 +10,11 @@ import StreamByTheSecond from "./StreamByTheSecond";
 import Link from "next/link";
 
 export default function Treasury(props) {
-  const [clicked, setClicked] = useState(""),
-    [mounted, setMounted] = useState(false),
-    handleMount = (bool) => {
-      setMounted(bool);
-    };
+  const [clicked, setClicked] = useState("");
+  const [mounted, setMounted] = useState(false);
+  const handleMount = (bool) => {
+    setMounted(bool);
+  };
 
   return (
     <>
@@ -23,7 +23,12 @@ export default function Treasury(props) {
           <p>Balance</p>
           <p>{props.elements.balance.toFixed(4)} MATIC</p>
         </DashboardElement>
-        <Button onClick={() => (setMounted(true), setClicked("withdraw"))}>
+        <Button
+          onClick={() => {
+            setMounted(true);
+            setClicked("withdraw");
+          }}
+        >
           Withdraw
         </Button>
         <h5>Active FontStreams</h5>
@@ -35,7 +40,10 @@ export default function Treasury(props) {
             <div className={classes["stream-data"]}>
               <StreamByTheSecond stream={el.ammount} />
               <Button
-                onClick={() => (setMounted(true), setClicked("unwrap"))}
+                onClick={() => {
+                  setMounted(true);
+                  setClicked("unwrap");
+                }}
                 className={classes.unwrap}
               >
                 Unwrap
@@ -43,7 +51,12 @@ export default function Treasury(props) {
             </div>
           </DashboardElement>
         ))}
-        <Button onClick={() => (setMounted(true), setClicked("stream"))}>
+        <Button
+          onClick={() => {
+            setMounted(true);
+            setClicked("stream");
+          }}
+        >
           Create New FontStream
         </Button>
       </div>

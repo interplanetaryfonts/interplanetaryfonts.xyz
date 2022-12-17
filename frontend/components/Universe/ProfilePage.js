@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 export default function ProfilePage(props) {
   return (
     <div className="container max-w-screen-md flex flex-col flex-wrap md:flex-row gap-5 items-star pl-6 pr-6 pb-12">
@@ -20,11 +18,11 @@ export default function ProfilePage(props) {
           {props.bio}
         </p> */}
         </div>
-        {publications.map((pub) => (
+        {/* {publications.map((pub) => (
           <div key={pub.id} className="shadow p-10 rounded mb-8 w-fit">
             <p>{pub.metadata.content}</p>
           </div>
-        ))}
+        ))} */}
       </div>
     </div>
   );

@@ -7,11 +7,11 @@ export default function CardHeaderButton(props) {
   // Event handlers
   const handleHover = () => {
       if (!props.active) setHover(true);
-    },
-    handleOut = () => {
+    };
+    const handleOut = () => {
       setHover(false);
-    },
-    handleClick = (e) => {
+    };
+    const handleClick = (e) => {
       const pressed = e.target.textContent;
       props.handleSubprofile(pressed);
       props.handleActiveButtons(pressed);

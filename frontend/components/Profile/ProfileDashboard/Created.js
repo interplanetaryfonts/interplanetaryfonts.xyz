@@ -7,8 +7,8 @@ import Button from "../../UI/Button";
 import CreateProject from "../../Overlay/CreateProject";
 
 export default function Created(props) {
-  const [mounted, setMounted] = useState(false),
-    handleMount = (bool) => {
+  const [mounted, setMounted] = useState(false);
+    const handleMount = (bool) => {
       setMounted(bool);
     };
 

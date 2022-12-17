@@ -21,12 +21,12 @@ export default function Profile(props) {
         collected: { txt: "Collected", active: true },
         funded: { txt: "Funded", active: false },
       },
-    },
-    getActiveButton = (btns) =>
+    };
+    const getActiveButton = (btns) =>
       Object.values(btns)
         .filter((button) => button.active)[0]
-        .txt.toLowerCase(),
-    getCurrentDashboard = (cb, sp) => {
+        .txt.toLowerCase();
+    const getCurrentDashboard = (cb, sp) => {
       return cb === "created" && sp === "creator" ? (
         <Created elements={props.user.created} />
       ) : cb === "collabs" && sp === "creator" ? (
@@ -42,24 +42,24 @@ export default function Profile(props) {
       );
     };
   // State
-  const [subprofile, setSubprofile] = useState("creator"),
-    [buttons] = useState({ ...profileButtons }),
-    [activeButtons, setActiveButtons] = useState(buttons[subprofile]),
-    [currentButton, setCurrentButton] = useState("created"),
-    [activeDashboard, setActiveDashboard] = useState(
+  const [subprofile, setSubprofile] = useState("creator");
+    const [buttons] = useState({ ...profileButtons });
+    const [activeButtons, setActiveButtons] = useState(buttons[subprofile]);
+    const [currentButton, setCurrentButton] = useState("created");
+    const [activeDashboard, setActiveDashboard] = useState(
       getCurrentDashboard(currentButton, subprofile)
     );
   // Event Handlers
   const handleSubprofile = (sp) => {
-      const splower = sp.toLowerCase(),
-        tempActive = buttons[splower],
-        tempActiveButton = getActiveButton(tempActive);
+      const splower = sp.toLowerCase();
+        const tempActive = buttons[splower];
+        const tempActiveButton = getActiveButton(tempActive);
       setSubprofile(splower);
       setActiveButtons(tempActive);
       setCurrentButton(tempActiveButton);
       setActiveDashboard(getCurrentDashboard(tempActiveButton, splower));
-    },
-    handleActiveDashboard = (e) => {
+    };
+    const handleActiveDashboard = (e) => {
       setActiveButtons((prevButtons) => {
         const temp = Object.fromEntries(
           Object.entries(prevButtons).map((entry) => {

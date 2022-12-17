@@ -6,8 +6,8 @@ import Button from "../UI/Button";
 import Worldcoin from "./Worldcoin";
 
 export default function CreateProject(props) {
-  const [mounted, setMounted] = useState(false),
-    handleMount = (bool) => {
+  const [mounted, setMounted] = useState(false);
+    const handleMount = (bool) => {
       setMounted(bool);
     };
   return (

@@ -13,14 +13,14 @@
     "integration-test:smart-contract": "pnpm --filter contracts run integration-test",
     "test:smart-contract": "pnpm --filter contracts run test",
     "dev:frontend": "pnpm --filter frontend run dev",
-    "lint:frontend": "pnpm --dir ./frontend --filter frontend run lint --fix",
-    "prettier:frontend": "pnpm --dir ./frontend --filter frontend run prettier",
+    "lint:frontend": "pnpm --filter frontend run lint --fix",
+    "prettier:frontend": "pnpm --filter frontend run prettier",
     "dev:backend": "pnpm --filter backend run dev",
     "prepare": "husky install"
   },
   "lint-staged": {
-    "*.js": "pnpm lint:frontend",
-    "*": "pnpm prettier:frontend"
+    "*.js": "cd ./frontend && pnpm run lint --fix",
+    "*": "cd ./frontend && pnpm run prettier"
   },
   "repository": {
     "type": "git",

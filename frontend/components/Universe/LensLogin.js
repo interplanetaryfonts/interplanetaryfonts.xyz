@@ -1,5 +1,4 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { client, challenge, authenticate } from "../../api";
 import { ethers } from "ethers";
 
@@ -61,9 +60,6 @@ export default function LensLogin() {
       localStorage.setItem("TOKEN", tokenAccess.accessToken);
 
       localStorage.setItem("TOKENREFRE", JSON.stringify({ refreshToken }));
-      const tokenRefresh = JSON.parse(
-        window.localStorage.getItem("TOKENREFRE")
-      );
       localStorage.setItem("TOKENREFRESH", tokenAccess.accessToken);
     } catch (err) {
       console.log("Error signing in: ", err);

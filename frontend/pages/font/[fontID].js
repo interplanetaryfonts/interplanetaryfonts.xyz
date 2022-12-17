@@ -1,4 +1,3 @@
-import { useState } from "react";
 // Components
 import FontCard from "../../components/Font/FontCard/FontCard";
 import FontDashboard from "../../components/Font/FontDashboard/FontDashboard";
