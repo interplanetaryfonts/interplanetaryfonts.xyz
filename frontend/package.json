@@ -10,7 +10,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "prettier": "prettier --write --ignore-unknow"
+    "prettier": "prettier --write --ignore-unknown"
   },
   "dependencies": {
     "@apollo/client": "^3.7.1",
