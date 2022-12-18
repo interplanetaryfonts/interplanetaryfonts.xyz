@@ -1,18 +1,15 @@
 import { gql } from '@apollo/client';
 
-export const createSetProfileWithMetadata = gql`
-    mutation CreateSetProfileMetadataTypedData(
-        $profileId: ProfileId!
-        $metadata: Url!
+export const createSetDefaultProfile = gql`
+    mutation CreateSetDefaultProfileTypedData(
+        $request: CreateSetDefaultProfileRequest!
     ) {
-        createSetProfileMetadataTypedData(
-            request: { profileId: $profileId, metadata: $metadata }
-        ) {
+        createSetDefaultProfileTypedData(request: $request) {
             id
             expiresAt
             typedData {
                 types {
-                    SetProfileMetadataURIWithSig {
+                    SetDefaultProfileWithSig {
                         name
                         type
                     }
@@ -26,8 +23,8 @@ export const createSetProfileWithMetadata = gql`
                 value {
                     nonce
                     deadline
+                    wallet
                     profileId
-                    metadata
                 }
             }
         }

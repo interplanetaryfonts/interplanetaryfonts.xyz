@@ -1,198 +1,80 @@
-import { useState, useEffect, useRef, useReducer } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     client as lensClient,
+    getDefaultProfile,
+    createSetDefaultProfile,
     createProfile,
-    getProfileByAddress,
     getProfileByHandle,
+    getProfileByAddress,
     createSetProfileWithMetadata,
 } from '../clientApi';
 import connectContract from '../utils/connectContract';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+import classes from '../styles/Form.module.css';
 // Components
 import Form from '../components/UI/Form';
 import Input from '../components/UI/Input';
 
 const defaultFormValues = {
         name: '',
-        nameIsValid: null,
         email: '',
-        emailIsValid: null,
-        username: '',
-        usernameIsValid: null,
+        handle: '',
         website: '',
-        websiteIsValid: null,
         bio: '',
-        bioIsValid: null,
-        links: {
-            twitter: { value: '', isValid: null },
-            lenster: { value: '', isValid: null },
-            instagram: { value: '', isValid: null },
-            discord: { value: '', isValid: null },
-            github: { value: '', isValid: null },
-        },
+        twitter: '',
+        lenster: '',
+        instagram: '',
+        discord: '',
+        github: '',
     },
-    userFormReducer = (state, action) => {
-        const validators = {
-            email: /[^@]+@[A-Za-z0-9-]+\.[A-Za-z]+/,
-            username: { grep: /[A-Za-z0-9-]+/, len: 2 },
-            website: { grep: /[A-Za-z0-9-]+\.[A-Za-z]+/, len: 5 },
-            bio: { min: 1, max: 120 },
+    createEditUserInputs = [
+        { id: 'name', type: 'text', label: 'Name' },
+        { id: 'email', type: 'email', label: 'E-Mail' },
+        { id: 'handle', type: 'text', label: 'Handle' },
+        { id: 'website', type: 'url', label: 'Website' },
+        { id: 'bio', type: 'text-area', label: 'Bio' },
+        { id: 'twitter', type: 'url', label: 'Twitter' },
+        { id: 'lenster', type: 'url', label: 'Lenster' },
+        { id: 'instagram', type: 'url', label: 'Instagram' },
+        { id: 'discord', type: 'text', label: 'Discord' },
+        { id: 'github', type: 'url', label: 'GitHub' },
+    ],
+    minStringValid = [3, 'Must be 3 characters or more'],
+    validateLinks = linkName => {
+        const greps = {
             twitter: /https:\/\/twitter\.com\/[A-Za-z0-9]+/,
             lenster: /https:\/\/lenster\.xyz\/u\/[A-Za-z0-9]+/,
             instagram: /https:\/\/www.instagram.com\/[A-Za-z0-9]+/,
             discord: /[A-Za-z0-9]+#\d{4}/,
             github: /https:\/\/github\.com\/[A-Za-z0-9]+/,
         };
-        let currentLink, actionType;
-        if (
-            [
-                'TWITTER_INPUT',
-                'LENSTER_INPUT',
-                'INSTAGRAM_INPUT',
-                'DISCORD_INPUT',
-                'GITHUB_INPUT',
-            ].includes(action.type)
-        ) {
-            currentLink = action.type.replace('_INPUT', '').toLowerCase();
-            actionType = 'LINKS_INPUT';
-        } else {
-            actionType = action.type;
-        }
-        switch (actionType) {
-            case 'NAME_INPUT':
-                return {
-                    ...state,
-                    name: action.val,
-                    nameIsValid:
-                        action.val.match(validators.username.grep) &&
-                        action.val.trim().length > validators.username.len,
-                };
-            case 'EMAIL_INPUT':
-                return {
-                    ...state,
-                    email: action.val,
-                    emailIsValid: action.val.match(validators.email),
-                };
-            case 'USERNAME_INPUT':
-                return {
-                    ...state,
-                    username: action.val,
-                    usernameIsValid:
-                        action.val.match(validators.username.grep) &&
-                        action.val.trim().length > validators.username.len,
-                };
-            case 'WEBSITE_INPUT':
-                return {
-                    ...state,
-                    website: action.val,
-                    websiteIsValid:
-                        action.val.match(validators.website.grep) &&
-                        action.val.trim().length > validators.website.len,
-                };
-            case 'BIO_INPUT':
-                return {
-                    ...state,
-                    bio: action.val,
-                    bioIsValid:
-                        action.val.trim().length >= validators.bio.min &&
-                        action.val.trim().length <= validators.bio.max,
-                };
-            case 'LINKS_INPUT':
-                return {
-                    ...state,
-                    links: {
-                        ...state.links,
-                        [currentLink]: {
-                            value: action.val,
-                            isValid: action.val.match(validators[currentLink]),
-                        },
-                    },
-                };
-            case 'LENSTER_INPUT':
-                return {
-                    ...state,
-                    links: {
-                        ...links,
-                        lenster: {
-                            value: action.val,
-                            isValid: action.val.match(validators.lenster),
-                        },
-                    },
-                };
-            case 'INSTAGRAM_INPUT':
-                return {
-                    ...state,
-                    links: {
-                        ...links,
-                        instagram: {
-                            value: action.val,
-                            isValid: action.val.match(validators.instagram),
-                        },
-                    },
-                };
-            case 'DISCORD_INPUT':
-                return {
-                    ...state,
-                    links: {
-                        ...links,
-                        discord: {
-                            value: action.val,
-                            isValid: action.val.match(validators.discord),
-                        },
-                    },
-                };
-            case 'GITHUB_INPUT':
-                return {
-                    ...state,
-                    links: {
-                        ...links,
-                        github: {
-                            value: action.val,
-                            isValid: action.val.match(validators.github),
-                        },
-                    },
-                };
-            case 'INPUT_BLUR':
-                return state;
-            case 'FORM_RESET':
-                return { ...defaultFormValues };
-        }
+        return Yup.string().matches(greps[linkName], {
+            message: `Invalid ${linkName} ${
+                linkName === 'discord' ? 'name' : 'link'
+            }`,
+            excludeEmptyString: true,
+        });
+    },
+    createEditUserValidationSchema = {
+        name: Yup.string().min(...minStringValid),
+        email: Yup.string().email('Invalid email address'),
+        handle: Yup.string().min(...minStringValid),
+        website: Yup.string().url('Invalid website'),
+        bio: Yup.string()
+            .min(...minStringValid)
+            .max(120, 'Must be less than 120 characters'),
+        twitter: validateLinks('twitter'),
+        lenster: validateLinks('lenster'),
+        instagram: validateLinks('instagram'),
+        discord: validateLinks('discord'),
+        github: validateLinks('github'),
     };
 
 export default function CreateEditUser(props) {
-    const [nameRef, emailRef, usernameRef, websiteRef, bioRef] = [
-            useRef(),
-            useRef(),
-            useRef(),
-            useRef(),
-            useRef(),
-        ],
-        links = [
-            { name: 'Twitter', ref: useRef(), type: 'url' },
-            { name: 'Lenster', ref: useRef(), type: 'url' },
-            { name: 'Instagram', ref: useRef(), type: 'url' },
-            { name: 'Discord', ref: useRef(), type: 'text' },
-            { name: 'GitHub', ref: useRef(), type: 'url' },
-        ],
-        [userFormState, dispatchUserForm] = useReducer(userFormReducer, {
-            ...defaultFormValues,
-        }),
-        [hasIPFonts, setHasIPFonts] = useState(false),
-        [lensHandle, setLensHandle] = useState(''),
-        [txStatus, setTxStatus] = useState('DEFAULT'),
-        formInputChangeHandler = e => {
-            let rawID = e.target.id.replace('user-', '');
-            dispatchUserForm({
-                type: `${rawID.toUpperCase()}_INPUT`,
-                val: e.target.value,
-            });
-        },
-        validateFormInputHandler = () => {
-            dispatchUserForm({ type: 'INPUT_BLUR' });
-        },
-        resetForm = () => {
-            dispatchUserForm({ type: 'FORM_RESET' });
-            setTxStatus('DEFAULT');
-        };
+    const [hasIPFonts, setHasIPFonts] = useState(false),
+        [lensHandle, setLensHandle] = useState(null),
+        [waitForm, setWaitForm] = useState(false);
 
     // Check if the user has IPFonts and lens profile
     useEffect(() => {
@@ -209,81 +91,115 @@ export default function CreateEditUser(props) {
                 );
                 setHasIPFonts(Boolean(ipfontsProfile.createdAt.toNumber()));
                 // Has Lens profile
-                const getLensUser = await lensClient.mutate({
-                        mutation: getProfileByAddress,
-                        variables: { owner: props.address },
-                    }),
-                    hasLens = Boolean(getLensUser.data.profiles.items.length);
-                setLensHandle(
-                    hasLens ? getLensUser.data.profiles.items[0].handle : ''
-                );
+                const getLensUser = await lensClient.query({
+                    query: getDefaultProfile,
+                    variables: { request: { ethereumAddress: props.address } },
+                });
+                // Setting a default profile is not working for some reason
+                setLensHandle(getLensUser.data.defaultProfile?.handle);
             } catch (err) {
-                setHasIPFonts('');
-                setLensHandle('');
+                setHasIPFonts(''), setLensHandle('');
             }
         })();
     }, [props.address]);
 
-    async function handleCreateUser(e) {
-        e.preventDefault();
-        const body = {
-            name: userFormState.name,
-            email: userFormState.email,
-            username: userFormState.username || lensHandle.replace('.test', ''),
-            website: userFormState.website,
-            bio: userFormState.bio,
-            links: Object.fromEntries(
-                Object.entries(userFormState.links).map(([link, values]) => {
-                    console.log();
-                    if (values.value) {
-                        return [link, values.value];
-                    }
-                })
-            ),
-        };
-        // Deactivate inpute while waiting
-        setTxStatus('WAIT');
-        // Creates a test lens profile with the username as handle
-        if (!lensHandle) {
+    // Create/edit user function
+    async function handleCreateEditUser(body, resetFunction) {
+        setWaitForm(true);
+        // Creates a test lens profile
+        const getLensUser = await lensClient.query({
+            query: getDefaultProfile,
+            variables: { request: { ethereumAddress: props.address } },
+        });
+        if (!getLensUser.data.defaultProfile?.handle) {
             try {
                 const createLensProfile = await lensClient.mutate({
-                    mutation: createProfile(userFormState.username),
+                    mutation: createProfile,
+                    variables: {
+                        request: {
+                            handle: body.handle,
+                            profilePictureUri: null,
+                            followModule: { freeFollowModule: true },
+                            followNFTURI: null,
+                        },
+                    },
                 });
-                if (createLensProfile.data)
-                    setLensHandle(userFormState.username);
+                if (
+                    createLensProfile.data.createProfile.reason ===
+                    'HANDLE_TAKEN'
+                ) {
+                    alert('Lens handle taken, change it and try again!');
+                    setWaitForm(false);
+                    return;
+                }
+                if (createLensProfile.data.createProfile.txHash) {
+                    const profileId = await lensClient.query({
+                            query: getProfileByAddress,
+                            variables: { owner: props.address },
+                        }),
+                        profiles = profileId.data.profiles.items,
+                        setProfile = await lensClient.mutate({
+                            mutation: createSetDefaultProfile,
+                            variables: {
+                                request: {
+                                    profileId: profiles[profiles.length - 1].id,
+                                },
+                            },
+                        });
+                    if (
+                        setProfile.data.createSetDefaultProfileTypedData
+                            .typedData.value.profileId
+                    ) {
+                        setLensHandle(`${body.handle}.test`);
+                        resetFunction();
+                    }
+                }
             } catch (err) {
                 alert(
                     `There was an error creating your lens test profile ${err}`
                 );
+                resetFunction();
             }
-            resetForm();
         }
         try {
-            const ipfontsContract = await connectContract();
+            const ipfontsContract = await connectContract(),
+                ipfontsBody = {
+                    email: body.email,
+                    name: body.name,
+                    website: body.website,
+                    bio: body.bio,
+                    links: [
+                        { name: 'twitter', url: body.twitter },
+                        { name: 'lenster', url: body.lenster },
+                        { name: 'instagram', url: body.instagram },
+                        { name: 'discord', user: body.discord },
+                        { name: 'github', url: body.github },
+                    ],
+                };
+            console.log(ipfontsBody);
             if (ipfontsContract) {
                 const response = await fetch('./api/user-profile-data', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(body),
+                    body: JSON.stringify(ipfontsBody),
                 });
                 if (response.status !== 200) {
                     alert(
                         'Oops! Something went wrong. Please refresh and try again.'
                     );
+                    resetFunction();
                 } else {
                     const responseJSON = await response.json(),
-                        cid = `https://${responseJSON.cid}.ipfs.w3s.link/data.json`;
+                        cidURL = `https://${responseJSON.cid}.ipfs.w3s.link/data.json`;
                     if (!hasIPFonts) {
                         const txn = await ipfontsContract.createUser(
                             lensHandle,
-                            cid,
+                            responseJSON.cid,
                             Date.now(),
                             { gasLimit: 900000 }
                         );
                         const wait = await txn.wait();
-                        setTxStatus(!wait && 'SENT');
-                        const reset = setTimeout(resetForm, 2000);
-                        clearTimeout(reset);
+                        resetFunction();
                     } else {
                         alert('Modify user logic goes here!');
                         if (lensHandle) {
@@ -293,14 +209,15 @@ export default function CreateEditUser(props) {
                             });
                             console.log(getProfile.data.profile);
                             const setLensProfile = await lensClient.mutate({
-                                mutation: createSetProfileWithMetadata(
-                                    getProfile.data.profile.id,
-                                    cid
-                                ),
+                                mutation: createSetProfileWithMetadata,
+                                variables: {
+                                    profileId: getProfile.data.profile.id,
+                                    metadata: cidURL,
+                                },
                             });
                             console.log(setLensProfile.data);
                         }
-                        resetForm();
+                        resetFunction();
                     }
                 }
             } else {
@@ -308,115 +225,63 @@ export default function CreateEditUser(props) {
             }
         } catch (error) {
             alert(`Oops! Something went wrong. Please refresh and try again.`);
-            resetForm();
+            resetFunction();
         }
     }
 
+    // Formik structure
+    const formik = useFormik({
+        initialValues: {
+            ...defaultFormValues,
+        },
+        validationSchema: Yup.object({ ...createEditUserValidationSchema }),
+        onSubmit: (values, { resetForm }) => {
+            const setReset = () => {
+                setWaitForm(false);
+                resetForm();
+            };
+            handleCreateEditUser(values, setReset);
+        },
+    });
+
     return (
-        <Form onSubmit={handleCreateUser}>
+        <Form onSubmit={formik.handleSubmit}>
             {!props.connected && (
                 <h5>Connect your wallet to create or edit your user</h5>
             )}
             {props.connected && (
                 <>
                     <h6>{lensHandle ? `Welcome ${lensHandle}` : 'Welcome'}</h6>
-                    <Input
-                        ref={nameRef}
-                        id='user-name'
-                        label='Full Name'
-                        type='text'
-                        onChange={formInputChangeHandler}
-                        onBlur={validateFormInputHandler}
-                        value={userFormState.name}
-                        isValid={userFormState.nameIsValid}
+                    {createEditUserInputs.map(field => {
+                        if (!Boolean(lensHandle && field.id === 'handle')) {
+                            return (
+                                <React.Fragment key={`${field.id}-fragment`}>
+                                    <Input
+                                        key={field.id}
+                                        id={field.id}
+                                        name={field.id}
+                                        type={field.type}
+                                        label={field.label}
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                        value={formik.values[field.id]}
+                                    />
+                                    {formik.touched[field.id] &&
+                                    formik.errors[field.id] ? (
+                                        <div key={`${field.id}-errors`}>
+                                            {formik.errors[field.id]}
+                                        </div>
+                                    ) : null}
+                                </React.Fragment>
+                            );
+                        }
+                    })}
+                    <input
+                        className={classes.input}
+                        type='submit'
+                        value={waitForm ? 'Submitting...' : 'Submit'}
+                        disabled={waitForm}
                     />
-                    <Input
-                        ref={emailRef}
-                        id='user-email'
-                        label='E-Mail'
-                        type='email'
-                        onChange={formInputChangeHandler}
-                        onBlur={validateFormInputHandler}
-                        value={userFormState.email}
-                        isValid={userFormState.emailIsValid}
-                    />
-                    {lensHandle ? (
-                        ''
-                    ) : (
-                        <Input
-                            ref={usernameRef}
-                            id='username'
-                            label='Username'
-                            type='text'
-                            onChange={formInputChangeHandler}
-                            onBlur={validateFormInputHandler}
-                            value={userFormState.username}
-                            isValid={userFormState.usernameIsValid}
-                        />
-                    )}
-                    <Input
-                        ref={websiteRef}
-                        id='user-website'
-                        label='Website'
-                        type='url'
-                        onChange={formInputChangeHandler}
-                        onBlur={validateFormInputHandler}
-                        value={userFormState.website}
-                        isValid={userFormState.websiteIsValid}
-                    />
-                    <Input
-                        ref={bioRef}
-                        id='user-bio'
-                        label='Biography'
-                        type='text-area'
-                        onChange={formInputChangeHandler}
-                        onBlur={validateFormInputHandler}
-                        value={userFormState.bio}
-                        isValid={userFormState.bioIsValid}
-                    />
-                    {links.map(link => (
-                        <Input
-                            key={`create-edit-user-link-${link.name}`}
-                            ref={link.ref}
-                            id={`user-${link.name.toLowerCase()}`}
-                            label={link.name}
-                            type={link.type}
-                            onChange={formInputChangeHandler}
-                            onBlur={validateFormInputHandler}
-                            value={
-                                userFormState.links[link.name.toLowerCase()]
-                                    .value
-                            }
-                            isValid={
-                                userFormState.links[link.name.toLowerCase()]
-                                    .isValid
-                            }
-                        />
-                    ))}
-                    {txStatus === 'DEFAULT' ? (
-                        <input
-                            type='submit'
-                            value={hasIPFonts ? 'Edit user' : 'Create user'}
-                        />
-                    ) : txStatus === 'WAIT' ? (
-                        <input
-                            type='submit'
-                            disabled={true}
-                            value={
-                                hasIPFonts ? 'Editing user' : 'Creating user'
-                            }
-                        />
-                    ) : txStatus === 'SENT' ? (
-                        <input
-                            type='submit'
-                            disabled={true}
-                            value={
-                                hasIPFonts ? 'User edited!' : 'User created!'
-                            }
-                        />
-                    ) : (
-                        ''
-                    )}
                 </>
             )}
         </Form>

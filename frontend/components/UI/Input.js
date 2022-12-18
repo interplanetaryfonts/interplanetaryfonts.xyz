@@ -1,45 +1,31 @@
-import React, { useRef, useImperativeHandle } from 'react';
 import classes from '../../styles/Form.module.css';
 
-const Input = React.forwardRef((props, ref) => {
-    const inputRef = useRef(),
-        activate = () => {
-            inputRef.current.focus();
-        };
-    useImperativeHandle(ref, () => {
-        return { focus: activate };
-    });
-
+export default function FormikInput(props) {
     return (
-        <div
-            className={`${classes.field}  ${
-                props.isValid === false ? classes.invalid : ''
-            }`}
-        >
+        <div className={classes.field}>
             <label className={classes.label} htmlFor={props.id}>
                 {props.label}
             </label>
-            {props.type === 'text-area' ? (
-                <textarea
-                    ref={inputRef}
-                    id={props.id}
-                    value={props.value}
-                    onChange={props.onChange}
-                    onBlur={props.onBlur}
-                ></textarea>
-            ) : (
+            {props.type !== 'text-area' ? (
                 <input
-                    ref={inputRef}
+                    className={classes.input}
                     id={props.id}
+                    name={props.name}
                     type={props.type}
-                    value={props.value}
                     onChange={props.onChange}
                     onBlur={props.onBlur}
+                    value={props.value}
                 />
+            ) : (
+                <textarea
+                    className={classes.input}
+                    id={props.id}
+                    name={props.name}
+                    onChange={props.onChange}
+                    onBlur={props.onBlur}
+                    value={props.value}
+                ></textarea>
             )}
         </div>
     );
-});
-
-Input.displayName = 'Input';
-export default Input;
+}
