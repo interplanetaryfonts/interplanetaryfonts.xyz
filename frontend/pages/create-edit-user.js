@@ -176,7 +176,6 @@ export default function CreateEditUser(props) {
                         { name: 'github', url: body.github },
                     ],
                 };
-            console.log(ipfontsBody);
             if (ipfontsContract) {
                 const response = await fetch('./api/user-profile-data', {
                     method: 'POST',

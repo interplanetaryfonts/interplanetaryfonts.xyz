@@ -1,6 +1,6 @@
 import classes from '../../styles/Form.module.css';
 
-export default function FormikInput(props) {
+export default function Input(props) {
     return (
         <div className={classes.field}>
             <label className={classes.label} htmlFor={props.id}>
