@@ -2,12 +2,9 @@ import { gql } from '@apollo/client';
 
 export const createSetProfileWithMetadata = gql`
     mutation CreateSetProfileMetadataTypedData(
-        $profileId: ProfileId!
-        $metadata: Url!
+        $request: CreatePublicSetProfileMetadataURIRequest!
     ) {
-        createSetProfileMetadataTypedData(
-            request: { profileId: $profileId, metadata: $metadata }
-        ) {
+        createSetProfileMetadataTypedData(request: $request) {
             id
             expiresAt
             typedData {

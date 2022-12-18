@@ -107,6 +107,7 @@ importers:
       tailwindcss: ^3.1.8
       typescript: ^4.8.3
       utf8: ^3.0.0
+      uuid: ^9.0.0
       wagmi: ^0.8.9
       web3.storage: ^4.4.0
       yup: ^0.32.11
@@ -132,6 +133,7 @@ importers:
       siwe: 1.1.6_ethers@5.7.2
       typescript: 4.8.4
       utf8: 3.0.0
+      uuid: 9.0.0
       wagmi: 0.8.9_yflvhnirygfio7wfwd2xnuvrsy
       web3.storage: 4.4.0_2zkwcmg3uyfbquk5hov4sasjd4
       yup: 0.32.11

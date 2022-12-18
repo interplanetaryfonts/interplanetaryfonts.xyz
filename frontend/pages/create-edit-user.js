@@ -11,6 +11,7 @@ import {
 import connectContract from '../utils/connectContract';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { v4 as uuid } from 'uuid';
 import classes from '../styles/Form.module.css';
 // Components
 import Form from '../components/UI/Form';
@@ -159,62 +160,124 @@ export default function CreateEditUser(props) {
                     `There was an error creating your lens test profile ${err}`
                 );
                 resetFunction();
+                return;
             }
         }
         try {
-            const ipfontsContract = await connectContract(),
-                ipfontsBody = {
-                    email: body.email,
-                    name: body.name,
-                    website: body.website,
-                    bio: body.bio,
-                    links: [
-                        { name: 'twitter', url: body.twitter },
-                        { name: 'lenster', url: body.lenster },
-                        { name: 'instagram', url: body.instagram },
-                        { name: 'discord', user: body.discord },
-                        { name: 'github', url: body.github },
-                    ],
-                };
+            const ipfontsContract = await connectContract();
             if (ipfontsContract) {
-                const response = await fetch('./api/user-profile-data', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(ipfontsBody),
-                });
-                if (response.status !== 200) {
+                const ipfontsBody = {
+                        email: body?.email,
+                        name: body?.name,
+                        website: body?.website,
+                        bio: body?.bio,
+                        links: [
+                            { name: 'twitter', url: body?.twitter },
+                            { name: 'lenster', url: body?.lenster },
+                            { name: 'instagram', url: body?.instagram },
+                            { name: 'discord', user: body?.discord },
+                            { name: 'github', url: body?.github },
+                        ],
+                    },
+                    ipfontsResponse = await fetch('./api/user-profile-data', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(ipfontsBody),
+                    });
+                if (ipfontsResponse.status !== 200) {
                     alert(
                         'Oops! Something went wrong. Please refresh and try again.'
                     );
                     resetFunction();
                 } else {
-                    const responseJSON = await response.json(),
-                        cidURL = `https://${responseJSON.cid}.ipfs.w3s.link/data.json`;
+                    const ipfontsResJSON = await ipfontsResponse.json();
                     if (!hasIPFonts) {
                         const txn = await ipfontsContract.createUser(
                             lensHandle,
-                            responseJSON.cid,
+                            ipfontsResJSON.cid,
                             Date.now(),
                             { gasLimit: 900000 }
                         );
-                        const wait = await txn.wait();
+                        await txn.wait();
                         resetFunction();
                     } else {
-                        alert('Modify user logic goes here!');
+                        alert('IPFonts modify user logic goes here!');
                         if (lensHandle) {
-                            const getProfile = await lensClient.query({
-                                query: getProfileByHandle,
-                                variables: { handle: lensHandle },
-                            });
-                            console.log(getProfile.data.profile);
-                            const setLensProfile = await lensClient.mutate({
-                                mutation: createSetProfileWithMetadata,
-                                variables: {
-                                    profileId: getProfile.data.profile.id,
-                                    metadata: cidURL,
-                                },
-                            });
-                            console.log(setLensProfile.data);
+                            const lensBody = {
+                                name: body?.name || null,
+                                bio: body?.bio || null,
+                                cover_picture: bio?.cover || null,
+                                attributes: [
+                                    {
+                                        traitType: 'string',
+                                        key: 'website',
+                                        value: body?.website || null,
+                                    },
+                                    {
+                                        traitType: 'string',
+                                        key: 'twitter',
+                                        value: body?.twitter || null,
+                                    },
+                                    {
+                                        traitType: 'string',
+                                        key: 'lenster',
+                                        value: body?.lenster || null,
+                                    },
+                                    {
+                                        traitType: 'string',
+                                        key: 'instagram',
+                                        value: body?.instagram || null,
+                                    },
+                                    {
+                                        traitType: 'string',
+                                        key: 'discord',
+                                        value: body?.discord || null,
+                                    },
+                                    {
+                                        traitType: 'string',
+                                        key: 'github',
+                                        value: body?.github || null,
+                                    },
+                                ],
+                                version: '1.0.0',
+                                metadata_id: uuid(),
+                                createdOn: new Date(),
+                                appId: 'InterplanetaryFonts',
+                            };
+                            const lensResponse = await fetch(
+                                './api/user-profile-data',
+                                {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                    },
+                                    body: JSON.stringify(lensBody),
+                                }
+                            );
+                            if (lensResponse.status !== 200) {
+                                alert(
+                                    'Oops! Something went wrong. Please refresh and try again.'
+                                );
+                                resetFunction();
+                            } else {
+                                const lensResJSON = await lensResponse.json(),
+                                    lensResJSONurl = `https://${lensResJSON.cid}.ipfs.w3s.link/data.json`,
+                                    getProfile = await lensClient.query({
+                                        query: getProfileByHandle,
+                                        variables: { handle: lensHandle },
+                                    }),
+                                    setLensProfile = await lensClient.mutate({
+                                        mutation: createSetProfileWithMetadata,
+                                        variables: {
+                                            request: {
+                                                profileId:
+                                                    getProfile.data.profile.id,
+                                                metadata: lensResJSONurl,
+                                            },
+                                        },
+                                    });
+                                console.log(setLensProfile);
+                            }
                         }
                         resetFunction();
                     }
@@ -223,7 +286,9 @@ export default function CreateEditUser(props) {
                 alert("Couldn't connect contract!");
             }
         } catch (error) {
-            alert(`Oops! Something went wrong. Please refresh and try again.`);
+            alert(
+                `Oops! Something went wrong. Please refresh and try again. ${error}`
+            );
             resetFunction();
         }
     }
