@@ -218,7 +218,13 @@ export default function CreateEditUser(props) {
                         await txn.wait();
                         resetFunction();
                     } else {
-                        alert('IPFonts modify user logic goes here!');
+                        const txn = await ipfontsContract.editUser(
+                            lensHandle,
+                            ipfontsResJSON.cid,
+                            Date.now(),
+                            { gasLimit: 900000 }
+                        );
+                        await txn.wait();
                         if (lensHandle) {
                             const lensBody = {
                                 name: body?.name || null,
@@ -301,6 +307,7 @@ export default function CreateEditUser(props) {
                                 console.log(setLensProfile);
                             }
                         }
+                        alert('User updated!');
                         resetFunction();
                     }
                 }
