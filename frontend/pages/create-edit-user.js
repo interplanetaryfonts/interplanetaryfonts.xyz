@@ -75,7 +75,8 @@ const defaultFormValues = {
 export default function CreateEditUser(props) {
     const [hasIPFonts, setHasIPFonts] = useState(false),
         [lensHandle, setLensHandle] = useState(null),
-        [waitForm, setWaitForm] = useState(false);
+        [waitForm, setWaitForm] = useState(false),
+        [formValues, setFormValues] = useState({ ...defaultFormValues });
 
     // Check if the user has IPFonts and lens profile
     useEffect(() => {
@@ -93,11 +94,27 @@ export default function CreateEditUser(props) {
                 setHasIPFonts(Boolean(ipfontsProfile.createdAt.toNumber()));
                 // Has Lens profile
                 const getLensUser = await lensClient.query({
-                    query: getDefaultProfile,
-                    variables: { request: { ethereumAddress: props.address } },
-                });
+                        query: getDefaultProfile,
+                        variables: {
+                            request: { ethereumAddress: props.address },
+                        },
+                    }),
+                    currentProfile = getLensUser.data.defaultProfile;
+                if (currentProfile !== null) {
+                    setFormValues({
+                        ...defaultFormValues,
+                        handle: currentProfile.handle,
+                        bio: currentProfile.bio,
+                        name: currentProfile.name,
+                        ...Object.fromEntries(
+                            currentProfile.attributes.map(field => {
+                                return [field.key, field.value || ''];
+                            })
+                        ),
+                    });
+                }
                 // Setting a default profile is not working for some reason
-                setLensHandle(getLensUser.data.defaultProfile?.handle);
+                setLensHandle(currentProfile?.handle);
             } catch (err) {
                 setHasIPFonts(''), setLensHandle('');
             }
@@ -210,6 +227,11 @@ export default function CreateEditUser(props) {
                                 attributes: [
                                     {
                                         traitType: 'string',
+                                        key: 'email',
+                                        value: body?.email || null,
+                                    },
+                                    {
+                                        traitType: 'string',
                                         key: 'website',
                                         value: body?.website || null,
                                     },
@@ -296,8 +318,9 @@ export default function CreateEditUser(props) {
     // Formik structure
     const formik = useFormik({
         initialValues: {
-            ...defaultFormValues,
+            ...formValues,
         },
+        enableReinitialize: true,
         validationSchema: Yup.object({ ...createEditUserValidationSchema }),
         onSubmit: (values, { resetForm }) => {
             const setReset = () => {
