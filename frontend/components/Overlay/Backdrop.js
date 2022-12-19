@@ -1,5 +1,5 @@
-import classes from '../../styles/Overlay.module.css';
-import { createPortal } from 'react-dom';
+import classes from "../../styles/Overlay.module.css";
+import { createPortal } from "react-dom";
 
 export default function Backdrop(props) {
   return props.mounted
@@ -8,7 +8,7 @@ export default function Backdrop(props) {
           className={classes.backdrop}
           onClick={() => props.handleMount(false)}
         ></div>,
-        document.getElementById('backdrop-root')
+        document.getElementById("backdrop-root")
       )
     : null;
 }
