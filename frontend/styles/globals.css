@@ -88,4 +88,9 @@ strong {
     a:hover {
         color: var(--darkblue);
     }
+
+    input[type='submit']:hover {
+        border-color: var(--darkblue);
+        color: var(--darkblue);
+    }
 }
