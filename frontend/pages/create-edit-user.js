@@ -38,7 +38,7 @@ const defaultFormValues = {
         { id: 'twitter', type: 'url', label: 'Twitter' },
         { id: 'lenster', type: 'url', label: 'Lenster' },
         { id: 'instagram', type: 'url', label: 'Instagram' },
-        { id: 'discord', type: 'text', label: 'Discord' },
+        { id: 'discord', type: 'url', label: 'Discord' },
         { id: 'github', type: 'url', label: 'GitHub' },
     ],
     minStringValid = [3, 'Must be 3 characters or more'],
@@ -47,13 +47,11 @@ const defaultFormValues = {
             twitter: /https:\/\/twitter\.com\/[A-Za-z0-9]+/,
             lenster: /https:\/\/lenster\.xyz\/u\/[A-Za-z0-9]+/,
             instagram: /https:\/\/www.instagram.com\/[A-Za-z0-9]+/,
-            discord: /[A-Za-z0-9]+#\d{4}/,
+            discord: /https:\/\/discordapp.com\/users\/[A-Za-z0-9]+#\d{4}/,
             github: /https:\/\/github\.com\/[A-Za-z0-9]+/,
         };
         return Yup.string().matches(greps[linkName], {
-            message: `Invalid ${linkName} ${
-                linkName === 'discord' ? 'name' : 'link'
-            }`,
+            message: `Invalid ${linkName} url`,
             excludeEmptyString: true,
         });
     },
@@ -192,7 +190,7 @@ export default function CreateEditUser(props) {
                             { name: 'twitter', url: body?.twitter },
                             { name: 'lenster', url: body?.lenster },
                             { name: 'instagram', url: body?.instagram },
-                            { name: 'discord', user: body?.discord },
+                            { name: 'discord', url: body?.discord },
                             { name: 'github', url: body?.github },
                         ],
                     },
