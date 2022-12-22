@@ -2,11 +2,12 @@ import { readContract } from '@wagmi/core'
 import connectContract from '../../utils/connectContract';
 import abiJSON from "../../utils/FontProject.json";
 import { ethers } from 'ethers';
+import getIPFontsUser from './getIPFontsUser';
 
 const contractAddress = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS;
 
 export async function createIPFontsUser({
-  lensAddress,
+  address,
   lensHandle,
   email,
   name,
@@ -27,12 +28,7 @@ export async function createIPFontsUser({
     return;
   }
 
-  const { createdAt} = await readContract({
-    address: contractAddress,
-    abi: abiJSON.abi,
-    functionName: 'addressToUser',
-    args: [lensAddress]
-  });
+  const { createdAt } = await getIPFontsUser(address);
 
   const isRegistered = !ethers.BigNumber.from(createdAt).isZero;
   
