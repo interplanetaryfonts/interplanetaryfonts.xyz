@@ -224,6 +224,8 @@ export default function CreateEditUser(props) {
                         await txn.wait();
                         if (lensHandle) {
                             const lensBody = {
+                                version: '1.0.0',
+                                metadata_id: uuid(),
                                 name: body?.name || null,
                                 bio: body?.bio || null,
                                 cover_picture: bio?.cover || null,
@@ -264,8 +266,6 @@ export default function CreateEditUser(props) {
                                         value: body?.github || null,
                                     },
                                 ],
-                                version: '1.0.0',
-                                metadata_id: uuid(),
                                 createdOn: new Date(),
                                 appId: 'IPFonts',
                             };
