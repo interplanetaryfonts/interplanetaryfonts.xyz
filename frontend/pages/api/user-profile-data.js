@@ -1,4 +1,3 @@
-import { Web3Storage, File } from 'web3.storage';
 import { withIronSessionApiRoute } from 'iron-session/next';
 import ironOptions from '../../config/ironOptions';
 
@@ -17,7 +16,7 @@ async function storeUserData(req, res) {
     try {
         const file = await makeFileObject(body),
             cid = await storeFile(file);
-        return res.status(200).json({ success: true, cid: cid });
+        return res.status(200).json({ success: true, ...cid });
     } catch (err) {
         return res
             .status(500)
@@ -31,9 +30,13 @@ async function makeFileObject(body) {
 }
 
 async function storeFile(file) {
-    const client = new Web3Storage({ token: process.env.WEB3STORAGE_TOKEN });
-    const cid = await client.put([file]);
-    return cid;
+    const ipfs = ipfsHttpClient({
+        url: 'https://ipfs.infura.io:5001/api/v0',
+        headers: { authorization },
+    });
+    const result = await ipfs.add(file);
+    console.log('Result', result.path);
+    return { cid: result.cid, path: result.path };
 }
 
 export default withIronSessionApiRoute(handler, ironOptions);
