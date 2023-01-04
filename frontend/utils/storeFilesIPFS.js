@@ -1,6 +1,6 @@
 import { Web3Storage, File } from "web3.storage";
 
-function makeStorageClient() {
+function makeWeb3StorageClient() {
   return new Web3Storage({ token: process.env.WEB3STORAGE_TOKEN });
 }
 
@@ -9,7 +9,7 @@ export async function storeFilesIPFS(files) {
     return new File([buffer],name);
   });
 
-  const client = makeStorageClient();
+  const client = makeWeb3StorageClient();
   const cid = await client.put(web3StorageFiles);
 
   return cid;

@@ -39,3 +39,4 @@ export * from './lens/mirror';
 export * from './lens/refresh';
 
 export * from './ipfonts/createIPFontsUser';
+export * from './ipfonts/createIPFontProject';

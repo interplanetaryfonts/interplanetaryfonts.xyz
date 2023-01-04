@@ -4,8 +4,6 @@ import abiJSON from "../../utils/FontProject.json";
 import { ethers } from 'ethers';
 import getIPFontsUser from './getIPFontsUser';
 
-const contractAddress = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS;
-
 export async function createIPFontsUser({
   address,
   lensHandle,

@@ -1,22 +1,28 @@
 import React, { useContext } from "react";
-import { useAuthenticationStatus } from '@rainbow-me/rainbowkit';
 import { useAccount } from 'wagmi';
 import { FormContext } from "../../Overlay/CreateProject.js";
 import classes from "../../../styles/Forms.module.css";
 import {
   client as lensClient,
   createIPFontsUser,
+  createIPFontProject,
   getProfileByAddress
 } from '../../../clientApi';
 
 export default function Submit() {
-  const { address } = useAccount();
-  const walletConnectionStatus = useAuthenticationStatus();
+  const { address, isConnected } = useAccount();
   const { activeStepIndex, setActiveStepIndex, formData } = useContext(FormContext);
+
+  //   projectName: "",
+    // description: "",
+    // files: "",
+    // lensHandle: "",
+    // minLimit: "",
+    // setPrice: "",
 
   const submit = async () => {
     // Check to see if user is logged in
-    if (walletConnectionStatus === 'authenticated') {
+    if (isConnected) {
       const lensProfile = await lensClient.query({
         query: getProfileByAddress,
         variables: {
@@ -25,25 +31,38 @@ export default function Submit() {
       });
 
       // Checks to see if user has a profile in our smart contract
-      // If false create user in smart contract with address and lens handle if logged in with lens
-      await createIPFontsUser({
-        address,
-        lensHandle : lensProfile.data?.profiles?.items[0]?.handle
-      });
+      // If false create basic user in smart contract with address and lens handle if logged in with lens
+      // await createIPFontsUser({
+      //   address,
+      //   lensHandle : lensProfile.data?.profiles?.items[0]?.handle
+      // });
 
       // Upload font files to IPFS through our endpoint
-      const { ok, cid } = await fetch('api/upload-font', {
-        method: 'POST',
-        body: '' // todo
+      // const { ok, cid } = await fetch('api/upload-font', {
+      //   method: 'POST',
+      //   body: '' // todo get file data from formData
+      // });
+
+      // if (!ok || !cid) {
+      //   throw Error('could not upload font files');
+      // }
+
+      //     If font upload succesful 
+      //        - upload name and description metadata to IPFS with our endpoint
+
+      console.log(formData);
+
+
+
+      const result = await createIPFontProject({
+        name : formData.projectName,
+        description : formData.description
       });
 
-      if (!ok || !cid) {
-        throw Error('could not upload font files');
-      }
+      console.log(result);
 
-      //     If succesful 
-      //        - upload name and description metadata to IPFS with our endpoint
-      //        - create project in smart contract with rest of form data and CID of metadata and upload CID
+
+      // - create project in smart contract with rest of form data and CID of metadata and upload CID
     }
 
     setActiveStepIndex(activeStepIndex + 1);
