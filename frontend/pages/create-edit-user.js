@@ -196,7 +196,6 @@ export default function CreateEditUser(props) {
                     },
                     ipfontsResponse = await fetch('./api/user-profile-data', {
                         method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(ipfontsBody),
                     });
                 if (ipfontsResponse.status !== 200) {
@@ -274,9 +273,6 @@ export default function CreateEditUser(props) {
                                 './api/user-profile-data',
                                 {
                                     method: 'POST',
-                                    headers: {
-                                        'Content-Type': 'application/json',
-                                    },
                                     body: JSON.stringify(lensBody),
                                 }
                             );
@@ -287,7 +283,7 @@ export default function CreateEditUser(props) {
                                 resetFunction();
                             } else {
                                 const lensResJSON = await lensResponse.json(),
-                                    lensResJSONurl = `https://${lensResJSON.cid}.ipfs.w3s.link/data.json`,
+                                    lensResJSONurl = `ipfs://${lensResJSON.cid}/data.json`,
                                     getProfile = await lensClient.query({
                                         query: getProfileByHandle,
                                         variables: { handle: lensHandle },
