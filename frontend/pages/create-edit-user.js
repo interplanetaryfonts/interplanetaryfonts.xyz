@@ -267,7 +267,7 @@ export default function CreateEditUser(props) {
                                     },
                                 ],
                                 createdOn: new Date(),
-                                appId: 'IPFonts',
+                                app_id: 'IPFonts',
                             };
                             const lensResponse = await fetch(
                                 './api/user-profile-data',
