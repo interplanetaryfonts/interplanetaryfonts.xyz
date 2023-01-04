@@ -267,7 +267,7 @@ export default function CreateEditUser(props) {
                                 version: '1.0.0',
                                 metadata_id: uuid(),
                                 createdOn: new Date(),
-                                appId: 'InterplanetaryFonts',
+                                appId: 'IPFonts',
                             };
                             const lensResponse = await fetch(
                                 './api/user-profile-data',
@@ -283,7 +283,7 @@ export default function CreateEditUser(props) {
                                 resetFunction();
                             } else {
                                 const lensResJSON = await lensResponse.json(),
-                                    lensResJSONurl = `ipfs://${lensResJSON.cid}/data.json`,
+                                    lensResJSONurl = `https://ipfs.io/ipfs/${lensResJSON.cid}/data.json`,
                                     getProfile = await lensClient.query({
                                         query: getProfileByHandle,
                                         variables: { handle: lensHandle },

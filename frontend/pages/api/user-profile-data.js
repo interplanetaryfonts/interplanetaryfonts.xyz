@@ -28,7 +28,7 @@ async function storeUserMetadata(req, res) {
         console.log(err);
         return res
             .status(500)
-            .json({ error: 'Error creating font', ok: false });
+            .json({ error: 'Error creating/editing user', ok: false });
     }
 }
 
