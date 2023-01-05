@@ -22,7 +22,5 @@ export async function storeMetadataFileIPFS(file) {
     content : file.content
   });
 
-  console.log(result);
-
   return result.cid.toString();
 }

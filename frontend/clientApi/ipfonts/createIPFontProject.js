@@ -1,54 +1,86 @@
-import { readContract } from '@wagmi/core'
 import connectContract from '../../utils/connectContract';
-import abiJSON from "../../utils/FontProject.json";
-import { ethers } from 'ethers';
-import getIPFontsUser from './getIPFontsUser';
 
-// const contractAddress = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS;
 
 export async function createIPFontProject({
+  files,
   name,
-  description
+  description,
+  perCharacterMintPrice,
+  mintLimit
 }) {
-  // TODO : create nextjs api endpoint that creates profile data json, uploads it to
-  // IPFS using web3.storage and returns the IPFS CID. This is for data outside of
-  // lensHandle
+  const ipfontsContract = connectContract();
 
-  // const profileInfoCID = '';
+  if (!ipfontsContract) {
+    console.log('Cound not connect to contract');
+    return;
+  }
 
-  // const ipfontsContract = connectContract();
+  const formData = new FormData();
 
-  // if (!ipfontsContract) {
-  //   console.log('Cound not connect to contract');
-  //   return;
-  // }
+  for (let i = 0; i < files.length; i++) {
+    formData.append('fonts', files[i]);
+  };
+  
+  try {
+    const uploadFontResponse = await fetch('/api/upload-font', {
+      method: 'POST',
+      body: formData
+    });
 
+    const {
+      ok: fontUploadOk,
+      cid: fontFilesCID,
+      error: fontUploadError
+    } = await uploadFontResponse.json();
 
-  const { ok, cid } = await fetch('/api/upload-metadata', {
-    method: 'POST',
-    body: JSON.stringify({
-      name,
-      description
-    })
-  });
+    console.log({
+      fontUploadOk,
+      fontFilesCID,
+      fontUploadError
+    });
 
-  return { ok, cid };
+    const uploadMetadataResponse = await fetch('/api/upload-metadata', {
+      method: 'POST',
+      body: JSON.stringify({
+        name,
+        description
+      })
+    });
 
-  // TODO - make smart contract call to create font project
-  // if (!isRegistered) {
-  //   const createdAt = Date.now();
+    const {
+      ok: metadataUploadOk,
+      cid: fontMetadataCID,
+      error: metadataUploadError
+    } = await uploadMetadataResponse.json();
 
-  //   const txn = await ipfontsContract.createUser(
-  //     lensHandle,
-  //     profileInfoCID,
-  //     createdAt,
-  //     { gasLimit: 900000 }
-  //   );
-  //   console.log("IPFonts : Creating user entity", txn.hash);
+    console.log({
+      metadataUploadOk,
+      fontMetadataCID,
+      metadataUploadError
+    });
 
-  //   const wait = await txn.wait();
-  //   console.log("IPFonts : User entity created", txn.hash);
-  // } else {
-  //   console.log('User alread registered');
-  // }
+    if (fontUploadOk && metadataUploadOk) {
+      const createdAt = Date.now();
+
+      const txn = await ipfontsContract.createFontProject(
+        createdAt,
+        createdAt,
+        perCharacterMintPrice,
+        mintLimit,
+        process.env.NEXT_PUBLIC_SUPERFLUID_MATICX_TOKEN_ADDRESS,
+        fontMetadataCID,
+        fontFilesCID,
+        { gasLimit: 900000 }
+      );
+      console.log("IPFonts : Creating font project entity", txn.hash);
+
+      await txn.wait();
+      console.log("IPFonts : Font project entity created", txn.hash);
+    } else {
+      console.log(fontUploadError);
+      console.log(metadataUploadError);
+    }
+  } catch(err) {
+    console.log(err);
+  }
 }

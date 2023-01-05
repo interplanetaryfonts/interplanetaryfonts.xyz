@@ -4,9 +4,15 @@ import { storeMetadataFileIPFS } from '../../utils/storeMetadataFileIPFS';
 
 async function handler(req, res) {
   if (req.method === "POST") {
+    // Check that user has signed in and is authorized to uplaod files
+    if (!req.session.siwe) {
+      return res.status(401).json({ message: 'You have to sign-in first' });
+    }
+
     return await storeFontMetadata(req, res);
   } else {
     return res
+      .setHeader('Allow', ['POST'])
       .status(405)
       .json({ message: "Method not allowed", success: false });
   }
@@ -28,7 +34,7 @@ async function storeFontMetadata(req, res) {
     console.log(err);
     return res
       .status(500)
-      .json({ error: "Error creating font", ok: false });
+      .json({ error: "Error uploading font metadata", ok: false });
   }
 }
 
