@@ -5,8 +5,6 @@ import { useRouter } from 'next/router';
 import logo from '../../public/logoHeader.svg';
 import classes from '../../styles/NavBar.module.css';
 import ConnectButton from '../UI/ConnectButton';
-import { client as lensClient, challenge, authenticate, getProfileByAddress, createIPFontsUser } from '../../clientApi';
-import { ethers } from 'ethers';
 
 export default function NavBar(props) {
     const router = useRouter();
