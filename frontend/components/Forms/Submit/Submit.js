@@ -10,19 +10,12 @@ import {
 } from '../../../clientApi';
 
 export default function Submit() {
-  const { address, isConnected } = useAccount();
+  const { isConnected } = useAccount();
   const { activeStepIndex, setActiveStepIndex, formData } = useContext(FormContext);
 
   const submit = async () => {
     // Check to see if user is logged in
     if (isConnected) {
-      const lensProfile = await lensClient.query({
-        query: getProfileByAddress,
-        variables: {
-          owner: address,
-        },
-      });
-
       // TODO - create user in smart contract if it does not exist already
 
       await createIPFontProject({
