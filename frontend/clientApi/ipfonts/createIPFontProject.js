@@ -39,6 +39,11 @@ export async function createIPFontProject({
       fontUploadError
     });
 
+    if (!fontUploadOk) {
+      console.log(fontUploadError);
+      return;
+    }
+
     const uploadMetadataResponse = await fetch('/api/upload-metadata', {
       method: 'POST',
       body: JSON.stringify({
@@ -59,27 +64,27 @@ export async function createIPFontProject({
       metadataUploadError
     });
 
-    if (fontUploadOk && metadataUploadOk) {
-      const createdAt = Date.now();
-
-      const txn = await ipfontsContract.createFontProject(
-        createdAt,
-        createdAt,
-        perCharacterMintPrice,
-        mintLimit,
-        process.env.NEXT_PUBLIC_SUPERFLUID_MATICX_TOKEN_ADDRESS,
-        fontMetadataCID,
-        fontFilesCID,
-        { gasLimit: 900000 }
-      );
-      console.log("IPFonts : Creating font project entity", txn.hash);
-
-      await txn.wait();
-      console.log("IPFonts : Font project entity created", txn.hash);
-    } else {
-      console.log(fontUploadError);
+    if (!metadataUploadOk) {
       console.log(metadataUploadError);
+      return;
     }
+
+    const createdAt = Date.now();
+
+    const txn = await ipfontsContract.createFontProject(
+      createdAt,
+      createdAt,
+      perCharacterMintPrice,
+      mintLimit,
+      process.env.NEXT_PUBLIC_SUPERFLUID_MATICX_TOKEN_ADDRESS,
+      fontMetadataCID,
+      fontFilesCID,
+      { gasLimit: 900000 }
+    );
+    console.log("IPFonts : Creating font project entity", txn.hash);
+
+    await txn.wait();
+    console.log("IPFonts : Font project entity created", txn.hash);
   } catch(err) {
     console.log(err);
   }
