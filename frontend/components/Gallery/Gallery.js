@@ -74,9 +74,11 @@ const dummyProjects = [
 const GET_FONTS = gql`
     query GetFonts {
         fontProjects {
+            metaData {
+              name
+             description
+            }
             id
-            name
-            description
             perCharacterMintPrice
             launchDateTime
             createdAt
