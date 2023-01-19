@@ -1,4 +1,5 @@
 module.exports = {
- standard: require('./standard'),
+ react: require('./react'),
+ base: require('./base'),
  prettier: require('./prettier')
 };

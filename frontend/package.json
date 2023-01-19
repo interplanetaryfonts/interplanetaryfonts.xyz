@@ -39,13 +39,8 @@
   "devDependencies": {
     "@ipfonts/eslint-config-custom": "workspace:*",
     "autoprefixer": "^10.4.8",
-    "eslint": "7.23.0",
+    "eslint": "8.32.0",
     "eslint-config-next": "12.2.5",
-    "eslint-config-prettier": "^8.5.0",
-    "eslint-config-standard": "^17.0.0",
-    "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-n": "^15.6.0",
-    "eslint-plugin-promise": "^6.1.1",
     "postcss": "^8.4.16",
     "prettier": "^2.8.1",
     "tailwindcss": "^3.1.8"
