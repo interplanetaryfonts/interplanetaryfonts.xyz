@@ -1,0 +1,15 @@
+{
+  "name": "@ipfonts/eslint-config-custom",
+  "main": "./index.js",
+  "devDependencies": {
+    "eslint": "7.23.0"
+  },
+  "dependencies": {
+    "eslint-config-next": "12.2.5",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-n": "^15.6.0",
+    "eslint-plugin-promise": "^6.1.1"
+  }
+}

@@ -37,6 +37,7 @@
     "web3.storage": "^4.4.0"
   },
   "devDependencies": {
+    "@ipfonts/eslint-config-custom": "workspace:*",
     "autoprefixer": "^10.4.8",
     "eslint": "7.23.0",
     "eslint-config-next": "12.2.5",

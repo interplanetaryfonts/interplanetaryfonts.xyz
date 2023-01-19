@@ -1,5 +1,6 @@
 module.exports = {
-  extends: ["next/core-web-vitals", "standard", "prettier"],
+  root: true,
+  extends: ["next/core-web-vitals", "@ipfonts/eslint-config-custom"],
   settings: {
     next: {
       rootDir: "./frontend/",
