@@ -8,9 +8,9 @@ import CreateProject from "../../Overlay/CreateProject";
 
 export default function Created(props) {
   const [mounted, setMounted] = useState(false);
-    const handleMount = (bool) => {
-      setMounted(bool);
-    };
+  const handleMount = (bool) => {
+    setMounted(bool);
+  };
 
   return (
     <>

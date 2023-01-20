@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { client, challenge, authenticate } from "../../api";
+import { useState, useEffect } from "react";
+import { client, challenge, authenticate } from "../../clientApi";
 import { ethers } from "ethers";
 
 export default function LensLogin() {

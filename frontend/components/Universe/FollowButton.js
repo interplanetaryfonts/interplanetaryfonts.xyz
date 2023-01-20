@@ -1,4 +1,3 @@
-import React from "react";
 import ABI from "../../abi.json";
 import { ethers } from "ethers";
 import Button from "../UI/Button";

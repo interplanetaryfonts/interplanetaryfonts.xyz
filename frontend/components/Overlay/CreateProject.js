@@ -7,9 +7,9 @@ import Worldcoin from "./Worldcoin";
 
 export default function CreateProject(props) {
   const [mounted, setMounted] = useState(false);
-    const handleMount = (bool) => {
-      setMounted(bool);
-    };
+  const handleMount = (bool) => {
+    setMounted(bool);
+  };
   return (
     <>
       <Backdrop mounted={props.mounted} handleMount={props.handleMount} />
