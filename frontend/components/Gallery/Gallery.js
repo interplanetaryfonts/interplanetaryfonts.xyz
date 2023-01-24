@@ -78,19 +78,18 @@ const dummyProjects = [
 ];
 
 const GET_FONTS = gql`
-    query GetFonts {
-        fontProjects {
-            metaData {
-              name
-             description
-            }
-            id
-            perCharacterMintPrice
-            launchDateTime
-            createdAt
-            updatedAt
-            fontFilesCID
-        }
+  query GetFonts {
+    fontProjects {
+      metaData {
+        name
+        description
+      }
+      id
+      perCharacterMintPrice
+      launchDateTime
+      createdAt
+      updatedAt
+      fontFilesCID
     }
   }
 `;
