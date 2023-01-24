@@ -1,9 +1,4 @@
-import {
-  ApolloClient,
-  InMemoryCache,
-  gql,
-  createHttpLink,
-} from "@apollo/client";
+import { ApolloClient, InMemoryCache, createHttpLink } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 
 const authLink = setContext((_, { headers }) => {
@@ -39,3 +34,4 @@ export * from "./lens/mirror";
 export * from "./lens/refresh";
 
 export * from "./ipfonts/createIPFontsUser";
+export * from "./ipfonts/createIPFontProject";

@@ -70,7 +70,9 @@ const handler = async (req, res) => {
           cid,
         });
       } catch (_error) {
-        res.json({ ok: false });
+        res
+          .status(500)
+          .json({ error: "Error uploading font files", ok: false });
       }
       break;
     default:

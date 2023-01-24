@@ -1,0 +1,117 @@
+.modalCreateProject {
+  width: 50%;
+  padding-bottom: 2rem;
+  position: fixed;
+  top: 20vh;
+  left: calc(50% - 25%);
+  right: auto;
+  background-color: var(--light);
+  border-radius: var(--global-radius);
+  border: 2px solid var(--red);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  gap: 1rem;
+}
+.modalCreateProject-content {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  gap: 1.5rem;
+}
+
+.modalCreateProject-content p,
+.modalCreateProject-content a {
+  font-size: 1.5rem;
+}
+.errorMessage {
+  font-style: italic;
+  color: var(--blue);
+}
+
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  justify-items: center;
+  align-items: center;
+  margin-bottom: 1rem;
+  color: var(--red);
+}
+.title {
+  font-size: xx-large;
+  font-weight: bold;
+  align-self: center;
+  margin-bottom: 1rem;
+  color: var(--red);
+}
+
+.continue {
+  border-radius: 5px;
+  background-color: var(--red);
+  font-weight: normal;
+  font-size: large;
+  color: white;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+  padding: 0.5rem 2rem;
+}
+.continue:hover {
+  background-color: var(--darkblue);
+}
+.back {
+  border-radius: 5px;
+  background-color: var(--light);
+  font-weight: lighter;
+  font-size: x-small;
+  color: var(--darkblue);
+  border: 2px solid;
+  margin-bottom: 1rem;
+  padding: 0.2rem 1rem;
+}
+.back:hover {
+  background-color: var(--darkblue);
+  color: var(--light);
+}
+.lens {
+  border-radius: 3rem;
+  border: solid 2px;
+  border-color: #00501e;
+  font-weight: normal;
+  font-size: large;
+  color: #00501e;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+  padding: 0.5rem 2rem;
+}
+.lens:hover {
+  background-color: #00501e;
+  color: white;
+}
+
+.formValues {
+  font-size: x-large;
+  font-weight: medium;
+  align-self: center;
+  margin-bottom: 0.1rem;
+  color: var(--red);
+}
+.formValuesDescription {
+  width: 80%;
+  font-size: large;
+  color: var(--darkblue);
+  word-break: break-all;
+  white-space: normal;
+  text-align: left;
+}
+
+.labelField {
+  align-self: flex-start;
+  font-size: medium;
+  font-weight: bold;
+  text-align: left;
+  margin-top: 1rem;
+  margin-bottom: 0.2rem;
+  color: var(--red);
+}

@@ -11,13 +11,8 @@ import {
   RainbowKitAuthenticationProvider,
   lightTheme,
 } from "@rainbow-me/rainbowkit";
-import {
-  chain,
-  configureChains,
-  createClient,
-  WagmiConfig,
-  useAccount,
-} from "wagmi";
+import { configureChains, createClient, WagmiConfig, useAccount } from "wagmi";
+import { polygonMumbai } from "wagmi/chains";
 import { infuraProvider } from "wagmi/providers/infura";
 import { publicProvider } from "wagmi/providers/public";
 import useIronSessionRainbowAuthAdapter from "../hooks/useIronSessionRainbowAuthAdapter";
@@ -38,7 +33,7 @@ import Disclaimer from "../components/UI/Disclaimer";
 // Wallet connect objects
 const infuraId = process.env.NEXT_PUBLIC_INFURA_ID;
 const { chains, provider } = configureChains(
-  [chain.polygonMumbai],
+  [polygonMumbai],
   [infuraProvider({ infuraId }), publicProvider()]
 );
 const { connectors } = getDefaultWallets({

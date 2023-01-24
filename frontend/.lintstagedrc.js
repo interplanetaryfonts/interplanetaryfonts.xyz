@@ -6,7 +6,13 @@ const buildEslintCommand = (filenames) => {
     .join(" --file ")}`;
 };
 
+const buildPrettierCommand = (filenames) => {
+  return `pnpm --filter frontend run prettier ${filenames.map(
+    (f) => `./${path.relative(__dirname, f)}`
+  )}`;
+};
+
 module.exports = {
-  "*.{js,jsx}": buildEslintCommand,
   "*": "pnpm prettier:frontend",
+  "*.{js,jsx}": buildEslintCommand,
 };

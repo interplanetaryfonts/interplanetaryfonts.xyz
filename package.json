@@ -14,7 +14,7 @@
     "test:smart-contract": "pnpm --filter contracts run test",
     "dev:frontend": "pnpm --filter frontend run dev",
     "lint:frontend": "pnpm --filter frontend run lint",
-    "prettier:frontend": "pnpm --filter frontend run prettier",
+    "prettier:frontend": "pnpm --filter frontend run prettier .",
     "dev:backend": "pnpm --filter backend run dev",
     "prepare": "husky install"
   },
