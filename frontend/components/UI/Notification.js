@@ -1,4 +1,4 @@
-import classes from '../../styles/Notifications.module.css';
+import classes from "../../styles/Notifications.module.css";
 
 export default function Notification(props) {
   return (

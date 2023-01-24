@@ -1,9 +1,13 @@
-import Link from 'next/link';
-import { client as lensClient, challenge, authenticate } from '../../../clientApi';
-import { ethers } from 'ethers';
-import clsx from 'clsx';
+import Link from "next/link";
+import {
+  client as lensClient,
+  challenge,
+  authenticate,
+} from "../../../clientApi";
+import { ethers } from "ethers";
+import clsx from "clsx";
 
-import classes from './ConnectionStatus.module.css';
+import classes from "./ConnectionStatus.module.css";
 
 export default function ConnectionStatus({
   accountAddress,
@@ -14,9 +18,8 @@ export default function ConnectionStatus({
   isLoggedInWithLens,
   onOpenChainModal,
   onOpenAccountModal,
-  onLensLogin
+  onLensLogin,
 }) {
-
   async function lensLogin(lensaddress) {
     try {
       const challengeInfo = await lensClient.query({
@@ -32,7 +35,7 @@ export default function ConnectionStatus({
         mutation: authenticate,
         variables: {
           address: lensaddress,
-          signature: signature,
+          signature,
         },
       });
       const {
@@ -42,8 +45,8 @@ export default function ConnectionStatus({
       } = authData;
       onLensLogin(accessToken, refreshToken);
     } catch (err) {
-      window.localStorage.removeItem('lens-auth-token');
-      console.log('Error signing in: ', err);
+      window.localStorage.removeItem("lens-auth-token");
+      console.log("Error signing in: ", err);
     }
   }
 
@@ -52,41 +55,32 @@ export default function ConnectionStatus({
       <button
         className={clsx(classes.button, classes.displayNameButton)}
         onClick={onOpenAccountModal}
-        type='button'
+        type="button"
       >
-        {accountDisplayName} ({accountDisplayBalance ?? ''})
+        {accountDisplayName} ({accountDisplayBalance ?? ""})
       </button>
       <div className={classes.networkProfile}>
         <button
           className={clsx(classes.button, classes.networkProfileButton)}
           onClick={onOpenChainModal}
-          type='button'
+          type="button"
         >
           {chainName}
         </button>
-        <Link
-          href={`/user/${accountAddress}`}
-        >
+        <Link href={`/user/${accountAddress}`}>
           <button className={clsx(classes.button, classes.dashBoardButton)}>
             Dashboard
           </button>
         </Link>
 
         {isLoggedInWithLens ? (
-          <button
-            className={classes.button}
-            onClick={onLensLogout}
-          >
+          <button className={classes.button} onClick={onLensLogout}>
             Disconnect Lens
           </button>
         ) : (
           <button
             className={classes.button}
-            onClick={() =>
-              lensLogin(
-                accountAddress
-              )
-            }
+            onClick={() => lensLogin(accountAddress)}
           >
             Login With Lens
           </button>

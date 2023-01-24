@@ -6,7 +6,7 @@ function makeWeb3StorageClient() {
 
 export async function storeFilesIPFS(files) {
   const web3StorageFiles = files.map(({ name, buffer }) => {
-    return new File([buffer],name);
+    return new File([buffer], name);
   });
 
   const client = makeWeb3StorageClient();

@@ -1,4 +1,4 @@
-import classes from '../../styles/CardHeader.module.css';
+import classes from "../../styles/CardHeader.module.css";
 
 export default function CardHeader(props) {
   return (

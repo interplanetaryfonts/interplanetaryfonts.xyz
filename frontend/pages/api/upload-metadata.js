@@ -1,18 +1,18 @@
-import { withIronSessionApiRoute } from 'iron-session/next';
-import ironOptions from '../../config/ironOptions';
-import { storeMetadataFileIPFS } from '../../utils/storeMetadataFileIPFS';
+import { withIronSessionApiRoute } from "iron-session/next";
+import ironOptions from "../../config/ironOptions";
+import { storeMetadataFileIPFS } from "../../utils/storeMetadataFileIPFS";
 
 async function handler(req, res) {
   if (req.method === "POST") {
     // Check that user has signed in and is authorized to uplaod files
     if (!req.session.siwe) {
-      return res.status(401).json({ message: 'You have to sign-in first' });
+      return res.status(401).json({ message: "You have to sign-in first" });
     }
 
     return await storeFontMetadata(req, res);
   } else {
     return res
-      .setHeader('Allow', ['POST'])
+      .setHeader("Allow", ["POST"])
       .status(405)
       .json({ message: "Method not allowed", success: false });
   }
@@ -23,8 +23,8 @@ async function storeFontMetadata(req, res) {
 
   try {
     const file = {
-      path : '/tmp/data.json',
-      content: Buffer.from(body)
+      path: "/tmp/data.json",
+      content: Buffer.from(body),
     };
 
     const cid = await storeMetadataFileIPFS(file);
@@ -38,4 +38,4 @@ async function storeFontMetadata(req, res) {
   }
 }
 
-export default withIronSessionApiRoute(handler, ironOptions)
+export default withIronSessionApiRoute(handler, ironOptions);

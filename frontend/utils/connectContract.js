@@ -18,13 +18,9 @@ function connectContract() {
       const provider = new ethers.providers.Web3Provider(ethereum);
       const signer = provider.getSigner();
 
-      fontContract = new ethers.Contract(
-        contractAddress,
-        contractABI,
-        signer
-      ); 
+      fontContract = new ethers.Contract(contractAddress, contractABI, signer);
     } else {
-      throw new Error('Please connect to the Polygon Mumbai network.')
+      throw new Error("Please connect to the Polygon Mumbai network.");
     }
   } catch (error) {
     console.log("ERROR:", error);

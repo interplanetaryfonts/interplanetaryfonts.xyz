@@ -1,20 +1,20 @@
-import { useState } from 'react';
-import Link from 'next/link';
-import classes from '../../../styles/UserDashboard.module.css';
+import { useState } from "react";
+import Link from "next/link";
+import classes from "../../../styles/UserDashboard.module.css";
 // Components
-import DashboardElement from '../../UI/DashboardElement';
-import Button from '../../UI/Button';
-import CreateProject from '../../Overlay/CreateProject';
+import DashboardElement from "../../UI/DashboardElement";
+import Button from "../../UI/Button";
+import CreateProject from "../../Overlay/CreateProject";
 
 export default function Created(props) {
-  const [mounted, setMounted] = useState(false),
-    handleMount = bool => {
-      setMounted(bool);
-    };
+  const [mounted, setMounted] = useState(false);
+  const handleMount = (bool) => {
+    setMounted(bool);
+  };
 
   return (
     <>
-      <div className={classes['profile-elements']}>
+      <div className={classes["profile-elements"]}>
         {props.elements.map((el, i) => (
           <DashboardElement key={`created-el-${i}`}>
             <p>{el.txt}</p>

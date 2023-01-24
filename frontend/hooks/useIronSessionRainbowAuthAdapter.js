@@ -1,17 +1,12 @@
-import {
-  useMemo,
-  useState,
-  useRef,
-  useEffect
-} from 'react';
+import { useMemo, useState, useRef, useEffect } from "react";
 
-import { createAuthenticationAdapter } from '@rainbow-me/rainbowkit';
-import { SiweMessage } from 'siwe';
+import { createAuthenticationAdapter } from "@rainbow-me/rainbowkit";
+import { SiweMessage } from "siwe";
 
 export default function useIronSessionRainbowAuthAdapter() {
   const fetchingStatusRef = useRef(false);
   const verifyingRef = useRef(false);
-  const [authStatus, setAuthStatus] = useState('loading');
+  const [authStatus, setAuthStatus] = useState("loading");
 
   // Fetch user when:
   useEffect(() => {
@@ -23,11 +18,11 @@ export default function useIronSessionRainbowAuthAdapter() {
       fetchingStatusRef.current = true;
 
       try {
-        const response = await fetch('/api/me');
+        const response = await fetch("/api/me");
         const json = await response.json();
-        setAuthStatus(json.address ? 'authenticated' : 'unauthenticated');
+        setAuthStatus(json.address ? "authenticated" : "unauthenticated");
       } catch (_error) {
-        setAuthStatus('unauthenticated');
+        setAuthStatus("unauthenticated");
       } finally {
         fetchingStatusRef.current = false;
       }
@@ -37,14 +32,14 @@ export default function useIronSessionRainbowAuthAdapter() {
     fetchStatus();
 
     // 2. window is focused (in case user logs out of another window)
-    window.addEventListener('focus', fetchStatus);
-    return () => window.removeEventListener('focus', fetchStatus);
+    window.addEventListener("focus", fetchStatus);
+    return () => window.removeEventListener("focus", fetchStatus);
   }, []);
 
   const authAdapter = useMemo(() => {
     return createAuthenticationAdapter({
       getNonce: async () => {
-        const response = await fetch('/api/nonce');
+        const response = await fetch("/api/nonce");
         return await response.text();
       },
 
@@ -52,9 +47,9 @@ export default function useIronSessionRainbowAuthAdapter() {
         return new SiweMessage({
           domain: window.location.host,
           address,
-          statement: 'Sign into the font universe with InterplanetaryFonts.',
+          statement: "Sign into the font universe with InterplanetaryFonts.",
           uri: window.location.origin,
-          version: '1',
+          version: "1",
           chainId,
           nonce,
         });
@@ -68,16 +63,16 @@ export default function useIronSessionRainbowAuthAdapter() {
         verifyingRef.current = true;
 
         try {
-          const response = await fetch('/api/verify', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+          const response = await fetch("/api/verify", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ message, signature }),
           });
 
           const authenticated = Boolean(response.ok);
 
           if (authenticated) {
-            setAuthStatus(authenticated ? 'authenticated' : 'unauthenticated');
+            setAuthStatus(authenticated ? "authenticated" : "unauthenticated");
           }
 
           return authenticated;
@@ -89,8 +84,8 @@ export default function useIronSessionRainbowAuthAdapter() {
       },
 
       signOut: async () => {
-        await fetch('/api/logout');
-        setAuthStatus('unauthenticated');
+        await fetch("/api/logout");
+        setAuthStatus("unauthenticated");
       },
     });
   }, []);
@@ -98,6 +93,6 @@ export default function useIronSessionRainbowAuthAdapter() {
   return {
     authAdapter,
     authStatus,
-    isConnected : authStatus === 'authenticated'
+    isConnected: authStatus === "authenticated",
   };
 }

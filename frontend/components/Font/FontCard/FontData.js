@@ -1,5 +1,5 @@
-import Link from 'next/link';
-import classes from '../../../styles/CardData.module.css';
+import Link from "next/link";
+import classes from "../../../styles/CardData.module.css";
 
 export default function FontData(props) {
   return (
@@ -7,7 +7,7 @@ export default function FontData(props) {
       <h5 className={classes.username}>{props.font.nme}</h5>
       <h6>Description</h6>
       <p className={classes.about}>{props.font.description}</p>
-      <h6>{`Creator${props.font.creators.length > 1 ? 's' : ''}`}</h6>
+      <h6>{`Creator${props.font.creators.length > 1 ? "s" : ""}`}</h6>
       <div className={classes.about}>
         {props.font.creators.map((creator, i) => (
           <Link

@@ -1,17 +1,13 @@
-import React, { useContext } from "react";
-import { useAccount } from 'wagmi';
+import { useContext } from "react";
+import { useAccount } from "wagmi";
 import { FormContext } from "../../Overlay/CreateProject.js";
 import classes from "../../../styles/Forms.module.css";
-import {
-  client as lensClient,
-  createIPFontsUser,
-  createIPFontProject,
-  getProfileByAddress
-} from '../../../clientApi';
+import { createIPFontProject } from "../../../clientApi";
 
 export default function Submit() {
   const { isConnected } = useAccount();
-  const { activeStepIndex, setActiveStepIndex, formData } = useContext(FormContext);
+  const { activeStepIndex, setActiveStepIndex, formData } =
+    useContext(FormContext);
 
   const submit = async () => {
     // Check to see if user is logged in
@@ -20,10 +16,10 @@ export default function Submit() {
 
       await createIPFontProject({
         files: formData.files,
-        name : formData.projectName,
-        description : formData.description,
+        name: formData.projectName,
+        description: formData.description,
         perCharacterMintPrice: formData.setPrice,
-        mintLimit: formData.minLimit
+        mintLimit: formData.minLimit,
       });
     }
 

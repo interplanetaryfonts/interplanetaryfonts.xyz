@@ -1,5 +1,5 @@
-import CardHeader from '../../UI/CardHeader';
+import CardHeader from "../../UI/CardHeader";
 
 export default function FontHeader() {
-  return <CardHeader title='Font' color={{ normal: 'darkblue' }}></CardHeader>;
+  return <CardHeader title="Font" color={{ normal: "darkblue" }}></CardHeader>;
 }

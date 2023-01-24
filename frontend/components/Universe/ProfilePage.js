@@ -1,12 +1,9 @@
-import Link from "next/link";
-
-
 export default function ProfilePage(props) {
   return (
     <div className="container max-w-screen-md flex flex-col flex-wrap md:flex-row gap-5 items-star pl-6 pr-6 pb-12">
       <div className="flex flex-col justify-center items-center ">
         <div className=" flex flex-row justify-around p-5 w-full  ">
-          { /* eslint-disable-next-line @next/next/no-img-element */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             alt="avatar"
             className="w-40 h-40 rounded-full border-solid border-red  border-4 "
@@ -21,11 +18,11 @@ export default function ProfilePage(props) {
           {props.bio}
         </p> */}
         </div>
-        {publications.map((pub) => (
+        {/* {publications.map((pub) => (
           <div key={pub.id} className="shadow p-10 rounded mb-8 w-fit">
             <p>{pub.metadata.content}</p>
           </div>
-        ))}
+        ))} */}
       </div>
     </div>
   );

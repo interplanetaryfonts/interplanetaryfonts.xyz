@@ -1,14 +1,14 @@
-import { ConnectButton as RainbowConnectButton } from '@rainbow-me/rainbowkit';
-import clsx from 'clsx';
-import Button from '../Button';
-import ConnectionStatus from '../ConnectionStatus';
+import { ConnectButton as RainbowConnectButton } from "@rainbow-me/rainbowkit";
+import clsx from "clsx";
+import Button from "../Button";
+import ConnectionStatus from "../ConnectionStatus";
 
-import classes from './ConnectButton.module.css';
+import classes from "./ConnectButton.module.css";
 
 export default function ConnectButton({
   handleLensLogout,
   isLoggedInWithLens,
-  onLensLogin
+  onLensLogin,
 }) {
   return (
     <RainbowConnectButton.Custom>
@@ -23,15 +23,15 @@ export default function ConnectButton({
       }) => {
         // Note: If your app doesn't use authentication, you
         // can remove all 'authenticationStatus' checks
-        const ready = mounted && authenticationStatus !== 'loading';
+        const ready = mounted && authenticationStatus !== "loading";
         const connected =
           ready &&
           account &&
           chain &&
-          (!authenticationStatus || authenticationStatus === 'authenticated');
+          (!authenticationStatus || authenticationStatus === "authenticated");
 
         const wrapperClasses = clsx({
-          [classes.wrapperLoading] : !ready
+          [classes.wrapperLoading]: !ready,
         });
 
         let onButtonClick;
@@ -39,21 +39,18 @@ export default function ConnectButton({
 
         if (!connected) {
           onButtonClick = openConnectModal;
-          onButtonText = 'Connect Wallet';
+          onButtonText = "Connect Wallet";
         }
 
         if (chain?.unsupported) {
           onButtonClick = openChainModal;
-          onButtonText = 'Wrong network';
+          onButtonText = "Wrong network";
         }
 
         return (
           <div className={wrapperClasses}>
             {!connected || chain?.unsupported ? (
-              <Button
-                onClick={onButtonClick}
-                type='button'
-              >
+              <Button onClick={onButtonClick} type="button">
                 {onButtonText}
               </Button>
             ) : (

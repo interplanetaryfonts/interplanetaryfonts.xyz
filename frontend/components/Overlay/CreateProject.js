@@ -1,9 +1,8 @@
-import { useState } from "react";
+import { useState, createContext } from "react";
 import Modal from "./Modal";
 import Backdrop from "./Backdrop";
 import Step from "../Step/Step";
 import Stepper from "../Stepper";
-import { createContext } from "react";
 import classes from "../../styles/Forms.module.css";
 
 export const FormContext = createContext();
@@ -19,10 +18,6 @@ export default function CreateProject(props) {
     setPrice: "",
   });
 
-  const [mounted, setMounted] = useState(false),
-    handleMount = (bool) => {
-      setMounted(bool);
-    };
   return (
     <>
       <Backdrop mounted={props.mounted} handleMount={props.handleMount} />

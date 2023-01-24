@@ -1,7 +1,7 @@
-import classes from '../../../styles/Card.module.css';
+import classes from "../../../styles/Card.module.css";
 // Components
-import FontHeader from './FontHeader';
-import FontData from './FontData';
+import FontHeader from "./FontHeader";
+import FontData from "./FontData";
 
 export default function FontCard(props) {
   return (

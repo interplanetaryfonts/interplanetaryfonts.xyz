@@ -1,5 +1,5 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import React, { useContext, useState } from "react";
+import { useContext } from "react";
 import { FormContext } from "../../Overlay/CreateProject.js";
 import * as yup from "yup";
 import classes from "../../../styles/Forms.module.css";
@@ -22,7 +22,7 @@ function Files({ formData, setFormData }) {
       enableReinitialize={true}
       initialValues={formData}
       validationSchema={ValidationSchema}
-      onSubmit={(values) => {
+      onSubmit={() => {
         // const data = { ...formData, ...values };
         // setFormData(data);
         setActiveStepIndex(activeStepIndex + 1);
@@ -46,13 +46,16 @@ function Files({ formData, setFormData }) {
               console.log(event.target.files);
               setFormData({
                 ...formData,
-                files : [...event.target.files],
+                files: [...event.target.files],
               });
             }}
           />
           <ErrorMessage name="files" render={renderError} />
-          <label className={classes.labelField}>Name</label>
+          <label htmlFor="description" className={classes.labelField}>
+            Name
+          </label>
           <Field
+            id="projectName"
             value={formData.projectName}
             onChange={(e) => {
               setFormData({
@@ -65,8 +68,11 @@ function Files({ formData, setFormData }) {
             className=" text-red-500 placeholder:italic placeholder:text-red-100 block bg-white w-full border border-red-300 rounded-md px-5 py-2 shadow-sm focus:outline-none focus:border-red-500 focus:ring-red-500 hover:border-red-500 hover:border-1 focus:ring-1 sm:text-sm"
           />
           <ErrorMessage name="projectName" render={renderError} />
-          <label className={classes.labelField}>Description</label>
+          <label htmlFor="description" className={classes.labelField}>
+            Description
+          </label>
           <Field
+            id="description"
             type="text"
             component="textarea"
             rows="5"

@@ -1,8 +1,8 @@
 const ironOptions = {
-  cookieName: 'universe',
+  cookieName: "universe",
   password: process.env.IRON_SESSION_OPTIONS_PASSWORD,
   cookieOptions: {
-    secure: process.env.NODE_ENV === 'production',
+    secure: process.env.NODE_ENV === "production",
   },
 };
 

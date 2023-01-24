@@ -1,10 +1,9 @@
 import Link from "next/link";
-import React, { useContext } from "react";
+import { useContext } from "react";
 import classes from "../../../styles/Forms.module.css";
 import { FormContext } from "../../Overlay/CreateProject.js";
 function Success() {
-  const { activeStepIndex, setActiveStepIndex, formData, setFormData } =
-    useContext(FormContext);
+  const { setActiveStepIndex, setFormData } = useContext(FormContext);
   return (
     <>
       <div className={classes.title}>New Font Project Created</div>

@@ -1,42 +1,41 @@
-import connectContract from '../../utils/connectContract';
-
+import connectContract from "../../utils/connectContract";
 
 export async function createIPFontProject({
   files,
   name,
   description,
   perCharacterMintPrice,
-  mintLimit
+  mintLimit,
 }) {
   const ipfontsContract = connectContract();
 
   if (!ipfontsContract) {
-    console.log('Cound not connect to contract');
+    console.log("Cound not connect to contract");
     return;
   }
 
   const formData = new FormData();
 
   for (let i = 0; i < files.length; i++) {
-    formData.append('fonts', files[i]);
-  };
-  
+    formData.append("fonts", files[i]);
+  }
+
   try {
-    const uploadFontResponse = await fetch('/api/upload-font', {
-      method: 'POST',
-      body: formData
+    const uploadFontResponse = await fetch("/api/upload-font", {
+      method: "POST",
+      body: formData,
     });
 
     const {
       ok: fontUploadOk,
       cid: fontFilesCID,
-      error: fontUploadError
+      error: fontUploadError,
     } = await uploadFontResponse.json();
 
     console.log({
       fontUploadOk,
       fontFilesCID,
-      fontUploadError
+      fontUploadError,
     });
 
     if (!fontUploadOk) {
@@ -44,24 +43,24 @@ export async function createIPFontProject({
       return;
     }
 
-    const uploadMetadataResponse = await fetch('/api/upload-metadata', {
-      method: 'POST',
+    const uploadMetadataResponse = await fetch("/api/upload-metadata", {
+      method: "POST",
       body: JSON.stringify({
         name,
-        description
-      })
+        description,
+      }),
     });
 
     const {
       ok: metadataUploadOk,
       cid: fontMetadataCID,
-      error: metadataUploadError
+      error: metadataUploadError,
     } = await uploadMetadataResponse.json();
 
     console.log({
       metadataUploadOk,
       fontMetadataCID,
-      metadataUploadError
+      metadataUploadError,
     });
 
     if (!metadataUploadOk) {
@@ -85,7 +84,7 @@ export async function createIPFontProject({
 
     await txn.wait();
     console.log("IPFonts : Font project entity created", txn.hash);
-  } catch(err) {
+  } catch (err) {
     console.log(err);
   }
 }
