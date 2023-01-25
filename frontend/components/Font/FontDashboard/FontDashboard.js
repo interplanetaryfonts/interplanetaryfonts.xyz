@@ -1,59 +1,59 @@
-import { useState } from 'react';
-import classes from '../../../styles/FontDashboard.module.css';
+import { useState } from "react";
+import classes from "../../../styles/FontDashboard.module.css";
 // Components
 // Components
-import DashboardContent from '../../UI/DashboardContent';
-import Charset from './Charset';
-import CharsetList from './CharsetList';
-import FontTester from './FontTester';
-import Specimen from './Specimen';
-import MintButton from './MintButton';
-import MintModal from '../../Overlay/MintModal';
+import DashboardContent from "../../UI/DashboardContent";
+import Charset from "./Charset";
+import CharsetList from "./CharsetList";
+import FontTester from "./FontTester";
+import Specimen from "./Specimen";
+import MintButton from "./MintButton";
+import MintModal from "../../Overlay/MintModal";
 
 export default function FontDashboard(props) {
-  const [price, setPrice] = useState(0),
-    [chars, setChars] = useState(
-      [...props.font.charset].map(ch => {
-        return { char: ch, checked: false, clss: '' };
-      })
-    ),
-    [unit] = useState(props.font.price / props.font.charset.length),
-    [mounted, setMounted] = useState(false);
+  const [price, setPrice] = useState(0);
+  const [chars, setChars] = useState(
+    [...props.font.charset].map((ch) => {
+      return { char: ch, checked: false, clss: "" };
+    })
+  );
+  const [unit] = useState(props.font.price / props.font.charset.length);
+  const [mounted, setMounted] = useState(false);
   // Event Handler
-  const handleLetterClick = e => {
-      const char = e.target.textContent,
-        ix = chars.findIndex(ch => char == ch.char),
-        tempChars = [...chars];
-      tempChars[ix].checked = !tempChars[ix].checked;
-      tempChars[ix].clss = tempChars[ix].clss === '' ? 'letter-checked' : '';
-      //  i = chars.findIndex(ch);
-      setChars(tempChars);
-      setPrice(prevPrice =>
-        Math.abs(prevPrice + (tempChars[ix].checked ? unit : -unit))
-      );
-    },
-    handleCharList = e => {
-      const list = e.target.value,
-        filteredChars = chars.map(ch => {
-          if (
-            list === 'Complete' ||
-            (list === 'Uppercase' && ch.char.match(/[A-Z]/)) ||
-            (list === 'Lowercase' && ch.char.match(/[a-z]/))
-          ) {
-            ch.checked = true;
-            ch.clss = 'letter-checked';
-          } else {
-            ch.checked = false;
-            ch.clss = '';
-          }
-          return ch;
-        });
-      setChars(filteredChars);
-      setPrice(filteredChars.filter(ch => ch.checked).length * unit);
-    },
-    handleMount = bool => {
-      setMounted(bool);
-    };
+  const handleLetterClick = (e) => {
+    const char = e.target.textContent;
+    const ix = chars.findIndex((ch) => char === ch.char);
+    const tempChars = [...chars];
+    tempChars[ix].checked = !tempChars[ix].checked;
+    tempChars[ix].clss = tempChars[ix].clss === "" ? "letter-checked" : "";
+    //  i = chars.findIndex(ch);
+    setChars(tempChars);
+    setPrice((prevPrice) =>
+      Math.abs(prevPrice + (tempChars[ix].checked ? unit : -unit))
+    );
+  };
+  const handleCharList = (e) => {
+    const list = e.target.value;
+    const filteredChars = chars.map((ch) => {
+      if (
+        list === "Complete" ||
+        (list === "Uppercase" && ch.char.match(/[A-Z]/)) ||
+        (list === "Lowercase" && ch.char.match(/[a-z]/))
+      ) {
+        ch.checked = true;
+        ch.clss = "letter-checked";
+      } else {
+        ch.checked = false;
+        ch.clss = "";
+      }
+      return ch;
+    });
+    setChars(filteredChars);
+    setPrice(filteredChars.filter((ch) => ch.checked).length * unit);
+  };
+  const handleMount = (bool) => {
+    setMounted(bool);
+  };
   // Component
   return (
     <>
@@ -65,7 +65,7 @@ export default function FontDashboard(props) {
           specimen={props.font.specimen}
         />
         <FontTester cssname={props.font.cssname} weight={props.font.weight} />
-        <p className='text-left'>
+        <p className="text-left">
           Please select the characters you want to mint or select an option of
           pre-selected charsets in the list bellow.
         </p>

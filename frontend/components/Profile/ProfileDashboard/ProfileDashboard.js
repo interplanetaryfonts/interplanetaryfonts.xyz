@@ -1,5 +1,5 @@
-import DashboardContent from '../../UI/DashboardContent';
-import UserButtons from './UserButtons';
+import DashboardContent from "../../UI/DashboardContent";
+import UserButtons from "./UserButtons";
 
 export default function ProfileDashboard(props) {
   return (

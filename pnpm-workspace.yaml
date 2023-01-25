@@ -2,3 +2,4 @@ packages:
     - contracts
     - frontend
     - backend
+    - packages/*

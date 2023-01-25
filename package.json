@@ -1,38 +1,45 @@
 {
-    "name": "interplanetaryfonts",
-    "homepage": "https://github.com/interplanetaryfonts/interplanetaryfonts.xyz#readme",
-    "version": "0.1.0",
-    "private": true,
-    "description": "InterplanetaryFonts Fullstack DApp",
-    "main": "README.md",
-    "scripts": {
-        "compile:smart-contract": "pnpm --filter contracts run compile",
-        "deploy:smart-contract": "pnpm --filter contracts run deploy",
-        "upgrade:smart-contract": "pnpm --filter contracts run upgrade",
-        "verify:smart-contract": "pnpm --filter contracts run verify",
-        "integration-test:smart-contract": "pnpm --filter contracts run integration-test",
-        "test:smart-contract": "pnpm --filter contracts run test",
-        "dev:frontend": "pnpm --filter frontend run dev",
-        "dev:backend": "pnpm --filter backend run dev"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/interplanetaryfonts/interplanetaryfonts.xyz.git"
-    },
-    "keywords": [
-        "ethereum",
-        "blockchain",
-        "web3",
-        "polygon",
-        "graphQL",
-        "superfluid",
-        "fonts",
-        "fullstack"
-    ],
-    "author": "InterplanetaryFonts",
-    "license": "MIT",
-    "dependencies": {
-        "graphql": "^16.6.0",
-        "urql": "^3.0.3"
-    }
+  "name": "interplanetaryfonts",
+  "homepage": "https://github.com/interplanetaryfonts/interplanetaryfonts.xyz#readme",
+  "version": "0.1.0",
+  "private": true,
+  "description": "InterplanetaryFonts Fullstack DApp",
+  "main": "README.md",
+  "scripts": {
+    "compile:smart-contract": "pnpm --filter contracts run compile",
+    "deploy:smart-contract": "pnpm --filter contracts run deploy",
+    "upgrade:smart-contract": "pnpm --filter contracts run upgrade",
+    "verify:smart-contract": "pnpm --filter contracts run verify",
+    "integration-test:smart-contract": "pnpm --filter contracts run integration-test",
+    "test:smart-contract": "pnpm --filter contracts run test",
+    "dev:frontend": "pnpm --filter frontend run dev",
+    "lint:frontend": "pnpm --filter frontend run lint",
+    "prettier:frontend": "pnpm --filter frontend run prettier .",
+    "dev:backend": "pnpm --filter backend run dev",
+    "prepare": "husky install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/interplanetaryfonts/interplanetaryfonts.xyz.git"
+  },
+  "keywords": [
+    "ethereum",
+    "blockchain",
+    "web3",
+    "polygon",
+    "graphQL",
+    "superfluid",
+    "fonts",
+    "fullstack"
+  ],
+  "author": "InterplanetaryFonts",
+  "license": "MIT",
+  "dependencies": {
+    "graphql": "^16.6.0",
+    "urql": "^3.0.3"
+  },
+  "devDependencies": {
+    "husky": "^8.0.0",
+    "lint-staged": "^13.1.0"
+  }
 }

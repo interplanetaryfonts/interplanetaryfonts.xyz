@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { FormContext } from "../Overlay/CreateProject.js";
 import { Files, Success, SetPrice, VerifyHumanity, Submit } from "../Forms";
 

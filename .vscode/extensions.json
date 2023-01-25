@@ -1,0 +1,8 @@
+{
+    "recommendations": [
+        "JuanBlanco.solidity",
+        "redhat.vscode-yaml",
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+    ]
+}

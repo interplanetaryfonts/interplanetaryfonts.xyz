@@ -16,7 +16,7 @@ async function storeFontData(req, res) {
   try {
     const files = await makeFileObjects(body);
     const cid = await storeFiles(files);
-    return res.status(200).json({ success: true, cid: cid });
+    return res.status(200).json({ success: true, cid });
   } catch (err) {
     return res
       .status(500)

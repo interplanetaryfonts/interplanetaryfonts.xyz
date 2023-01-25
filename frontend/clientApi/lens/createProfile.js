@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
 export const createProfile = gql`
     mutation CreateProfile($request: CreateProfileRequest!) {
@@ -12,4 +12,5 @@ export const createProfile = gql`
             __typename
         }
     }
+  }
 `;

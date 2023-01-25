@@ -1,6 +1,6 @@
-import classes from '../../../styles/UserDashboard.module.css';
+import classes from "../../../styles/UserDashboard.module.css";
 // Components
-import Button from '../../UI/Button';
+import Button from "../../UI/Button";
 
 export default function UserButtons(props) {
   return (
