@@ -14,18 +14,18 @@ const authLink = setContext((_, { headers }) => {
 const API_URL = "https://api-mumbai.lens.dev/";
 
 const httpLink = createHttpLink({
-    uri: API_URL,
+  uri: API_URL,
 });
 
 export const client = new ApolloClient({
-    link: authLink.concat(httpLink),
-    cache: new InMemoryCache(),
+  link: authLink.concat(httpLink),
+  cache: new InMemoryCache(),
 });
 
 export * from "./lens/authenticate";
 export * from "./lens/challenge";
 export * from "./lens/createProfile";
-export * from './lens/createSetDefaultProfile';
+export * from "./lens/createSetDefaultProfile";
 export * from "./lens/exploreProfiles";
 export * from "./lens/getDefaultProfile";
 export * from "./lens/getProfileByHandle";
@@ -33,7 +33,7 @@ export * from "./lens/getProfileByAddress";
 export * from "./lens/getPublications";
 export * from "./lens/mirror";
 export * from "./lens/refresh";
-export * from './lens/createSetProfileWithMetadata';
+export * from "./lens/createSetProfileWithMetadata";
 
 export * from "./ipfonts/createIPFontsUser";
 export * from "./ipfonts/createIPFontProject";

@@ -1,50 +1,50 @@
 .form {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    width: 100%;
-    max-width: 350px;
-    padding: 1rem;
-    border: 2px solid var(--red);
-    border-radius: var(--global-radius);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+  max-width: 350px;
+  padding: 1rem;
+  border: 2px solid var(--red);
+  border-radius: var(--global-radius);
 }
 
 .field {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-    color: var(--darkblue);
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  color: var(--darkblue);
 }
 
 .label {
-    text-align: left;
-    width: 100%;
+  text-align: left;
+  width: 100%;
 }
 
 .input {
-    padding: 0.5rem;
-    color: var(--darkblue);
-    border: solid 2px var(--red);
-    border-radius: var(--global-radius);
+  padding: 0.5rem;
+  color: var(--darkblue);
+  border: solid 2px var(--red);
+  border-radius: var(--global-radius);
 }
 
-.input[type='submit'] {
-    margin-top: 1.5rem;
-    cursor: pointer;
-    background-color: var(--red);
-    color: var(--light);
-    border-radius: var(--global-radius);
-    border: 1px solid var(--red);
-    transition: all 0.5s ease;
+.input[type="submit"] {
+  margin-top: 1.5rem;
+  cursor: pointer;
+  background-color: var(--red);
+  color: var(--light);
+  border-radius: var(--global-radius);
+  border: 1px solid var(--red);
+  transition: all 0.5s ease;
 }
 
-.input[type='submit']:disabled {
-    background-color: var(--light);
-    color: var(--darkblue);
-    border-color: var(--darkblue);
-    cursor: wait;
+.input[type="submit"]:disabled {
+  background-color: var(--light);
+  color: var(--darkblue);
+  border-color: var(--darkblue);
+  cursor: wait;
 }
 
 .invalid {
-    color: var(--red);
+  color: var(--red);
 }
