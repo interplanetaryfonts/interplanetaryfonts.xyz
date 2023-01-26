@@ -5,6 +5,31 @@ export const getDefaultProfile = gql`
     defaultProfile(request: $request) {
       id
       handle
+      name
+      bio
+      attributes {
+        key
+        value
+      }
+      coverPicture {
+        ... on MediaSet {
+          original {
+            url
+          }
+        }
+      }
+      picture {
+        ... on MediaSet {
+          original {
+            url
+          }
+        }
+        ... on NftImage {
+          uri
+          tokenId
+          contractAddress
+        }
+      }
     }
   }
 `;

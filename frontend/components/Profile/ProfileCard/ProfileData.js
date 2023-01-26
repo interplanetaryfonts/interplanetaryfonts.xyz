@@ -1,3 +1,4 @@
+import Link from "next/link";
 import classes from "../../../styles/CardData.module.css";
 
 export default function ProfileData(props) {
@@ -29,7 +30,9 @@ export default function ProfileData(props) {
         {(props.user?.website ?? "").replace(/https?:\/\//, "")}
       </a>
       {props.connected && (
-        <button className={classes.edit}>Edit Profile</button>
+        <Link className={classes.edit} href="/create-edit-user">
+          Edit Profile
+        </Link>
       )}
       <div className={classes.about}>
         <h6>About</h6>

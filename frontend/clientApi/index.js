@@ -25,6 +25,7 @@ export const client = new ApolloClient({
 export * from "./lens/authenticate";
 export * from "./lens/challenge";
 export * from "./lens/createProfile";
+export * from "./lens/createSetDefaultProfile";
 export * from "./lens/exploreProfiles";
 export * from "./lens/getDefaultProfile";
 export * from "./lens/getProfileByHandle";
@@ -32,6 +33,7 @@ export * from "./lens/getProfileByAddress";
 export * from "./lens/getPublications";
 export * from "./lens/mirror";
 export * from "./lens/refresh";
+export * from "./lens/createSetProfileWithMetadata";
 
 export * from "./ipfonts/createIPFontsUser";
 export * from "./ipfonts/createIPFontProject";
