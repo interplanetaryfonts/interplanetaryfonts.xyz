@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
 export const config = {
   matcher: [
@@ -13,7 +13,7 @@ export const config = {
   ],
 };
 
-export default async function middleware(req: NextRequest) {
+export default async function middleware(req) {
   const url = req.nextUrl;
 
   // Get hostname of request (e.g. demo.vercel.pub, demo.localhost:3000)
@@ -40,15 +40,6 @@ export default async function middleware(req: NextRequest) {
 
   // rewrites for app pages
   if (currentHost == "app") {
-    if (
-      url.pathname === "/login" &&
-      (req.cookies.get("next-auth.session-token") ||
-        req.cookies.get("__Secure-next-auth.session-token"))
-    ) {
-      url.pathname = "/";
-      return NextResponse.redirect(url);
-    }
-
     url.pathname = `/app${url.pathname}`;
     return NextResponse.rewrite(url);
   }

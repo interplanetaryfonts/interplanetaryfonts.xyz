@@ -1,10 +1,10 @@
 import { useState } from "react";
-import Button from "../../components/UI/Button";
-import NFTsAndStream from "../../components/UI/NFTsAndStream";
-import classes from "../../styles/NFTsAndStream.module.css";
-import SeePeople from "../../components/Overlay/SeePeople";
-import Collaborate from "../../components/Overlay/Collaborate";
-import Fund from "../../components/Overlay/Fund";
+import Button from "../../../components/UI/Button";
+import NFTsAndStream from "../../../components/UI/NFTsAndStream";
+import classes from "../../../styles/NFTsAndStream.module.css";
+import SeePeople from "../../../components/Overlay/SeePeople";
+import Collaborate from "../../../components/Overlay/Collaborate";
+import Fund from "../../../components/Overlay/Fund";
 
 const fakeStream = {
   nme: "Some FontStream",

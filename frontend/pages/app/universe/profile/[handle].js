@@ -1,6 +1,6 @@
 // Components
 
-import MainContainer from "../../../components/UI/MainContainer";
+import MainContainer from "../../../../components/UI/MainContainer";
 /* pages/profile/[handle].js */
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
@@ -8,8 +8,8 @@ import {
   client,
   getPublications,
   getProfileByHandle,
-} from "../../../clientApi";
-import FollowButton from "../../../components/Universe/FollowButton";
+} from "../../../../clientApi";
+import FollowButton from "../../../../components/Universe/FollowButton";
 
 export default function Profile() {
   /* create initial state to hold user profile and array of publications */

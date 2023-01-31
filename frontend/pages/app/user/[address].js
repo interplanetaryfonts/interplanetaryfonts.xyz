@@ -1,13 +1,13 @@
 import { useState } from "react";
 // Components
-import ProfileCard from "../../components/Profile/ProfileCard/ProfileCard";
-import DashboardContainer from "../../components/UI/DashboardContainer";
-import ProfileDashboard from "../../components/Profile/ProfileDashboard/ProfileDashboard";
-import Created from "../../components/Profile/ProfileDashboard/Created";
-import Collabs from "../../components/Profile/ProfileDashboard/Collabs";
-import Treasury from "../../components/Profile/ProfileDashboard/Treasury";
-import Collected from "../../components/Profile/ProfileDashboard/Collected";
-import Funded from "../../components/Profile/ProfileDashboard/Funded";
+import ProfileCard from "../../../components/Profile/ProfileCard/ProfileCard";
+import DashboardContainer from "../../../components/UI/DashboardContainer";
+import ProfileDashboard from "../../../components/Profile/ProfileDashboard/ProfileDashboard";
+import Created from "../../../components/Profile/ProfileDashboard/Created";
+import Collabs from "../../../components/Profile/ProfileDashboard/Collabs";
+import Treasury from "../../../components/Profile/ProfileDashboard/Treasury";
+import Collected from "../../../components/Profile/ProfileDashboard/Collected";
+import Funded from "../../../components/Profile/ProfileDashboard/Funded";
 
 export default function Profile(props) {
   // Util
