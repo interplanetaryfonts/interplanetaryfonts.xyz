@@ -76,4 +76,5 @@ export default async function middleware(req) {
   // return NextResponse.rewrite(
   //   new URL(`/_sites/${currentHost}${path}`, req.url)
   // );
+  return NextResponse.next();
 }
