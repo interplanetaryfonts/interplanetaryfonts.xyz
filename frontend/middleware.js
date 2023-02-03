@@ -13,23 +13,35 @@ export const config = {
   ],
 };
 
-export default async function middleware(req) {
-  // If in preview environment perform no rewrites
-  // since preview URLs have dynamic subdomains.
-  // Therefore to access app pages you will need
-  // to navigate to /app/<page route here>
-  // or /home/<page route here> for content pages
-  if (process.env.VERCEL_ENV === "preview") {
-    return NextResponse.next();
-  }
+function rewriteHome(path, reqUrl) {
+  return NextResponse.rewrite(new URL(`/home${path}`, reqUrl));
+}
 
-  const url = req.nextUrl;
+function rewriteApp(nextUrl) {
+  nextUrl.pathname = `/app${nextUrl.pathname}`;
+  return NextResponse.rewrite(nextUrl);
+}
+
+export default async function middleware(req) {
+  const nextUrl = req.nextUrl;
+
+  // Get the pathname of the request (e.g. /, /about, /blog/first-post)
+  const path = nextUrl.pathname;
+
+  // If in preview environment perform rewrite /home
+  // to the pages under pages/home and
+  // everything else to pages/app.
+  // This is because vercel preview URLs have dynamic subdomains
+  if (process.env.VERCEL_ENV === "preview") {
+    if (nextUrl.pathname.startsWith("/home")) {
+      return rewriteHome(path, req.url);
+    }
+
+    return rewriteApp(nextUrl);
+  }
 
   // Get hostname of request (e.g. demo.vercel.pub, demo.localhost:3000)
   const hostname = req.headers.get("host") || "interplanetaryfonts.xyz";
-
-  // Get the pathname of the request (e.g. /, /about, /blog/first-post)
-  const path = url.pathname;
 
   /*  You have to replace ".vercel.pub" with your own domain if you deploy this example under your domain.
       You can also use wildcard subdomains on .vercel.app links that are associated with your Vercel team slug
@@ -45,8 +57,7 @@ export default async function middleware(req) {
 
   // rewrites for app pages
   if (currentHost == "app") {
-    url.pathname = `/app${url.pathname}`;
-    return NextResponse.rewrite(url);
+    return rewriteApp(nextUrl);
   }
 
   // rewrite root application to `/home` folder
@@ -56,7 +67,7 @@ export default async function middleware(req) {
     hostname === "interplanetaryfonts.xyz" ||
     hostname === "ipfonts.xyz"
   ) {
-    return NextResponse.rewrite(new URL(`/home${path}`, req.url));
+    return rewriteHome(path, req.url);
   }
 
   // Enable if we decide to use a CMS to create static content pages like in
