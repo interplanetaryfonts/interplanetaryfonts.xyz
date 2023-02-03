@@ -34,7 +34,8 @@ export default async function middleware(req) {
   // This is because vercel preview URLs have dynamic subdomains
   if (process.env.VERCEL_ENV === "preview") {
     if (nextUrl.pathname.startsWith("/home")) {
-      return rewriteHome(path, req.url);
+      const rootHomePath = path.replace("/home", "");
+      return rewriteHome(rootHomePath, req.url);
     }
 
     return rewriteApp(nextUrl);
