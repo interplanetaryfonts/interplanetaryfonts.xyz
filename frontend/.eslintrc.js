@@ -5,6 +5,15 @@ module.exports = {
     next: {
       rootDir: "./frontend/",
     },
+    "import/resolver": {
+      "eslint-import-resolver-custom-alias": {
+        alias: {
+          "@": "./",
+        },
+        packages: ["frontend/*"],
+        extensions: [".js", ".jsx"],
+      },
+    },
   },
   parserOptions: {
     babelOptions: {

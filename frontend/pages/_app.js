@@ -24,11 +24,13 @@ import { client as ipfontsClient } from "../apollo-client";
 // Lens API
 import { client as lensClient, refresh } from "../clientApi";
 
+// Move app components to components/app
+// Create two navbars one in components/app and another in components/home
 // Components
-import NavBar from "../components/UI/NavBar";
-import MainContainer from "../components/UI/MainContainer";
-import Footer from "../components/UI/Footer";
-import Disclaimer from "../components/UI/Disclaimer";
+import NavBar from "@/components/app/UI/NavBar";
+import MainContainer from "@/components/shared/UI/MainContainer";
+import Footer from "@/components/shared/UI/Footer";
+import Disclaimer from "@/components/shared/UI/Disclaimer";
 
 // Wallet connect objects
 const infuraId = process.env.NEXT_PUBLIC_INFURA_ID;

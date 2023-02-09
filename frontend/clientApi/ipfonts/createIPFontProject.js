@@ -1,4 +1,4 @@
-import connectContract from "../../utils/connectContract";
+import connectContract from "@/utils/connectContract";
 
 export async function createIPFontProject({
   files,

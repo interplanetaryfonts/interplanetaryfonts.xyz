@@ -1,6 +1,6 @@
 import { withIronSessionApiRoute } from "iron-session/next";
-import ironOptions from "../../config/ironOptions";
-import { storeMetadataFileIPFS } from "../../utils/storeMetadataFileIPFS";
+import ironOptions from "@/config/ironOptions";
+import { storeMetadataFileIPFS } from "@/utils/storeMetadataFileIPFS";
 
 async function handler(req, res) {
   if (req.method === "POST") {

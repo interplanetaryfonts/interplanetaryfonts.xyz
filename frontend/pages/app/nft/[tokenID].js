@@ -1,11 +1,11 @@
 import { useState } from "react";
 import Link from "next/link";
-import classes from "../../../styles/NFTsAndStream.module.css";
+import classes from "@/styles/NFTsAndStream.module.css";
 // Components
-import Button from "../../../components/UI/Button";
-import NFTsAndStream from "../../../components/UI/NFTsAndStream";
-import SeePeople from "../../../components/Overlay/SeePeople";
-import Download from "../../../components/Overlay/Download";
+import Button from "@/components/app/UI/Button";
+import NFTsAndStream from "@/components/app/UI/NFTsAndStream";
+import SeePeople from "@/components/app/Overlay/SeePeople";
+import Download from "@/components/app/Overlay/Download";
 
 const fakeNFT = {
   nme: "Some NFT",

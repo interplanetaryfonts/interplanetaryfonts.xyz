@@ -1,6 +1,6 @@
 import Head from "next/head";
 // Components
-import Gallery from "../../components/Gallery/Gallery";
+import Gallery from "@/components/Gallery/Gallery";
 
 export default function Home(props) {
   return (
