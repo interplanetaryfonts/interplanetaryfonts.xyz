@@ -1,6 +1,6 @@
 import ABI from "@/abi.json";
 import { ethers } from "ethers";
-import Button from "../UI/Button";
+import Button from "@/components/app/UI/Button";
 
 const CONTRACT_ADDRESS = "0x60Ae865ee4C725cd04353b5AAb364553f56ceF82";
 

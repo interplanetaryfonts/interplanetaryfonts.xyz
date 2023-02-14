@@ -10,8 +10,7 @@ module.exports = {
         alias: {
           "@": "./",
         },
-        packages: ["frontend/*"],
-        extensions: [".js", ".jsx"],
+        extensions: [".js", ".jsx", ".json"],
       },
     },
   },
