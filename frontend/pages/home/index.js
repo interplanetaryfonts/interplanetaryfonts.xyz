@@ -1,4 +1,5 @@
 import Head from "next/head";
+import Layout from "@/components/home/Layout";
 
 export default function Home() {
   return (
@@ -17,3 +18,7 @@ export default function Home() {
     </>
   );
 }
+
+Home.getLayout = function getLayout(page) {
+  return <Layout>{page}</Layout>;
+};

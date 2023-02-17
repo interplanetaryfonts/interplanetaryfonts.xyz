@@ -5,6 +5,7 @@ import classes from "@/styles/NFTsAndStream.module.css";
 import SeePeople from "@/components/app/Overlay/SeePeople";
 import Collaborate from "@/components/app/Overlay/Collaborate";
 import Fund from "@/components/app/Overlay/Fund";
+import Layout from "@/components/app/Layout";
 
 const fakeStream = {
   nme: "Some FontStream",
@@ -81,3 +82,7 @@ export default function Stream() {
     </>
   );
 }
+
+Stream.getLayout = function getLayout(page, props) {
+  return <Layout {...props}>{page}</Layout>;
+};

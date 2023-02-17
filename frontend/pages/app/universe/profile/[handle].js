@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { client, getPublications, getProfileByHandle } from "@/clientApi";
 import FollowButton from "@/components/app/Universe/FollowButton";
+import Layout from "@/components/app/Layout";
 
 export default function Profile() {
   /* create initial state to hold user profile and array of publications */
@@ -125,3 +126,7 @@ export default function Profile() {
     </MainContainer>
   );
 }
+
+Profile.getLayout = function getLayout(page, props) {
+  return <Layout {...props}>{page}</Layout>;
+};

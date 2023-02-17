@@ -24,14 +24,6 @@ import { client as ipfontsClient } from "../apollo-client";
 // Lens API
 import { client as lensClient, refresh } from "../clientApi";
 
-// Move app components to components/app
-// Create two navbars one in components/app and another in components/home
-// Components
-import NavBar from "@/components/app/UI/NavBar";
-import MainContainer from "@/components/shared/UI/MainContainer";
-import Footer from "@/components/shared/UI/Footer";
-import Disclaimer from "@/components/shared/UI/Disclaimer";
-
 // Wallet connect objects
 const infuraId = process.env.NEXT_PUBLIC_INFURA_ID;
 const { chains, provider } = configureChains(
@@ -181,6 +173,23 @@ export default function MyApp({ Component, pageProps }) {
     window.localStorage.removeItem("lens-refresh-token");
   }
 
+  const getLayout = Component.getLayout || ((page) => page);
+  const layoutProps = {
+    handleLensLogin,
+    handleLensLogout,
+    token,
+  };
+  const component = (
+    <Component
+      {...pageProps}
+      font={fakeFont}
+      user={fakeUser}
+      connected={isConnected}
+      token={token}
+      address={address}
+    />
+  );
+
   return (
     <WagmiConfig client={wagmiClient}>
       <RainbowKitAuthenticationProvider
@@ -199,23 +208,7 @@ export default function MyApp({ Component, pageProps }) {
           modalSize="compact"
         >
           <ApolloProvider client={ipfontsClient}>
-            <MainContainer>
-              <Disclaimer />
-              <NavBar
-                handleLensLogin={handleLensLogin}
-                handleLensLogout={handleLensLogout}
-                token={token}
-              />
-              <Component
-                {...pageProps}
-                font={fakeFont}
-                user={fakeUser}
-                connected={isConnected}
-                token={token}
-                address={address}
-              />
-              <Footer />
-            </MainContainer>
+            {getLayout(component, layoutProps)}
           </ApolloProvider>
         </RainbowKitProvider>
       </RainbowKitAuthenticationProvider>

@@ -7,7 +7,7 @@ function Success() {
   return (
     <>
       <div className={classes.title}>New Font Project Created</div>
-      <Link href="../font/test-font">
+      <Link href="/font/test-font">
         <button onClick="" className={classes.continue}>
           View Project
         </button>

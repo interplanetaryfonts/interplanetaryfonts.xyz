@@ -6,6 +6,7 @@ import Button from "@/components/app/UI/Button";
 import NFTsAndStream from "@/components/app/UI/NFTsAndStream";
 import SeePeople from "@/components/app/Overlay/SeePeople";
 import Download from "@/components/app/Overlay/Download";
+import Layout from "@/components/app/Layout";
 
 const fakeNFT = {
   nme: "Some NFT",
@@ -81,3 +82,7 @@ export default function NFT() {
     </>
   );
 }
+
+NFT.getLayout = function getLayout(page, props) {
+  return <Layout {...props}>{page}</Layout>;
+};

@@ -8,6 +8,7 @@ import Collabs from "@/components/app/Profile/ProfileDashboard/Collabs";
 import Treasury from "@/components/app/Profile/ProfileDashboard/Treasury";
 import Collected from "@/components/app/Profile/ProfileDashboard/Collected";
 import Funded from "@/components/app/Profile/ProfileDashboard/Funded";
+import Layout from "@/components/app/Layout";
 
 export default function Profile(props) {
   // Util
@@ -100,3 +101,7 @@ export default function Profile(props) {
     </DashboardContainer>
   );
 }
+
+Profile.getLayout = function getLayout(page, props) {
+  return <Layout {...props}>{page}</Layout>;
+};

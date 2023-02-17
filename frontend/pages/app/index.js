@@ -1,6 +1,7 @@
 import Head from "next/head";
 // Components
 import Gallery from "@/components/app/Gallery/Gallery";
+import Layout from "@/components/app/Layout";
 
 export default function Home(props) {
   return (
@@ -19,3 +20,7 @@ export default function Home(props) {
     </>
   );
 }
+
+Home.getLayout = function getLayout(page, props) {
+  return <Layout {...props}>{page}</Layout>;
+};
