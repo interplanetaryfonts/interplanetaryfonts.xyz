@@ -3,7 +3,7 @@ import Layout from "@/components/home/Layout";
 import getAppURL from "@/utils/getAppURL";
 
 export default function Home() {
-  const appURL = getAppURL(process.env.NEXT_PUBLIC_URL);
+  const appURL = getAppURL(process.env.VERCEL_ENV);
 
   return (
     <>
