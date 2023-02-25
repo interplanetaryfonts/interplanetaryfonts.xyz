@@ -1,7 +1,10 @@
 import Head from "next/head";
 import Layout from "@/components/home/Layout";
+import getAppURL from "@/utils/getAppURL";
 
 export default function Home() {
+  const appURL = getAppURL(process.env.NEXT_PUBLIC_URL);
+
   return (
     <>
       <Head>
@@ -15,6 +18,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <h1>This is the test home page</h1>
+      <a href={appURL}>Go to app</a>
     </>
   );
 }
