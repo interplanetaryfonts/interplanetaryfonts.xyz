@@ -10,15 +10,17 @@ export default function Layout({
   token,
 }) {
   return (
-    <MainContainer>
+    <>
       <Disclaimer />
-      <NavBar
-        handleLensLogin={handleLensLogin}
-        handleLensLogout={handleLensLogout}
-        token={token}
-      />
-      {children}
-      <Footer />
-    </MainContainer>
+      <MainContainer>
+        <NavBar
+          handleLensLogin={handleLensLogin}
+          handleLensLogout={handleLensLogout}
+          token={token}
+        />
+        {children}
+        <Footer />
+      </MainContainer>
+    </>
   );
 }

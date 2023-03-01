@@ -5,11 +5,13 @@ import Disclaimer from "@/components/shared/UI/Disclaimer";
 
 export default function Layout({ children }) {
   return (
-    <MainContainer>
+    <>
       <Disclaimer />
-      <NavBar />
-      {children}
-      <Footer />
-    </MainContainer>
+      <MainContainer>
+        <NavBar />
+        {children}
+        <Footer />
+      </MainContainer>
+    </>
   );
 }
