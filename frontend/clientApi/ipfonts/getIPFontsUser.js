@@ -1,6 +1,6 @@
 import { readContract } from "@wagmi/core";
-import connectContract from "../../utils/connectContract";
-import abiJSON from "../../utils/FontProject.json";
+import connectContract from "@/utils/connectContract";
+import abiJSON from "@/utils/FontProject.json";
 
 const contractAddress = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS;
 
