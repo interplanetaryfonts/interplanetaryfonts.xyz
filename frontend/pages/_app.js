@@ -1,6 +1,8 @@
 // Global imports
 import { useEffect, useState } from "react";
 import "../styles/reset.css";
+import "../styles/fonts.css";
+import "../styles/variables.css";
 import "../styles/globals.css";
 
 // Connect wallet modules
