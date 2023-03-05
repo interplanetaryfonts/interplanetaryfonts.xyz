@@ -1,5 +1,4 @@
-// Global imports
-import { useEffect, useState } from "react";
+// Styles
 import "../styles/reset.css";
 import "../styles/fonts.css";
 import "../styles/variables.css";
@@ -17,14 +16,13 @@ import { configureChains, createClient, WagmiConfig, useAccount } from "wagmi";
 import { polygonMumbai } from "wagmi/chains";
 import { infuraProvider } from "wagmi/providers/infura";
 import { publicProvider } from "wagmi/providers/public";
+
+// Custom Hooks
 import useIronSessionRainbowAuthAdapter from "../hooks/useIronSessionRainbowAuthAdapter";
 
 // InterplanetaryFonts GraphQL
 import { ApolloProvider } from "@apollo/client";
 import { client as ipfontsClient } from "../apollo-client";
-
-// Lens API
-import { client as lensClient, refresh } from "../clientApi";
 
 // Components
 import NavBar from "../components/UI/NavBar";
@@ -48,6 +46,9 @@ const wagmiClient = createClient({
   provider,
 });
 
+// Contexts
+import LensContextProvider from "../store/LensContextProvider";
+
 // Dummy Data: Will be replaced by our SubGraph response
 import { fakeUser, fakeFont } from "../utils/dummyData";
 
@@ -55,46 +56,6 @@ export default function MyApp({ Component, pageProps }) {
   const { address } = useAccount();
   const { authAdapter, authStatus, isConnected } =
     useIronSessionRainbowAuthAdapter();
-
-  const [token, setToken] = useState();
-
-  useEffect(() => {
-    // Lens connection
-    async function refreshTkn(prevRefreshToken) {
-      try {
-        const refresher = await lensClient.mutate({
-          mutation: refresh,
-          variables: { refreshToken: prevRefreshToken },
-        });
-        const { accessToken, refreshToken } = refresher.data.refresh;
-        handleLensLogin(accessToken, refreshToken);
-      } catch (err) {
-        console.log("Couldn't refresh! ", err);
-      }
-    }
-
-    const lclStrorage = window.localStorage;
-    const localToken = lclStrorage.getItem("lens-auth-token");
-    if (localToken) {
-      const localRefreshToken = lclStrorage.getItem("lens-refresh-token");
-      if (localRefreshToken) {
-        refreshTkn(localRefreshToken);
-      }
-      setToken(localToken);
-    }
-  }, []);
-
-  async function handleLensLogin(token, refresh) {
-    setToken(token);
-    window.localStorage.setItem("lens-auth-token", token);
-    window.localStorage.setItem("lens-refresh-token", refresh);
-  }
-
-  async function handleLensLogout() {
-    setToken("");
-    window.localStorage.removeItem("lens-auth-token");
-    window.localStorage.removeItem("lens-refresh-token");
-  }
 
   return (
     <WagmiConfig client={wagmiClient}>
@@ -114,23 +75,20 @@ export default function MyApp({ Component, pageProps }) {
           modalSize="compact"
         >
           <ApolloProvider client={ipfontsClient}>
-            <MainContainer>
-              <Disclaimer />
-              <NavBar
-                handleLensLogin={handleLensLogin}
-                handleLensLogout={handleLensLogout}
-                token={token}
-              />
-              <Component
-                {...pageProps}
-                font={fakeFont}
-                user={fakeUser}
-                connected={isConnected}
-                token={token}
-                address={address}
-              />
-              <Footer />
-            </MainContainer>
+            <LensContextProvider>
+              <MainContainer>
+                <Disclaimer />
+                <NavBar />
+                <Component
+                  {...pageProps}
+                  font={fakeFont}
+                  user={fakeUser}
+                  connected={isConnected}
+                  address={address}
+                />
+                <Footer />
+              </MainContainer>
+            </LensContextProvider>
           </ApolloProvider>
         </RainbowKitProvider>
       </RainbowKitAuthenticationProvider>

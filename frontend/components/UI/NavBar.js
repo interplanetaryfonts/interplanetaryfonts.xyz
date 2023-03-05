@@ -6,7 +6,7 @@ import logo from "../../public/logoHeader.svg";
 import classes from "../../styles/NavBar.module.css";
 import ConnectButton from "../UI/ConnectButton";
 
-export default function NavBar(props) {
+export default function NavBar() {
   const router = useRouter();
   const [navbarOpen, setNavbarOpen] = useState(false);
 
@@ -57,11 +57,7 @@ export default function NavBar(props) {
             </a>
           </Link>
         </div>
-        <ConnectButton
-          handleLensLogout={props.handleLensLogout}
-          isLoggedInWithLens={props.token}
-          onLensLogin={props.handleLensLogin}
-        />
+        <ConnectButton />
         <button className={classes.cancel} onClick={handleHamburgerMenu}>
           Cancel
         </button>
