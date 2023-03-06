@@ -67,7 +67,8 @@ export default async function middleware(req) {
     hostname === "app-interplanetaryfonts.vercel.app" ||
     hostname === "interplanetaryfonts.xyz" ||
     hostname === "www.interplanetaryfonts.xyz" ||
-    hostname === "ipfonts.xyz"
+    hostname === "ipfonts.xyz" ||
+    hostname === "www.ipfonts.xyz"
   ) {
     return rewriteHome(path, req.url);
   }
