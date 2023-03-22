@@ -8,7 +8,7 @@ import {
 import { ethers } from "ethers";
 
 const useLensToken = (setToken, setIsLensConnected) => {
-  // Local storage token management
+  // Local storage and state token management
   const storeToken = useCallback(
     (token, refresh) => {
       setToken(token);
@@ -24,8 +24,7 @@ const useLensToken = (setToken, setIsLensConnected) => {
     window.localStorage.removeItem("lens-refresh-token");
     setIsLensConnected(false);
   }, [setToken, setIsLensConnected]);
-
-  // Lens refresh functions
+  // Lens session functions
   // Connect
   const lensLogin = async (lensaddress) => {
     try {
@@ -50,50 +49,43 @@ const useLensToken = (setToken, setIsLensConnected) => {
           authenticate: { accessToken, refreshToken },
         },
       } = authData;
-      setToken(accessToken, refreshToken);
+      storeToken(accessToken, refreshToken);
     } catch (err) {
-      window.localStorage.removeItem("lens-auth-token");
-      console.log("Error signing in: ", err);
+      removeToken();
+      alert("Error signing in, refresh the page and try agai!");
     }
   };
   const refreshRequest = useCallback(async () => {
     // Check for Lens Token already in local storage
     const localStorage = window.localStorage;
     const localToken = localStorage.getItem("lens-auth-token");
+    const localRefreshToken = localStorage.getItem("lens-refresh-token");
     // If there's a token the refresh request is started
-    if (localToken) {
-      const localRefreshToken = localStorage.getItem("lens-refresh-token");
-      if (localRefreshToken) {
-        try {
-          // Sets the new token and refresh token
-          const refresher = await lensClient.mutate({
-            mutation: refresh,
-            variables: { refreshToken: localRefreshToken },
-          });
-          const { accessToken, refreshToken } = refresher.data.refresh;
-          storeToken(accessToken, refreshToken);
-        } catch (_) {
-          // Removes the previous token and sends an alert
-          removeToken();
-          alert(
-            "Couldn't refresh Lens Token, close your session and sign-up again!"
-          );
-          return;
-        }
-      } else {
-        return;
+    if (localToken && localRefreshToken) {
+      try {
+        // Sets the new token and refresh token
+        const refresher = await lensClient.mutate({
+          mutation: refresh,
+          variables: { refreshToken: localRefreshToken },
+        });
+        const { accessToken, refreshToken } = refresher.data.refresh;
+        storeToken(accessToken, refreshToken);
+      } catch (_) {
+        // Removes the previous token and sends an alert
+        removeToken();
+        alert(
+          "Couldn't refresh Lens Token, close your session and sign-up again!"
+        );
       }
     }
-    // Set the session token
-    setToken(localStorage);
-  }, [storeToken, removeToken, setToken]);
+  }, [storeToken, removeToken]);
 
   // Checks connection when the app starts
   useEffect(() => {
     refreshRequest();
   }, [refreshRequest]);
 
-  return { storeToken, removeToken, lensLogin };
+  return { removeToken, lensLogin };
 };
 
 export default useLensToken;
