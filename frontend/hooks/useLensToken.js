@@ -31,6 +31,7 @@ const useLensToken = (setToken, setIsLensConnected) => {
       const challengeInfo = await lensClient.query({
         query: challenge,
         variables: { address: lensaddress },
+        fetchPolicy: "no-cache",
       });
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
