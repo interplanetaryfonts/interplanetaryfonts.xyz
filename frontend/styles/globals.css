@@ -2,17 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  /* Brand colors */
-  --red: #ff3b6a;
-  --yellow: #ffff5a;
-  --light: #ffffdd;
-  --cyan: #32f9e1;
-  --darkblue: #020866;
-  /* Global values */
-  --global-radius: 4px;
-}
-
 * {
   box-sizing: border-box;
 }
@@ -20,7 +9,7 @@
 html,
 body {
   text-align: center;
-  font-family: sans-serif;
+  font-family: "Cairo", sans-serif;
   background-color: var(--light);
   color: var(--darkblue);
 }

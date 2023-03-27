@@ -5,11 +5,7 @@ import ConnectionStatus from "../ConnectionStatus";
 
 import classes from "./ConnectButton.module.css";
 
-export default function ConnectButton({
-  handleLensLogout,
-  isLoggedInWithLens,
-  onLensLogin,
-}) {
+export default function ConnectButton() {
   return (
     <RainbowConnectButton.Custom>
       {({
@@ -59,11 +55,8 @@ export default function ConnectButton({
                 accountDisplayName={account.displayName}
                 accountDisplayBalance={account.displayBalance}
                 chainName={chain?.name}
-                onLensLogout={handleLensLogout}
-                isLoggedInWithLens={isLoggedInWithLens}
                 onOpenChainModal={openChainModal}
                 onOpenAccountModal={openAccountModal}
-                onLensLogin={onLensLogin}
               />
             )}
           </div>
