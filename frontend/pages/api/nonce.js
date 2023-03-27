@@ -1,6 +1,6 @@
 import { withIronSessionApiRoute } from "iron-session/next";
 import { generateNonce } from "siwe";
-import ironOptions from "../../config/ironOptions";
+import ironOptions from "@/config/ironOptions";
 
 const handler = async (req, res) => {
   const { method } = req;

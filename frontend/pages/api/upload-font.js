@@ -1,8 +1,8 @@
 import { withIronSessionApiRoute } from "iron-session/next";
 import multer from "multer";
-import ironOptions from "../../config/ironOptions";
-import { storeFilesIPFS } from "../../utils/storeFilesIPFS";
-import { runMiddleware } from "../../utils/runMiddleware";
+import ironOptions from "@/config/ironOptions";
+import { storeFilesIPFS } from "@/utils/storeFilesIPFS";
+import { runMiddleware } from "@/utils/runMiddleware";
 
 const uploadMiddleware = multer({
   storage: multer.memoryStorage(),

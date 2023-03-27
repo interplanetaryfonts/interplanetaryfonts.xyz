@@ -1,4 +1,4 @@
-import connectContract from "../../utils/connectContract";
+import connectContract from "@/utils/connectContract";
 import { ethers } from "ethers";
 import getIPFontsUser from "./getIPFontsUser";
 

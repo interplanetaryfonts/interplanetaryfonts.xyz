@@ -24,12 +24,6 @@ import useIronSessionRainbowAuthAdapter from "../hooks/useIronSessionRainbowAuth
 import { ApolloProvider } from "@apollo/client";
 import { client as ipfontsClient } from "../apollo-client";
 
-// Components
-import NavBar from "../components/UI/NavBar";
-import MainContainer from "../components/UI/MainContainer";
-import Footer from "../components/UI/Footer";
-import Disclaimer from "../components/UI/Disclaimer";
-
 // Wallet connect objects
 const infuraId = process.env.NEXT_PUBLIC_INFURA_ID;
 const { chains, provider } = configureChains(
@@ -47,15 +41,26 @@ const wagmiClient = createClient({
 });
 
 // Contexts
-import LensContextProvider from "../store/LensContextProvider";
+import LensContextProvider from "@/store/LensContextProvider";
 
 // Dummy Data: Will be replaced by our SubGraph response
-import { fakeUser, fakeFont } from "../utils/dummyData";
+import { fakeUser, fakeFont } from "@/utils/dummyData";
 
 export default function MyApp({ Component, pageProps }) {
   const { address } = useAccount();
   const { authAdapter, authStatus, isConnected } =
     useIronSessionRainbowAuthAdapter();
+
+  const getLayout = Component.getLayout || ((page) => page);
+  const component = (
+    <Component
+      {...pageProps}
+      font={fakeFont}
+      user={fakeUser}
+      connected={isConnected}
+      address={address}
+    />
+  );
 
   return (
     <WagmiConfig client={wagmiClient}>
@@ -75,20 +80,7 @@ export default function MyApp({ Component, pageProps }) {
           modalSize="compact"
         >
           <ApolloProvider client={ipfontsClient}>
-            <LensContextProvider>
-              <MainContainer>
-                <Disclaimer />
-                <NavBar />
-                <Component
-                  {...pageProps}
-                  font={fakeFont}
-                  user={fakeUser}
-                  connected={isConnected}
-                  address={address}
-                />
-                <Footer />
-              </MainContainer>
-            </LensContextProvider>
+            <LensContextProvider>{getLayout(component)}</LensContextProvider>
           </ApolloProvider>
         </RainbowKitProvider>
       </RainbowKitAuthenticationProvider>
